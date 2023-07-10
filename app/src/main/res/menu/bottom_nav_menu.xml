@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Code"
+        android:icon="@drawable/baseline_qr_code_24"
+        android:id="@+id/code"/>
+    <item android:title="Erkunden"
+        android:icon="@drawable/baseline_map_24"
+        android:id="@+id/explore"/>
+    <item android:title="Einstellung"
+        android:icon="@drawable/baseline_settings_24"
+        android:id="@+id/settings"/>
+</menu>
