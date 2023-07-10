@@ -13,14 +13,35 @@
     <EditText
         android:id="@+id/PersonName"
         android:layout_width="match_parent"
-        android:layout_height="71dp"
+        android:layout_height="wrap_content"
         android:padding="15dp"
+        android:hint="Vor- und Nachname"
+        android:textColorHint="@color/black"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/street"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:hint="Starße und Hausnummer"
+        android:textColorHint="@color/black"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="Lingen"
+        android:textColor="@color/black"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/button_generate"
         android:layout_width="wrap_content"
-        android:layout_height="63dp"
+        android:layout_height="64dp"
+        android:backgroundTint="@color/black"
         android:text="QR-Code generieren" />
 
     <ImageView
