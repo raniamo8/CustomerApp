@@ -41,7 +41,7 @@ public class CodeFragment extends Fragment {
 
     private static final int WIDTH_HEIGHT_NR = 400;
 
-    private AddressBook addressBook; // AddressBook-Instanz hinzufügen
+    private AddressBook addressBook= new AddressBook();
 
     @SuppressLint("StaticFieldLeak")
     public static CodeFragment instance;
@@ -71,14 +71,9 @@ public class CodeFragment extends Fragment {
         qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
 
         Button generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
-        generateQRCodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                generateQRCode();
-            }
+        generateQRCodeButton.setOnClickListener(v -> {
+            generateQRCode();
         });
-
-        addressBook = new AddressBook(); // AddressBook initialisieren
 
         return rootView;
     }
@@ -89,7 +84,6 @@ public class CodeFragment extends Fragment {
         String street = streetEditText.getText().toString().trim();
         String streetNr = streetNrEditText.getText().toString().trim();
 
-        // Check for valid inputs
         boolean isValidInput = true;
         if (!isValidLastName(lastName)) {
             lastNameErrorTextView.setVisibility(View.VISIBLE);
@@ -120,20 +114,13 @@ public class CodeFragment extends Fragment {
         }
 
         if (isValidInput) {
-            // Create a recipient and add an address
             Recipient recipient = new Recipient(firstName, lastName);
             Address address = new Address(street, streetNr);
             address.setPlz("49808");
             recipient.addAddress(address);
-
-            // Add the recipient to the AddressBook
             addressBook.addRecipient(recipient);
-
-            // Generate and display the QR code
             Bitmap qrCodeBitmap = recipient.generateQRCode();
             qrCodeImageView.setImageBitmap(qrCodeBitmap);
-
-            // Save the QR code to internal storage
             recipient.saveQRCodeToInternalStorage(getContext());
         }
     }
