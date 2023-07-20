@@ -6,35 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressBook {
-    private List<Address> addresses;
+    private List<Recipient> recipients;
 
     public AddressBook() {
-        addresses = new ArrayList<>();
+        this.recipients = new ArrayList<>();
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public void addRecipient(Recipient recipient) {
+        recipients.add(recipient);
+        System.out.println("Recipient wurde zum AddressBook erfolgreich hinzugefügt");
     }
 
-    public void addAddress(Address address) {
-        addresses.add(address);
-    }
-
-    public void deleteAddress(int index) {
-        if (index >= 0 && index < addresses.size()) {
-            addresses.remove(index);
-        }
-    }
-
-    public void deleteAllAddresses() {
-        addresses.clear();
-    }
-
-    public void loadData() {
-        // Hier können Sie den Code zum Laden der Adressen implementieren, z.B. aus einer Datenbank oder einer Datei
-    }
-
-    public void saveData() {
-        // Hier können Sie den Code zum Speichern der Adressen implementieren, z.B. in einer Datenbank oder einer Datei
+    public List<Recipient> getRecipients() {
+        return recipients;
     }
 }
+
