@@ -3,7 +3,6 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
-    <!-- Hier können Sie die Ansichtselemente definieren, die die Informationen jedes Elements anzeigen -->
 
     <ImageButton
         android:id="@+id/deleteButton"
