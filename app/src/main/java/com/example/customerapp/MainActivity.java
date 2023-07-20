@@ -53,12 +53,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitymainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new CodeFragment());
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item ->{
-            switch (item.getItemId()){
+        // Standardmäßig wird QRCodeListFragment angezeigt
+        replaceFragment(new QRCodeListFragment());
+
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
                 case R.id.code:
-                    replaceFragment(new CodeFragment());
+                    replaceFragment(new QRCodeListFragment());
                     break;
                 case R.id.explore:
                     replaceFragment(new ExploreFragment());
@@ -70,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+        binding.fabAddQRCode.setOnClickListener(v -> {
+            replaceFragment(new CodeFragment());
+        });
     }
 
     private void replaceFragment(Fragment fragment){
