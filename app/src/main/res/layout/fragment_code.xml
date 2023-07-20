@@ -1,54 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:layout_gravity="center_horizontal"
-    tools:context="com.example.customerapp.MainActivity"
-    >
+    android:padding="16dp">
 
     <EditText
-        android:id="@+id/PersonName"
+        android:id="@+id/lastNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:hint="Vor- und Nachname"
-        android:textColorHint="@color/black"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:hint="Nachname"
+        android:padding="12dp" />
 
-    <EditText
-        android:id="@+id/street"
+    <TextView
+        android:id="@+id/lastNameErrorTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:hint="Starße und Hausnummer"
-        android:textColorHint="@color/black"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:text="Inkorrekte Eingabe für Nachname"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <EditText
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
+        android:id="@+id/firstNameEditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:hint="Vorname"
+        android:padding="12dp" />
+
+    <TextView
+        android:id="@+id/firstNameErrorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inkorrekte Eingabe für Vorname"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/streetEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Straße"
+        android:padding="12dp" />
+
+    <TextView
+        android:id="@+id/streetErrorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inkorrekte Eingabe für Straße"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/streetNrEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Straßennummer"
+        android:padding="12dp" />
+
+    <TextView
+        android:id="@+id/streetNrErrorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inkorrekte Eingabe für Straßennummer"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/cityTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Lingen"
         android:textColor="@color/black"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+
+    <Spinner
+        android:id="@+id/plzSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_plz"
+        android:padding="12dp"
+        android:entries="@array/plz_options" />
+
+    <TextView
+        android:id="@+id/plzErrorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inkorrekte Eingabe für Postleitzahl"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <Button
-        android:id="@+id/button_generate"
+        android:id="@+id/buttonGenerate"
         android:layout_width="wrap_content"
-        android:layout_height="64dp"
-        android:backgroundTint="@color/black"
-        android:text="QR-Code generieren" />
+        android:layout_height="wrap_content"
+        android:text="Generate QR Code"
+        android:layout_gravity="center"
+        android:padding="12dp" />
 
     <ImageView
-        android:id="@+id/qr_code"
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:id="@+id/qrCodeImageView"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
         android:scaleType="fitCenter" />
-
 
 </LinearLayout>

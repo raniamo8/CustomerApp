@@ -1,5 +1,7 @@
 package com.example.customerapp;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,58 +11,140 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class CodeFragment extends Fragment {
 
-    private EditText personName;
+    private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
+    private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
+    private ImageView qrCodeImageView;
 
-    private Button buttonGenerate;
+    private static final int WIDTH_HEIGHT_NR = 400;
 
-    private ImageView qrCode;
-    public CodeFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     */
-    /*
-    public static CodeFragment newInstance(String param1, String param2) {
-        CodeFragment fragment = new CodeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-    */
+    @SuppressLint("StaticFieldLeak")
+    public static CodeFragment instance;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static CodeFragment getInstance() {
+        if (instance == null) {
+            instance = new CodeFragment();
+        }
+        return instance;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_code, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_code, container, false);
 
-        personName = view.findViewById(R.id.PersonName);
-        buttonGenerate = view.findViewById(R.id.button_generate);
-        qrCode = view.findViewById(R.id.qr_code);
+        lastNameEditText = rootView.findViewById(R.id.lastNameEditText);
+        firstNameEditText = rootView.findViewById(R.id.firstNameEditText);
+        streetEditText = rootView.findViewById(R.id.streetEditText);
+        streetNrEditText = rootView.findViewById(R.id.streetNrEditText);
 
-        buttonGenerate.setOnClickListener(v -> {
-            String name = personName.getText().toString().trim();
-            Recipient recipient = new Recipient(name);
-            recipient.sendPost();
-            recipient.generateQRCode(qrCode);
+        lastNameErrorTextView = rootView.findViewById(R.id.lastNameErrorTextView);
+        firstNameErrorTextView = rootView.findViewById(R.id.firstNameErrorTextView);
+        streetErrorTextView = rootView.findViewById(R.id.streetErrorTextView);
+        streetNrErrorTextView = rootView.findViewById(R.id.streetNrErrorTextView);
+
+        qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
+
+        Button generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
+        generateQRCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateQRCode();
+            }
         });
 
-        return view;
+        return rootView;
+    }
+
+    private void generateQRCode() {
+        String lastName = lastNameEditText.getText().toString().trim();
+        String firstName = firstNameEditText.getText().toString().trim();
+        String street = streetEditText.getText().toString().trim();
+        String streetNr = streetNrEditText.getText().toString().trim();
+
+        // Check for valid inputs
+        boolean isValidInput = true;
+        if (!isValidLastName(lastName)) {
+            lastNameErrorTextView.setVisibility(View.VISIBLE);
+            isValidInput = false;
+        } else {
+            lastNameErrorTextView.setVisibility(View.GONE);
+        }
+
+        if (!isValidFirstName(firstName)) {
+            firstNameErrorTextView.setVisibility(View.VISIBLE);
+            isValidInput = false;
+        } else {
+            firstNameErrorTextView.setVisibility(View.GONE);
+        }
+
+        if (!isValidStreet(street)) {
+            streetErrorTextView.setVisibility(View.VISIBLE);
+            isValidInput = false;
+        } else {
+            streetErrorTextView.setVisibility(View.GONE);
+        }
+
+        if (!isValidStreetNr(streetNr)) {
+            streetNrErrorTextView.setVisibility(View.VISIBLE);
+            isValidInput = false;
+        } else {
+            streetNrErrorTextView.setVisibility(View.GONE);
+        }
+
+        if (isValidInput) {
+            // Create a recipient and add an address
+            Recipient recipient = new Recipient(firstName, lastName);
+            Address address = new Address(street, streetNr);
+            address.setPlz("49808");
+            recipient.addAddress(address);
+
+            // Generate and display the QR code
+            Bitmap qrCodeBitmap = recipient.generateQRCode();
+            qrCodeImageView.setImageBitmap(qrCodeBitmap);
+
+            // Save the QR code to internal storage
+            recipient.saveQRCodeToInternalStorage(getContext());
+        }
+    }
+
+    private boolean isValidLastName(@NonNull String lastName) {
+        return !lastName.isEmpty();
+    }
+
+    private boolean isValidFirstName(@NonNull String firstName) {
+        return !firstName.isEmpty();
+    }
+
+    private boolean isValidStreet(@NonNull String street) {
+        return !street.isEmpty();
+    }
+
+    private boolean isValidStreetNr(@NonNull String streetNr) {
+        return !streetNr.isEmpty();
     }
 }

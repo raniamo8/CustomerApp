@@ -47,11 +47,6 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     ActivitymainBinding binding;
-    private EditText personName;
-
-    private Button buttonGenerate;
-
-    private ImageView qrCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
+        // Füge diesen Teil hinzu:
+        if (fragment instanceof CodeFragment) {
+            CodeFragment.instance = (CodeFragment) fragment;
+        }
     }
 }
 
