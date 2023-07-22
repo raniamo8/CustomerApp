@@ -1,32 +1,23 @@
 package com.example.customerapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.customerapp.QRCodeItem;
-import com.example.customerapp.R;
-
-import java.util.List;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeViewHolder> {
 
-    private List<QRCodeItem> qrCodeItems;
+    private List<String> qrCodeFilePaths;
 
-    public QRCodeAdapter(List<QRCodeItem> qrCodeItems) {
-        this.qrCodeItems = qrCodeItems;
+    public QRCodeAdapter(List<String> qrCodeFilePaths) {
+        this.qrCodeFilePaths = qrCodeFilePaths;
     }
 
     @NonNull
@@ -38,22 +29,26 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
 
     @Override
     public void onBindViewHolder(@NonNull QRCodeViewHolder holder, int position) {
-        QRCodeItem qrCodeItem = qrCodeItems.get(position);
-        holder.textViewContent.setText(qrCodeItem.getContent());
+        String filePath = qrCodeFilePaths.get(position);
+        // Lade die Bitmap und setze sie im ImageView anhand des Dateipfads
+        Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);
+        holder.imageViewQrCode.setImageBitmap(qrCodeBitmap);
     }
 
     @Override
     public int getItemCount() {
-        return qrCodeItems.size();
+        return qrCodeFilePaths.size();
     }
 
     static class QRCodeViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewContent;
+        ImageView imageViewQrCode;
 
         public QRCodeViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewContent = itemView.findViewById(R.id.textViewContent);
+            imageViewQrCode = itemView.findViewById(R.id.imageViewQrCode);
         }
     }
 }
+
+
 

@@ -1,17 +1,19 @@
 package com.example.customerapp;
 
+import android.graphics.Bitmap;
+
 public class QRCodeItem {
-    private String content;
+    private Bitmap qrCodeBitmap;
 
-    public QRCodeItem(String content) {
-        this.content = content;
+    public QRCodeItem(Bitmap qrCodeBitmap) {
+        this.qrCodeBitmap = qrCodeBitmap;
     }
 
-    public String getContent() {
-        return content;
+    public Bitmap getQrCodeBitmap() {
+        return qrCodeBitmap;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setQrCodeBitmap(Bitmap qrCodeBitmap) {
+        this.qrCodeBitmap = qrCodeBitmap;
     }
 }

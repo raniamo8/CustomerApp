@@ -1,5 +1,7 @@
 package com.example.customerapp;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,25 +10,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QRCodeListFragment extends Fragment {
 
-    private List<QRCodeItem> qrCodeItems;
+    private List<String> qrCodeFilePaths;
     private QRCodeAdapter qrCodeAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        qrCodeItems = new ArrayList<>();
-        qrCodeAdapter = new QRCodeAdapter(qrCodeItems);
+        qrCodeFilePaths = new ArrayList<>();
+        qrCodeAdapter = new QRCodeAdapter(qrCodeFilePaths);
     }
 
     @Nullable
@@ -38,20 +38,24 @@ public class QRCodeListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(qrCodeAdapter);
 
-        //For the test!
-        addQRCodeItem("Inhalt 1");
+        loadQRCodeFilePaths();
 
         return view;
     }
 
-    private void addQRCodeItem(String content) {
-        QRCodeItem qrCodeItem = new QRCodeItem(content);
-        qrCodeItems.add(qrCodeItem);
-        qrCodeAdapter.notifyDataSetChanged();
+    private void loadQRCodeFilePaths() {
+        qrCodeFilePaths.clear();
+        File directory = getContext().getDir("qr_codes", Context.MODE_PRIVATE);
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    qrCodeFilePaths.add(file.getAbsolutePath());
+                }
+            }
+        }
     }
 
-    private void replaceFragment(Fragment fragment) {
 
-    }
 }
 

@@ -1,16 +1,5 @@
 package com.example.customerapp;
 
-import android.graphics.Bitmap;
-
-import androidx.annotation.NonNull;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

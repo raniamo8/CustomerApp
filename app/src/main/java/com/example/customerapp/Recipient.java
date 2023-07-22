@@ -3,33 +3,41 @@ package com.example.customerapp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-import java.io.DataOutputStream;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONObject;
 
 
 
 public class Recipient {
+
+
+    private static int qrCodeCounter = 1;
     private static final int WIDTH_HEIGHT_NR = 400;
+
+
 
     private String firstName;
     private String lastName;
     private List<Address> addresses;
+
+    public static int getQrCodeCounter() {
+        return qrCodeCounter;
+    }
+
+    public static void setQrCodeCounter(int qrCodeCounter) {
+        Recipient.qrCodeCounter = qrCodeCounter;
+    }
 
     public Recipient(String firstName, String lastName) {
         this.firstName = firstName;
@@ -60,7 +68,7 @@ public class Recipient {
         }
 
         Address address = addresses.get(0);
-        String text = lastName + " " + firstName + "\n" + address.getStreet() + " " + address.getStreetNr() + "\n" + address.getPlz();
+        String text = lastName + "&" + firstName + "&" + address.getStreet() + "&" + address.getStreetNr() + "Lingen" + "&" + address.getPlz();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, WIDTH_HEIGHT_NR, WIDTH_HEIGHT_NR);
@@ -81,7 +89,8 @@ public class Recipient {
 
         try {
             File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
-            File file = new File(directory, "qr_code.png");
+            String fileName = "qr_code" + qrCodeCounter + ".png";
+            File file = new File(directory, fileName);
 
             OutputStream outputStream = new FileOutputStream(file);
             qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
@@ -89,10 +98,13 @@ public class Recipient {
             outputStream.close();
 
             Log.d("Recipient", "QR code saved to: " + file.getAbsolutePath());
+            qrCodeCounter++;
             return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
     }
+
+
 }
