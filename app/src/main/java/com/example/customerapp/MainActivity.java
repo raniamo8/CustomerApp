@@ -45,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        binding.fabAddQRCode.setOnClickListener(v -> {
-            replaceFragment(new CodeFragment());
-        });
+
     }
 
     private void replaceFragment(Fragment fragment){
