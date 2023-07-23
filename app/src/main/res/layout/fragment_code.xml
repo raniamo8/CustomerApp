@@ -16,8 +16,6 @@
         android:padding="12dp"
         android:src="@drawable/baseline_arrow_back_24" />
 
-
-
     <EditText
         android:id="@+id/lastNameEditText"
         android:layout_width="match_parent"

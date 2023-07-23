@@ -29,8 +29,6 @@ public class AddressBook {
         return recipients;
     }
 
-    //TODO: LoadData() und SaveData()
-
 
     public void loadData(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -42,7 +40,6 @@ public class AddressBook {
             recipients = new ArrayList<>();
         }
     }
-
 
     public void saveData(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -95,16 +92,5 @@ public class AddressBook {
         editor.apply();
     }
 
-    public static List<String> getSavedQRCodeFilePaths(Context context) {
-        List<String> filePaths = new ArrayList<>();
-        File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                filePaths.add(file.getAbsolutePath());
-            }
-        }
-        return filePaths;
-    }
 }
 

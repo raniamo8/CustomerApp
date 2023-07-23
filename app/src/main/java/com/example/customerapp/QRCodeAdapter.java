@@ -30,7 +30,6 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     @Override
     public void onBindViewHolder(@NonNull QRCodeViewHolder holder, int position) {
         String filePath = qrCodeFilePaths.get(position);
-        // Lade die Bitmap und setze sie im ImageView anhand des Dateipfads
         Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);
         holder.imageViewQrCode.setImageBitmap(qrCodeBitmap);
     }

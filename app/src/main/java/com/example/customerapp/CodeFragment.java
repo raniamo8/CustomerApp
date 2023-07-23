@@ -1,7 +1,6 @@
 package com.example.customerapp;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,13 +15,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.widget.AppCompatImageButton;
-
-import java.io.File;
 
 
 public class CodeFragment extends Fragment {
@@ -77,6 +74,13 @@ public class CodeFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 
     private void generateQRCode() {
@@ -154,12 +158,7 @@ public class CodeFragment extends Fragment {
         return !streetNr.isEmpty();
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -170,14 +169,5 @@ public class CodeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteAllQRCodes() {
-        File directory = getContext().getDir("qr_codes", Context.MODE_PRIVATE);
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                file.delete();
-            }
-        }
-        qrCodeImageView.setImageDrawable(null); // Löschen des aktuellen angezeigten Bildes
-    }
+
 }

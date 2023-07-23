@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //TODO: User Default (Shared Prefernces) vor dem Starten der App überprüfen
-
-
         if (savedInstanceState == null) {
             replaceFragment(new QRCodeListFragment());
         }

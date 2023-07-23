@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_delete_all_recipients"
-        android:title="Alle Empfänger löschen"
+        android:title="Alle QR-Codes löschen"
         app:showAsAction="never" />
 </menu>
 
