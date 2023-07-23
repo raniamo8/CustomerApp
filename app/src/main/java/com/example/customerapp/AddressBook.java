@@ -64,12 +64,30 @@ public class AddressBook {
         }
     }
 
+    public void deleteAllRecipients(Context context) {
+        recipients.clear();
+        setQRCodeCounter(context, 0); // Setze den QR-Code-Zähler auf 0 zurück
+        saveData(context); // Speichern der aktualisierten Daten nach dem Löschen aller QR-Codes
+        deleteAllSavedQRCodes(context); // Löschen aller gespeicherten QR-Codes
+        System.out.println("Alle Recipients und QR-Codes wurden gelöscht.");
+    }
+
+    private void deleteAllSavedQRCodes(Context context) {
+        File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
+        }
+    }
+
     public static int getQRCodeCounter(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getInt(KEY_QR_CODE_COUNTER, 1);
     }
 
-    // Methode zum Speichern des QR-Code-Counters in den SharedPreferences
+
     public static void setQRCodeCounter(Context context, int qrCodeCounter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();

@@ -4,8 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +31,7 @@ public class QRCodeListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         qrCodeFilePaths = new ArrayList<>();
         qrCodeAdapter = new QRCodeAdapter(qrCodeFilePaths);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -56,6 +61,27 @@ public class QRCodeListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_qr_code_list, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_delete_all_recipients) {
+            deleteAllRecipients();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllRecipients() {
+        AddressBook addressBook = new AddressBook();
+        addressBook.deleteAllRecipients(getContext());
+        qrCodeFilePaths.clear(); // Liste leeren, da alle QR-Codes gelöscht wurden
+        qrCodeAdapter.notifyDataSetChanged(); // Aktualisieren der RecyclerView-Ansicht
+        Toast.makeText(getContext(), "Alle Empfänger und QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
+    }
 }
 

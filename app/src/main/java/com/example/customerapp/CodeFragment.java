@@ -1,6 +1,7 @@
 package com.example.customerapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.widget.AppCompatImageButton;
+
+import java.io.File;
 
 
 public class CodeFragment extends Fragment {
@@ -165,5 +168,16 @@ public class CodeFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllQRCodes() {
+        File directory = getContext().getDir("qr_codes", Context.MODE_PRIVATE);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
+        }
+        qrCodeImageView.setImageDrawable(null); // Löschen des aktuellen angezeigten Bildes
     }
 }
