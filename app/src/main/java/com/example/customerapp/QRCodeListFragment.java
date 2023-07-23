@@ -23,6 +23,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//TODO: display inforamtion of the recipient as string next to the qrcode
+//TODO: QRCode as a button to display the whole QRCode
+
+
 public class QRCodeListFragment extends Fragment {
 
     private List<String> qrCodeFilePaths;
