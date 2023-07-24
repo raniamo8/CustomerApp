@@ -3,6 +3,7 @@ package com.example.customerapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import java.util.List;
 public class AddressBook {
     private static AddressBook instance;
     private static final String KEY_QR_CODE_COUNTER = "qr_code_counter";
+    private static final String ADDRESS_BOOK_PREFS_KEY = "address_book_prefs_key";
     private List<Recipient> recipients;
 
     public AddressBook() {
@@ -48,12 +50,13 @@ public class AddressBook {
     public void loadData(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Gson gson = new Gson();
-        String json = preferences.getString("addressBook", "");
+        String json = preferences.getString(ADDRESS_BOOK_PREFS_KEY, "");
         Type type = new TypeToken<List<Recipient>>() {}.getType();
         recipients = gson.fromJson(json, type);
         if (recipients == null) {
             recipients = new ArrayList<>();
         }
+        Log.d("AddressBook", "Loaded data: " + recipients.toString());
     }
 
     public void saveData(Context context) {
@@ -61,8 +64,9 @@ public class AddressBook {
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(recipients);
-        editor.putString("addressBook", json);
+        editor.putString(ADDRESS_BOOK_PREFS_KEY, json);
         editor.apply();
+        Log.d("AddressBook", "Saved data: " + json);
     }
 
 
