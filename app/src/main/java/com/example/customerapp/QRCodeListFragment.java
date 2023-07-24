@@ -1,7 +1,6 @@
 package com.example.customerapp;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,20 +23,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//TODO: display inforamtion of the recipient as string next to the qrcode
-//TODO: QRCode as a button to display the whole QRCode
+//TODO: fix the problem with addressBook after closing the app
+//TODO: Clear Information in CodeFragment after adding a new Recipient
 
 
 public class QRCodeListFragment extends Fragment {
 
     private List<String> qrCodeFilePaths;
     private QRCodeAdapter qrCodeAdapter;
+    private AddressBook addressBook;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         qrCodeFilePaths = new ArrayList<>();
-        qrCodeAdapter = new QRCodeAdapter(getContext(), qrCodeFilePaths);
+        addressBook = AddressBook.getInstance();
+        qrCodeAdapter = new QRCodeAdapter(getContext(), qrCodeFilePaths, addressBook);
         setHasOptionsMenu(true);
     }
 
@@ -53,21 +54,20 @@ public class QRCodeListFragment extends Fragment {
         loadQRCodeFilePaths();
 
         view.findViewById(R.id.fabAddQRCode).setOnClickListener(v -> {
-            replaceFragment(new CodeFragment());
+            goToCodeFragment();
         });
 
         return view;
     }
 
-    private void replaceFragment(Fragment fragment) {
-        if (getActivity() != null) {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
+    private void goToCodeFragment() {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, CodeFragment.getInstance());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
+
 
     private void loadQRCodeFilePaths() {
         qrCodeFilePaths.clear();
@@ -80,6 +80,9 @@ public class QRCodeListFragment extends Fragment {
                 }
             }
         }
+        //aktulalisierung
+        addressBook.loadData(getContext());
+        qrCodeAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -98,11 +101,11 @@ public class QRCodeListFragment extends Fragment {
     }
 
     private void deleteAllRecipients() {
-        AddressBook addressBook = new AddressBook();
         addressBook.deleteAllRecipients(getContext());
         qrCodeFilePaths.clear();
         qrCodeAdapter.notifyDataSetChanged();
         Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
     }
+
 }
 

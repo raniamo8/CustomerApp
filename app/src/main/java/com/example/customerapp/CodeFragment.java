@@ -75,17 +75,17 @@ public class CodeFragment extends Fragment {
 
         backButton = rootView.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            replaceFragment(new QRCodeListFragment());
+            goBackToQRCodeListFragment();
         });
+
+
 
         return rootView;
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void goBackToQRCodeListFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
+        fragmentManager.popBackStack();
     }
 
     private void generateQRCode(String plz) {
@@ -96,7 +96,7 @@ public class CodeFragment extends Fragment {
         String selectedPlz = ((Spinner) getView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();
 
         if (isInputValid(lastName, firstName, street, streetNr)) {
-            createAndSaveRecipient(lastName, firstName, street, streetNr, selectedPlz); // Übergeben Sie den PLZ-Wert
+            createAndSaveRecipient(lastName, firstName, street, streetNr, selectedPlz);
         } else {
             Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor.", Toast.LENGTH_SHORT).show();
         }
@@ -113,12 +113,10 @@ public class CodeFragment extends Fragment {
                 ", Street: " + street +
                 ", Street Nr: " + streetNr +
                 ", PLZ: " + plz);
-
-
-        addressBook.addRecipient(recipient);
+        addressBook.addRecipient(recipient, getContext());
 
         int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
-        recipient.setQrCodeCounter(qrCodeCounter);
+        recipient.setQRCodeCounter(qrCodeCounter);
 
         Bitmap qrCodeBitmap = recipient.generateQRCode();
         qrCodeImageView.setImageBitmap(qrCodeBitmap);

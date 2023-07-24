@@ -29,18 +29,19 @@ public class Recipient {
     private String lastName;
     private List<Address> addresses;
 
-    public static int getQrCodeCounter() {
-        return qrCodeCounter;
-    }
-
-    public static void setQrCodeCounter(int qrCodeCounter) {
-        Recipient.qrCodeCounter = qrCodeCounter;
-    }
-
     public Recipient(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addresses = new ArrayList<>();
+        this.qrCodeCounter = 0;
+    }
+
+    public int getQRCodeCounter() {
+        return qrCodeCounter;
+    }
+
+    public void setQRCodeCounter(int qrCodeCounter) {
+        this.qrCodeCounter = qrCodeCounter;
     }
 
     public String getFirstName() {
@@ -77,6 +78,7 @@ public class Recipient {
         }
         return null;
     }
+
 
 
     public boolean saveQRCodeToInternalStorage(Context context) {

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,11 +23,15 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
 
     private List<String> qrCodeFilePaths;
     private Context context;
+    private AddressBook addressBook;
 
-    public QRCodeAdapter(Context context, List<String> qrCodeFilePaths) {
+
+    public QRCodeAdapter(Context context, List<String> qrCodeFilePaths, AddressBook addressBook) {
         this.context = context;
         this.qrCodeFilePaths = qrCodeFilePaths;
+        this.addressBook = addressBook;
     }
+
 
     @NonNull
     @Override
@@ -39,6 +45,17 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         String filePath = qrCodeFilePaths.get(position);
         Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);
         holder.imageViewQrCode.setImageBitmap(qrCodeBitmap);
+
+        if (addressBook != null && position < addressBook.getRecipients().size()) {
+            Recipient recipient = addressBook.getRecipients().get(position);
+            String fullName = recipient.getFirstName() + " " + recipient.getLastName();
+            holder.textViewRecipientInfo.setText(fullName);
+
+            // Log the recipient information for debugging
+            Log.d("QRCodeAdapter", "Recipient at position " + position + ": " + fullName);
+        } else {
+            holder.textViewRecipientInfo.setText("Unknown Recipient position");
+        }
 
         holder.buttonOpenQRCode.setOnClickListener(v -> {
             openQRCodeDisplayActivity(v.getContext(), position);
@@ -58,12 +75,14 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         ImageView imageViewQrCode;
         Button deleteButton;
         Button buttonOpenQRCode;
+        TextView textViewRecipientInfo;
 
         public QRCodeViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewQrCode = itemView.findViewById(R.id.imageViewQrCode);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             buttonOpenQRCode = itemView.findViewById(R.id.buttonOpenQRCode);
+            textViewRecipientInfo = itemView.findViewById(R.id.textViewRecipientInfo);
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressBook {
+    private static AddressBook instance;
     private static final String KEY_QR_CODE_COUNTER = "qr_code_counter";
     private List<Recipient> recipients;
 
@@ -20,10 +21,24 @@ public class AddressBook {
         this.recipients = new ArrayList<>();
     }
 
-    public void addRecipient(Recipient recipient) {
-        recipients.add(recipient);
-        System.out.println("Recipient wurde zum AddressBook erfolgreich hinzugefügt");
+    public static AddressBook getInstance() {
+        if (instance == null) {
+            instance = new AddressBook();
+        }
+        return instance;
     }
+
+    public void addRecipient(Recipient recipient, Context context) {
+        int qrCodeCounter = getQRCodeCounter(context);
+        setQRCodeCounter(context, qrCodeCounter + 1);
+        recipient.setQRCodeCounter(qrCodeCounter);
+        recipients.add(recipient);
+        System.out.println("Hinzufügen eines Recipients: " + recipient.getFirstName() + " " + recipient.getLastName());
+        System.out.println("Recipient wurde zum AddressBook erfolgreich hinzugefügt");
+        saveData(context);
+    }
+
+
 
     public List<Recipient> getRecipients() {
         return recipients;
@@ -90,6 +105,13 @@ public class AddressBook {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(KEY_QR_CODE_COUNTER, qrCodeCounter);
         editor.apply();
+    }
+
+    public Recipient getRecipientByQRCodeCounter(int qrCodeCounter) {
+        if (qrCodeCounter >= 0 && qrCodeCounter < recipients.size()) {
+            return recipients.get(qrCodeCounter);
+        }
+        return null;
     }
 
 }
