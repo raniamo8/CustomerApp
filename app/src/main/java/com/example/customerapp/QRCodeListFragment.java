@@ -100,9 +100,9 @@ public class QRCodeListFragment extends Fragment {
     private void deleteAllRecipients() {
         AddressBook addressBook = new AddressBook();
         addressBook.deleteAllRecipients(getContext());
-        qrCodeFilePaths.clear(); // Liste leeren, da alle QR-Codes gelöscht wurden
-        qrCodeAdapter.notifyDataSetChanged(); // Aktualisieren der RecyclerView-Ansicht
-        Toast.makeText(getContext(), "Alle Empfänger und QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
+        qrCodeFilePaths.clear();
+        qrCodeAdapter.notifyDataSetChanged();
+        Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
     }
 }
 

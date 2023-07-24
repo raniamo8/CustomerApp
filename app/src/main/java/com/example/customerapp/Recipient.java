@@ -25,8 +25,6 @@ public class Recipient {
     private static int qrCodeCounter = 1;
     private static final int WIDTH_HEIGHT_NR = 400;
 
-
-
     private String firstName;
     private String lastName;
     private List<Address> addresses;
@@ -79,6 +77,7 @@ public class Recipient {
         }
         return null;
     }
+
 
     public boolean saveQRCodeToInternalStorage(Context context) {
         Bitmap qrCodeBitmap = generateQRCode();

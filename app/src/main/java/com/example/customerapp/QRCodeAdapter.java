@@ -59,6 +59,8 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         }
     }
 
+
+    //TODO: integration of the class AddressBook!
     private void deleteQRCode(int position) {
         String filePath = qrCodeFilePaths.get(position);
         File file = new File(filePath);

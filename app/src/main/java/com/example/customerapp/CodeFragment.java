@@ -96,6 +96,27 @@ public class CodeFragment extends Fragment {
         }
     }
 
+    private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr) {
+        Recipient recipient = new Recipient(firstName, lastName);
+        Address address = new Address(street, streetNr);
+        address.setPlz("49808");
+        recipient.addAddress(address);
+
+        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
+        recipient.setQrCodeCounter(qrCodeCounter);
+
+        Bitmap qrCodeBitmap = recipient.generateQRCode();
+        qrCodeImageView.setImageBitmap(qrCodeBitmap);
+
+        if (recipient.saveQRCodeToInternalStorage(getContext())) {
+            qrCodeCounter++;
+            AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
+            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich generiert.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private boolean isInputValid(String lastName, String firstName, String street, String streetNr) {
         boolean isValid = true;
 
@@ -129,28 +150,6 @@ public class CodeFragment extends Fragment {
 
         return isValid;
     }
-
-    private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr) {
-        Recipient recipient = new Recipient(firstName, lastName);
-        Address address = new Address(street, streetNr);
-        address.setPlz("49808");
-        recipient.addAddress(address);
-
-        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
-        recipient.setQrCodeCounter(qrCodeCounter);
-
-        Bitmap qrCodeBitmap = recipient.generateQRCode();
-        qrCodeImageView.setImageBitmap(qrCodeBitmap);
-
-        if (recipient.saveQRCodeToInternalStorage(getContext())) {
-            qrCodeCounter++;
-            AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
-            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich generiert.", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private boolean isValidLastName(@NonNull String lastName) {
         return !lastName.isEmpty();
     }
@@ -166,7 +165,6 @@ public class CodeFragment extends Fragment {
     private boolean isValidStreetNr(@NonNull String streetNr) {
         return !streetNr.isEmpty();
     }
-
 
 
     @Override
