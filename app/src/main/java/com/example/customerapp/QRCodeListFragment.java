@@ -37,7 +37,7 @@ public class QRCodeListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         qrCodeFilePaths = new ArrayList<>();
-        qrCodeAdapter = new QRCodeAdapter(qrCodeFilePaths);
+        qrCodeAdapter = new QRCodeAdapter(getContext(), qrCodeFilePaths);
         setHasOptionsMenu(true);
     }
 
