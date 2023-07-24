@@ -89,56 +89,65 @@ public class CodeFragment extends Fragment {
         String street = streetEditText.getText().toString().trim();
         String streetNr = streetNrEditText.getText().toString().trim();
 
-        boolean isValidInput = true;
+        if (isInputValid(lastName, firstName, street, streetNr)) {
+            createAndSaveRecipient(lastName, firstName, street, streetNr);
+        } else {
+            Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isInputValid(String lastName, String firstName, String street, String streetNr) {
+        boolean isValid = true;
+
         if (!isValidLastName(lastName)) {
             lastNameErrorTextView.setVisibility(View.VISIBLE);
-            isValidInput = false;
+            isValid = false;
         } else {
             lastNameErrorTextView.setVisibility(View.GONE);
         }
 
         if (!isValidFirstName(firstName)) {
             firstNameErrorTextView.setVisibility(View.VISIBLE);
-            isValidInput = false;
+            isValid = false;
         } else {
             firstNameErrorTextView.setVisibility(View.GONE);
         }
 
         if (!isValidStreet(street)) {
             streetErrorTextView.setVisibility(View.VISIBLE);
-            isValidInput = false;
+            isValid = false;
         } else {
             streetErrorTextView.setVisibility(View.GONE);
         }
 
         if (!isValidStreetNr(streetNr)) {
             streetNrErrorTextView.setVisibility(View.VISIBLE);
-            isValidInput = false;
+            isValid = false;
         } else {
             streetNrErrorTextView.setVisibility(View.GONE);
         }
 
-        if (isValidInput) {
-            Recipient recipient = new Recipient(firstName, lastName);
-            Address address = new Address(street, streetNr);
-            address.setPlz("49808");
-            recipient.addAddress(address);
+        return isValid;
+    }
 
-            // Counter erhöhen
-            int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
-            recipient.setQrCodeCounter(qrCodeCounter);
+    private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr) {
+        Recipient recipient = new Recipient(firstName, lastName);
+        Address address = new Address(street, streetNr);
+        address.setPlz("49808");
+        recipient.addAddress(address);
 
-            Bitmap qrCodeBitmap = recipient.generateQRCode();
-            qrCodeImageView.setImageBitmap(qrCodeBitmap);
+        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
+        recipient.setQrCodeCounter(qrCodeCounter);
 
-            if (recipient.saveQRCodeToInternalStorage(getContext())) {
-                // Erfolgreich gespeichert, Counter erhöhen
-                qrCodeCounter++;
-                AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
-            } else {
-                // Fehler beim Speichern
-                Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
-            }
+        Bitmap qrCodeBitmap = recipient.generateQRCode();
+        qrCodeImageView.setImageBitmap(qrCodeBitmap);
+
+        if (recipient.saveQRCodeToInternalStorage(getContext())) {
+            qrCodeCounter++;
+            AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
+            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich generiert.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
         }
     }
 
