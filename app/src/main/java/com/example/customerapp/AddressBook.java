@@ -63,9 +63,9 @@ public class AddressBook {
 
     public void deleteAllRecipients(Context context) {
         recipients.clear();
-        setQRCodeCounter(context, 0); // Setze den QR-Code-Zähler auf 0 zurück
-        saveData(context); // Speichern der aktualisierten Daten nach dem Löschen aller QR-Codes
-        deleteAllSavedQRCodes(context); // Löschen aller gespeicherten QR-Codes
+        setQRCodeCounter(context, 0);
+        saveData(context);
+        deleteAllSavedQRCodes(context);
         System.out.println("Alle Recipients und QR-Codes wurden gelöscht.");
     }
 

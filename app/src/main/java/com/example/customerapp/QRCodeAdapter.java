@@ -1,6 +1,7 @@
 package com.example.customerapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -38,6 +39,11 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         String filePath = qrCodeFilePaths.get(position);
         Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);
         holder.imageViewQrCode.setImageBitmap(qrCodeBitmap);
+
+        holder.buttonOpenQRCode.setOnClickListener(v -> {
+            openQRCodeDisplayActivity(v.getContext(), position);
+        });
+
         holder.deleteButton.setOnClickListener(v -> {
             deleteQRCode(position);
         });
@@ -51,11 +57,13 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     static class QRCodeViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewQrCode;
         Button deleteButton;
+        Button buttonOpenQRCode;
 
         public QRCodeViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewQrCode = itemView.findViewById(R.id.imageViewQrCode);
             deleteButton = itemView.findViewById(R.id.deleteButton);
+            buttonOpenQRCode = itemView.findViewById(R.id.buttonOpenQRCode);
         }
     }
 
@@ -76,6 +84,14 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         }
     }
 
+    private void openQRCodeDisplayActivity(Context context, int position) {
+        if (position >= 0 && position < qrCodeFilePaths.size()) {
+            String filePath = qrCodeFilePaths.get(position);
+            Intent intent = new Intent(context, QRCodeDisplayActivity.class);
+            intent.putExtra("qrCodeFilePath", filePath);
+            context.startActivity(intent);
+        }
+    }
 
 }
 

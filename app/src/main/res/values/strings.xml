@@ -110,4 +110,5 @@
         <item>49809</item>
         <item>49811</item>
     </string-array>
+    <string name="title_activity_qrcode_display">QRCodeDisplayActivity</string>
 </resources>
