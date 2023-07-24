@@ -20,10 +20,10 @@ public class Address {
         this.plz = plz;
     }
 
-    public Address(String street, String streetNr) {
+    public Address(String street, String streetNr, String plz) {
         this.street = street;
         this.streetNr = streetNr;
-        this.plz = "";
+        this.plz = plz;
     }
 
     public String getStreet() {

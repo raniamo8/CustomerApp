@@ -3,6 +3,7 @@ package com.example.customerapp;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,11 +63,14 @@ public class CodeFragment extends Fragment {
         streetErrorTextView = rootView.findViewById(R.id.streetErrorTextView);
         streetNrErrorTextView = rootView.findViewById(R.id.streetNrErrorTextView);
 
+        Spinner plzSpinner = rootView.findViewById(R.id.plzSpinner);
+        String selectedPLZ = plzSpinner.getSelectedItem().toString();
+
         qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
 
         Button generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
         generateQRCodeButton.setOnClickListener(v -> {
-            generateQRCode();
+            generateQRCode(selectedPLZ);
         });
 
         backButton = rootView.findViewById(R.id.backButton);
@@ -83,24 +88,34 @@ public class CodeFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    private void generateQRCode() {
+    private void generateQRCode(String plz) {
         String lastName = lastNameEditText.getText().toString().trim();
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
         String streetNr = streetNrEditText.getText().toString().trim();
+        String selectedPlz = ((Spinner) getView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();
 
         if (isInputValid(lastName, firstName, street, streetNr)) {
-            createAndSaveRecipient(lastName, firstName, street, streetNr);
+            createAndSaveRecipient(lastName, firstName, street, streetNr, selectedPlz); // Übergeben Sie den PLZ-Wert
         } else {
             Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr) {
+
+    private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr, String plz) {
         Recipient recipient = new Recipient(firstName, lastName);
-        Address address = new Address(street, streetNr);
-        address.setPlz("49808");
+        Address address = new Address(street, streetNr, plz);
         recipient.addAddress(address);
+
+        Log.d("Recipient Info", "First Name: " + firstName +
+                ", Last Name: " + lastName +
+                ", Street: " + street +
+                ", Street Nr: " + streetNr +
+                ", PLZ: " + plz);
+
+
+        addressBook.addRecipient(recipient);
 
         int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
         recipient.setQrCodeCounter(qrCodeCounter);
