@@ -60,6 +60,10 @@ public class Recipient {
         addresses.add(address);
     }
 
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+    }
+
     public Bitmap generateQRCode() {
         if (firstName == null || lastName == null || addresses.isEmpty()) {
             Log.e("Recipient", "Cannot generate QR code. Incomplete recipient information.");

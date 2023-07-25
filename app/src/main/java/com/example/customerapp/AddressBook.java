@@ -30,6 +30,20 @@ public class AddressBook {
         return instance;
     }
 
+    public static int getQRCodeCounter(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getInt(KEY_QR_CODE_COUNTER, 1);
+    }
+
+
+    public static void setQRCodeCounter(Context context, int qrCodeCounter) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(KEY_QR_CODE_COUNTER, qrCodeCounter);
+        editor.apply();
+    }
+
+
     public void addRecipient(Recipient recipient, Context context) {
         int qrCodeCounter = getQRCodeCounter(context);
         setQRCodeCounter(context, qrCodeCounter + 1);
@@ -41,16 +55,17 @@ public class AddressBook {
     }
 
 
-
     public List<Recipient> getRecipients() {
         return recipients;
     }
 
 
     public void loadData(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);        Gson gson = new Gson();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Gson gson = new Gson();
         String json = preferences.getString(ADDRESS_BOOK_PREFS_KEY, "");
-        Type type = new TypeToken<List<Recipient>>() {}.getType();
+        Type type = new TypeToken<List<Recipient>>() {
+        }.getType();
         recipients = gson.fromJson(json, type);
         if (recipients == null) {
             recipients = new ArrayList<>();
@@ -71,6 +86,12 @@ public class AddressBook {
 
     public void deleteOneRecipient(Recipient recipient, Context context) {
         if (recipients.contains(recipient)) {
+            // Erst die Adresse entfernen, bevor der Empfänger gelöscht wird
+            for (Address address : recipient.getAddresses()) {
+                recipient.removeAddress(address);
+                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
+            }
+
             recipients.remove(recipient);
             System.out.println("Der Recipient wurde erfolgreich entfernt");
 
@@ -79,6 +100,7 @@ public class AddressBook {
                 qrCodeCounter--;
                 setQRCodeCounter(context, qrCodeCounter);
             }
+
             if (recipients.isEmpty()) {
                 setQRCodeCounter(context, 0);
             }
@@ -88,6 +110,7 @@ public class AddressBook {
             System.out.println("Der Recipient konnte nicht gefunden werden");
         }
     }
+
 
 
     public void deleteAllRecipients(Context context) {
@@ -106,26 +129,6 @@ public class AddressBook {
                 file.delete();
             }
         }
-    }
-
-    public static int getQRCodeCounter(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getInt(KEY_QR_CODE_COUNTER, 1);
-    }
-
-
-    public static void setQRCodeCounter(Context context, int qrCodeCounter) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(KEY_QR_CODE_COUNTER, qrCodeCounter);
-        editor.apply();
-    }
-
-    public Recipient getRecipientByQRCodeCounter(int qrCodeCounter) {
-        if (qrCodeCounter >= 0 && qrCodeCounter < recipients.size()) {
-            return recipients.get(qrCodeCounter);
-        }
-        return null;
     }
 
 }

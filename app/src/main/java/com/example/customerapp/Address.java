@@ -2,6 +2,7 @@ package com.example.customerapp;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Address {
     private String street;
@@ -36,6 +37,21 @@ public class Address {
 
     public String getPlz() {
         return plz;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(plz, address.plz) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(streetNr, address.streetNr);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(plz, street, streetNr);
     }
 
     public boolean isValidAddress() {

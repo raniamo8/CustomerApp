@@ -95,6 +95,12 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
             if (file.exists()) {
                 if (file.delete()) {
                     qrCodeFilePaths.remove(position);
+                    Address addressToRemove = recipient.getAddresses().get(0);
+                    if (recipient.getAddresses().contains(addressToRemove)) {
+                        Log.d("AddressBook", "Adresse vor dem Löschen: " + addressToRemove.toString());
+                    } else {
+                        Log.d("AddressBook", "Adresse nicht gefunden, bevor sie entfernt wird.");
+                    }
                     addressBook.deleteOneRecipient(recipient, context);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, qrCodeFilePaths.size());
