@@ -69,15 +69,23 @@ public class AddressBook {
     }
 
 
-    public void deleteRecipient(Recipient recipient, Context context) {
+    public void deleteOneRecipient(Recipient recipient, Context context) {
         if (recipients.contains(recipient)) {
             recipients.remove(recipient);
             System.out.println("Der Recipient wurde erfolgreich entfernt");
+
+            if (recipient.getQRCodeCounter() > 0) {
+                int qrCodeCounter = getQRCodeCounter(context);
+                qrCodeCounter--;
+                setQRCodeCounter(context, qrCodeCounter);
+            }
+
             saveData(context);
         } else {
             System.out.println("Der Recipient konnte nicht gefunden werden");
         }
     }
+
 
     public void deleteAllRecipients(Context context) {
         recipients.clear();

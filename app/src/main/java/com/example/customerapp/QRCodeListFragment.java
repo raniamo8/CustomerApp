@@ -99,13 +99,13 @@ public class QRCodeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_delete_all_recipients) {
-            deleteAllRecipients();
+            deleteAllQRandRecipients();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteAllRecipients() {
+    private void deleteAllQRandRecipients() {
         addressBook.deleteAllRecipients(getContext());
         qrCodeFilePaths.clear();
         qrCodeAdapter.notifyDataSetChanged();

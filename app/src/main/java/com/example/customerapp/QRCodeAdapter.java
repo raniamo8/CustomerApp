@@ -62,7 +62,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         });
 
         holder.deleteButton.setOnClickListener(v -> {
-            deleteQRCode(position);
+            deleteQRCodeAndRecipient(position);
         });
     }
 
@@ -88,20 +88,25 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
 
 
     //TODO: integration of the class AddressBook!
-    private void deleteQRCode(int position) {
-        String filePath = qrCodeFilePaths.get(position);
-        File file = new File(filePath);
-        if (file.exists()) {
-            if (file.delete()) {
-                qrCodeFilePaths.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, qrCodeFilePaths.size());
-                Toast.makeText(context, "QR-Code gelöscht.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Fehler beim Löschen des QR-Codes.", Toast.LENGTH_SHORT).show();
+    private void deleteQRCodeAndRecipient(int position) {
+        Recipient recipient = addressBook.getRecipients().get(position);
+        if (recipient != null) {
+            String filePath = qrCodeFilePaths.get(position);
+            File file = new File(filePath);
+            if (file.exists()) {
+                if (file.delete()) {
+                    qrCodeFilePaths.remove(position);
+                    addressBook.deleteOneRecipient(recipient, context);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, qrCodeFilePaths.size());
+                    Toast.makeText(context, "QR-Code und Recipient gelöscht.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Fehler beim Löschen des QR-Codes.", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
+
 
     private void openQRCodeDisplayActivity(Context context, int position) {
         if (position >= 0 && position < qrCodeFilePaths.size()) {
