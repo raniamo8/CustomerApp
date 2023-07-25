@@ -134,6 +134,7 @@ public class CodeFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
         }
+        clearInputFields();
     }
 
     private boolean isInputValid(String lastName, String firstName, String street, String streetNr) {
@@ -201,5 +202,17 @@ public class CodeFragment extends Fragment {
         addressBook.saveData(getContext());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        clearInputFields();
+    }
+
+    private void clearInputFields() {
+        lastNameEditText.setText("");
+        firstNameEditText.setText("");
+        streetEditText.setText("");
+        streetNrEditText.setText("");
+    }
 
 }
