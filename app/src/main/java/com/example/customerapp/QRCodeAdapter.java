@@ -1,5 +1,6 @@
 package com.example.customerapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -45,17 +46,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         String filePath = qrCodeFilePaths.get(position);
         Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);
         holder.imageViewQrCode.setImageBitmap(qrCodeBitmap);
-
-        if (addressBook != null && position < addressBook.getRecipients().size()) {
-            Recipient recipient = addressBook.getRecipients().get(position);
-            String fullName = recipient.getFirstName() + " " + recipient.getLastName();
-            holder.textViewRecipientInfo.setText(fullName);
-
-            // Log the recipient information for debugging
-            Log.d("QRCodeAdapter", "Recipient at position " + position + ": " + fullName);
-        } else {
-            holder.textViewRecipientInfo.setText("Unknown Recipient position");
-        }
+        setRecipientInfo(holder, position);
 
         holder.buttonOpenQRCode.setOnClickListener(v -> {
             openQRCodeDisplayActivity(v.getContext(), position);
@@ -83,6 +74,18 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
             deleteButton = itemView.findViewById(R.id.deleteButton);
             buttonOpenQRCode = itemView.findViewById(R.id.buttonOpenQRCode);
             textViewRecipientInfo = itemView.findViewById(R.id.textViewRecipientInfo);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setRecipientInfo(@NonNull QRCodeViewHolder holder, int position) {
+        if (addressBook != null && position < addressBook.getRecipients().size()) {
+            Recipient recipient = addressBook.getRecipients().get(position);
+            String fullName = recipient.getFirstName() + " " + recipient.getLastName();
+            holder.textViewRecipientInfo.setText(fullName);
+            Log.d("QRCodeAdapter", "Recipient at position " + position + ": " + fullName);
+        } else {
+            holder.textViewRecipientInfo.setText("Unknown Recipient position problem");
         }
     }
 
@@ -123,6 +126,3 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     }
 
 }
-
-
-

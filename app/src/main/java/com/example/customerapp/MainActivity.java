@@ -1,5 +1,6 @@
 package com.example.customerapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AddressBook addressBook;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("MainActivity", "onDestroy");
+        addressBook.saveData(getApplicationContext());
+    }
+
     private void replaceFragment(Fragment fragment){
         currentFragment = fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -72,11 +81,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("MainActivity", "onDestroy");
-        addressBook.saveData(getApplicationContext());
-    }
 }
-

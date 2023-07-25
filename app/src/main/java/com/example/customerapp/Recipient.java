@@ -71,7 +71,8 @@ public class Recipient {
         }
 
         Address address = addresses.get(0);
-        String text = lastName + "&" + firstName + "&" + address.getStreet() + "&" + address.getStreetNr() + "Lingen" + "&" + address.getPlz();
+        String text = lastName + "&" + firstName + "&" + address.getStreet() + "&"
+                + address.getStreetNr() + "Lingen" + "&" + address.getPlz();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, WIDTH_HEIGHT_NR, WIDTH_HEIGHT_NR);
@@ -84,10 +85,8 @@ public class Recipient {
     }
 
 
-
     public boolean saveQRCodeToInternalStorage(Context context) {
         Bitmap qrCodeBitmap = generateQRCode();
-
         if (qrCodeBitmap == null) {
             return false;
         }
@@ -96,20 +95,18 @@ public class Recipient {
             File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
             String fileName = "qr_code" + qrCodeCounter + ".png";
             File file = new File(directory, fileName);
-
             OutputStream outputStream = new FileOutputStream(file);
             qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
-
             Log.d("Recipient", "QR code saved to: " + file.getAbsolutePath());
             qrCodeCounter++;
+
             return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
     }
-
 
 }

@@ -1,5 +1,6 @@
 package com.example.customerapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class QRCodeListFragment extends Fragment {
@@ -43,7 +45,6 @@ public class QRCodeListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_qr_code_list, container, false);
-
         addressBook = AddressBook.getInstance();
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewQRCodeList);
@@ -59,33 +60,8 @@ public class QRCodeListFragment extends Fragment {
         return view;
     }
 
-    private void goToCodeFragment() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, CodeFragment.getInstance());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
-
-
-    private void loadQRCodeFilePaths() {
-        qrCodeFilePaths.clear();
-        File directory = getContext().getDir("qr_codes", Context.MODE_PRIVATE);
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    qrCodeFilePaths.add(file.getAbsolutePath());
-                }
-            }
-        }
-        //aktulalisierung
-        addressBook.loadData(getContext());
-        qrCodeAdapter.notifyDataSetChanged();
-    }
-
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_qr_code_list, menu);
     }
 
@@ -99,6 +75,33 @@ public class QRCodeListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private void goToCodeFragment() {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, CodeFragment.getInstance());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void loadQRCodeFilePaths() {
+        qrCodeFilePaths.clear();
+        File directory = Objects.requireNonNull(getContext()).getDir("qr_codes", Context.MODE_PRIVATE);
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    qrCodeFilePaths.add(file.getAbsolutePath());
+                }
+            }
+        }
+        //aktulalisierung
+        addressBook.loadData(getContext());
+        qrCodeAdapter.notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private void deleteAllQRandRecipients() {
         addressBook.deleteAllRecipients(getContext());
         qrCodeFilePaths.clear();

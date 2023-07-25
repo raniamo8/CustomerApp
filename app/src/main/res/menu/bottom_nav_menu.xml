@@ -10,4 +10,5 @@
     <item android:title="Einstellung"
         android:icon="@drawable/baseline_settings_24"
         android:id="@+id/settings"/>
+
 </menu>

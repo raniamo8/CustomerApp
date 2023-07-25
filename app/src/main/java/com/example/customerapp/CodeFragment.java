@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Objects;
+
 //TODO: save the City with the QRCode
 
 public class CodeFragment extends Fragment {
@@ -31,11 +33,7 @@ public class CodeFragment extends Fragment {
     private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
     private ImageView qrCodeImageView;
 
-    private Toolbar toolbar;
-
     private AppCompatImageButton backButton;
-
-    private static final int WIDTH_HEIGHT_NR = 400;
 
     private AddressBook addressBook= new AddressBook();
 
@@ -89,6 +87,27 @@ public class CodeFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            requireActivity().onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        addressBook.saveData(getContext());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        clearInputFields();
+    }
+
     private void goBackToQRCodeListFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
@@ -99,7 +118,7 @@ public class CodeFragment extends Fragment {
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
         String streetNr = streetNrEditText.getText().toString().trim();
-        String selectedPlz = ((Spinner) getView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();
+        String selectedPlz = ((Spinner) Objects.requireNonNull(getView()).findViewById(R.id.plzSpinner)).getSelectedItem().toString();
 
         if (isInputValid(lastName, firstName, street, streetNr)) {
             createAndSaveRecipient(lastName, firstName, street, streetNr, selectedPlz);
@@ -109,10 +128,10 @@ public class CodeFragment extends Fragment {
         }
     }
 
-
     private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr, String plz) {
         Recipient recipient = new Recipient(firstName, lastName);
         Address address = new Address(street, streetNr, plz);
+        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
         recipient.addAddress(address);
 
         Log.d("Recipient Info", "First Name: " + firstName +
@@ -120,11 +139,9 @@ public class CodeFragment extends Fragment {
                 ", Street: " + street +
                 ", Street Nr: " + streetNr +
                 ", PLZ: " + plz);
+
         addressBook.addRecipient(recipient, getContext());
-
-        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
         recipient.setQRCodeCounter(qrCodeCounter);
-
         Bitmap qrCodeBitmap = recipient.generateQRCode();
         qrCodeImageView.setImageBitmap(qrCodeBitmap);
 
@@ -187,27 +204,6 @@ public class CodeFragment extends Fragment {
         return !streetNr.isEmpty();
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            requireActivity().onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        addressBook.saveData(getContext());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        clearInputFields();
-    }
 
     private void clearInputFields() {
         lastNameEditText.setText("");

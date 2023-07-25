@@ -19,6 +19,7 @@ public class AddressBook {
     private static final String ADDRESS_BOOK_PREFS_KEY = "address_book_prefs_key";
     private List<Recipient> recipients;
 
+
     public AddressBook() {
         this.recipients = new ArrayList<>();
     }
@@ -28,6 +29,10 @@ public class AddressBook {
             instance = new AddressBook();
         }
         return instance;
+    }
+
+    public List<Recipient> getRecipients() {
+        return recipients;
     }
 
     public static int getQRCodeCounter(Context context) {
@@ -55,11 +60,6 @@ public class AddressBook {
     }
 
 
-    public List<Recipient> getRecipients() {
-        return recipients;
-    }
-
-
     public void loadData(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Gson gson = new Gson();
@@ -70,7 +70,7 @@ public class AddressBook {
         if (recipients == null) {
             recipients = new ArrayList<>();
         }
-        Log.d("AddressBook", "Loaded data: " + recipients.toString());
+        Log.d("AddressBook", "Loaded data: " + recipients);
     }
 
     public void saveData(Context context) {
@@ -86,7 +86,6 @@ public class AddressBook {
 
     public void deleteOneRecipient(Recipient recipient, Context context) {
         if (recipients.contains(recipient)) {
-            // Erst die Adresse entfernen, bevor der Empfänger gelöscht wird
             for (Address address : recipient.getAddresses()) {
                 recipient.removeAddress(address);
                 Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
@@ -104,14 +103,11 @@ public class AddressBook {
             if (recipients.isEmpty()) {
                 setQRCodeCounter(context, 0);
             }
-
             saveData(context);
         } else {
             System.out.println("Der Recipient konnte nicht gefunden werden");
         }
     }
-
-
 
     public void deleteAllRecipients(Context context) {
         recipients.clear();
@@ -132,4 +128,3 @@ public class AddressBook {
     }
 
 }
-
