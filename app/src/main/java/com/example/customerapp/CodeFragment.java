@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-//TODO: Information clean up after generating the QRCode
 public class CodeFragment extends Fragment {
 
     private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;

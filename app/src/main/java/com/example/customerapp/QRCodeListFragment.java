@@ -23,12 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//TODO: fix the problem with addressBook after closing the app
-//TODO: Clear Information in CodeFragment after adding a new Recipient
-//TODO: func delete QRCodeCode should set the counter to 0 after deleting all QRCodes
-//TODO: func delete QRCodeCode should be combined with addressBook
-
-
 public class QRCodeListFragment extends Fragment {
 
     private List<String> qrCodeFilePaths;
