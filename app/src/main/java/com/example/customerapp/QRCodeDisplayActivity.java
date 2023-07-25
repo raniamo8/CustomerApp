@@ -25,6 +25,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.customerapp.databinding.ActivityQrcodeDisplayBinding;
 
+//TODO: display the QRCode information (Strings)
+
 public class QRCodeDisplayActivity extends AppCompatActivity {
 
     private ImageView qrCodeImageView;

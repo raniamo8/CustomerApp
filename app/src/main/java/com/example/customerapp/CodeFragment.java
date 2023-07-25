@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+//TODO: save the City with the QRCode
+
 public class CodeFragment extends Fragment {
 
     private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
