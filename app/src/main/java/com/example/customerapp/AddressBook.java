@@ -48,6 +48,9 @@ public class AddressBook {
         editor.apply();
     }
 
+    public void reset() {
+        recipients.clear();
+    }
 
     public void addRecipient(Recipient recipient, Context context) {
         int qrCodeCounter = getQRCodeCounter(context);
