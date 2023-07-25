@@ -40,6 +40,7 @@ public class QRCodeListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         qrCodeFilePaths = new ArrayList<>();
         addressBook = AddressBook.getInstance();
+        addressBook.loadData(getContext());
         qrCodeAdapter = new QRCodeAdapter(getContext(), qrCodeFilePaths, addressBook);
         setHasOptionsMenu(true);
     }
@@ -48,6 +49,8 @@ public class QRCodeListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_qr_code_list, container, false);
+
+        addressBook = AddressBook.getInstance();
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewQRCodeList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

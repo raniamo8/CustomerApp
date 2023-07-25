@@ -48,6 +48,13 @@ public class CodeFragment extends Fragment {
         return instance;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addressBook = AddressBook.getInstance();
+        addressBook.loadData(getContext());
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,8 +85,6 @@ public class CodeFragment extends Fragment {
             goBackToQRCodeListFragment();
         });
 
-
-
         return rootView;
     }
 
@@ -97,6 +102,7 @@ public class CodeFragment extends Fragment {
 
         if (isInputValid(lastName, firstName, street, streetNr)) {
             createAndSaveRecipient(lastName, firstName, street, streetNr, selectedPlz);
+            addressBook.saveData(getContext());
         } else {
             Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor.", Toast.LENGTH_SHORT).show();
         }
@@ -189,6 +195,11 @@ public class CodeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        addressBook.saveData(getContext());
+    }
 
 
 }

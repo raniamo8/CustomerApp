@@ -48,8 +48,7 @@ public class AddressBook {
 
 
     public void loadData(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Gson gson = new Gson();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);        Gson gson = new Gson();
         String json = preferences.getString(ADDRESS_BOOK_PREFS_KEY, "");
         Type type = new TypeToken<List<Recipient>>() {}.getType();
         recipients = gson.fromJson(json, type);
