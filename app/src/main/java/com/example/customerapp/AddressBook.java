@@ -79,6 +79,9 @@ public class AddressBook {
                 qrCodeCounter--;
                 setQRCodeCounter(context, qrCodeCounter);
             }
+            if (recipients.isEmpty()) {
+                setQRCodeCounter(context, 0);
+            }
 
             saveData(context);
         } else {

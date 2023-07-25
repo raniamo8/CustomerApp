@@ -87,7 +87,6 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     }
 
 
-    //TODO: integration of the class AddressBook!
     private void deleteQRCodeAndRecipient(int position) {
         Recipient recipient = addressBook.getRecipients().get(position);
         if (recipient != null) {
