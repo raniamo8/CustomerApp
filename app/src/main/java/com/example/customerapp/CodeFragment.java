@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.Objects;
 
-//TODO: save the City with the QRCode
+//TODO: Plz Spinner with dark mode
 
 public class CodeFragment extends Fragment {
 
