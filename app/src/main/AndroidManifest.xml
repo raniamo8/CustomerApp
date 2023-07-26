@@ -20,7 +20,7 @@
         tools:targetApi="tiramisu">
         <activity
             android:name=".QRCodeDisplayActivity"
-            android:label="QR-Code Anzeige" />
+            android:theme="@style/Theme.CustomerApp.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.CustomerApp.NoActionBar"

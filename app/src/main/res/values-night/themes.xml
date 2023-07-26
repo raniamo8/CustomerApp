@@ -16,11 +16,15 @@
 
 
     <style name="Screen">
-        <item name="android:background">#CB404040</item>
+        <item name="android:background">#946A6A6A</item>
     </style>
 
     <style name="Text">
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="View">
+        <item name="android:background">@color/white</item>
     </style>
 
 </resources>
