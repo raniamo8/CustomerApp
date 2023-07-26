@@ -13,4 +13,14 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+
+    <style name="Screen">
+        <item name="android:background">#CB404040</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

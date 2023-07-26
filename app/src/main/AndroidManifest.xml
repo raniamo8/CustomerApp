@@ -23,6 +23,7 @@
             android:label="QR-Code Anzeige" />
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.CustomerApp.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

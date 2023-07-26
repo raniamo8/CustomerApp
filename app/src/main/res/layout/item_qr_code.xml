@@ -26,13 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black" />
+            style="@style/Text" />
 
         <Button
             android:id="@+id/buttonOpenQRCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            style="@style/Text"
+            android:backgroundTint="@color/lavender"
             android:text="QR-Code öffnen" />
 
         <Button
@@ -40,6 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            style="@style/Text"
+            android:backgroundTint="@color/lavender"
             android:text="QR-Code löschen" />
 
     </LinearLayout>
