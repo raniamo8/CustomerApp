@@ -97,7 +97,7 @@ public class AddressBook {
             recipients.remove(recipient);
             System.out.println("Der Recipient wurde erfolgreich entfernt");
 
-            if (recipient.getQRCodeCounter() > 0) {
+            if (!recipient.getAddresses().isEmpty()) {
                 int qrCodeCounter = getQRCodeCounter(context);
                 qrCodeCounter--;
                 setQRCodeCounter(context, qrCodeCounter);
