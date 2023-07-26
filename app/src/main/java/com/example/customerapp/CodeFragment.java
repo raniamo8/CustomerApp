@@ -131,13 +131,15 @@ public class CodeFragment extends Fragment {
         Recipient recipient = new Recipient(firstName, lastName);
         Address address = new Address(street, streetNr, plz);
         int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
+        address.getCity();
         recipient.addAddress(address);
 
         Log.d("Recipient Info", "First Name: " + firstName +
                 ", Last Name: " + lastName +
                 ", Street: " + street +
                 ", Street Nr: " + streetNr +
-                ", PLZ: " + plz);
+                ", PLZ: " + plz +
+                ", City: " + address.getCity());
 
         addressBook.addRecipient(recipient, getContext());
         recipient.setQRCodeCounter(qrCodeCounter);

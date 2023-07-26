@@ -7,6 +7,7 @@ public class Address {
     private String street;
     private String streetNr;
     private String plz;
+    private final String city = "Lingen";
 
     public void setStreet(String street) {
         this.street = street;
@@ -36,6 +37,10 @@ public class Address {
 
     public String getPlz() {
         return plz;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public boolean isValidAddress() {
