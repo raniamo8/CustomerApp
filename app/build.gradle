@@ -33,10 +33,14 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation"
+    }
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.preference:preference:1.2.0'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.7'
     implementation 'androidx.navigation:navigation-fragment:2.6.0'

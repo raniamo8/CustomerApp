@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(new QRCodeListFragment());
         }
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.code:
                     replaceFragment(new QRCodeListFragment());

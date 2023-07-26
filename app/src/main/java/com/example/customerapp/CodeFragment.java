@@ -18,10 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Objects;
 
@@ -128,6 +126,7 @@ public class CodeFragment extends Fragment {
         }
     }
 
+    @SuppressLint("NewApi")
     private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr, String plz) {
         Recipient recipient = new Recipient(firstName, lastName);
         Address address = new Address(street, streetNr, plz);

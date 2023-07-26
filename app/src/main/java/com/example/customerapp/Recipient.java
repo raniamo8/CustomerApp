@@ -2,7 +2,10 @@ package com.example.customerapp;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -11,9 +14,9 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +88,7 @@ public class Recipient {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean saveQRCodeToInternalStorage(Context context) {
         Bitmap qrCodeBitmap = generateQRCode();
         if (qrCodeBitmap == null) {
@@ -95,7 +99,7 @@ public class Recipient {
             File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
             String fileName = "qr_code" + qrCodeCounter + ".png";
             File file = new File(directory, fileName);
-            OutputStream outputStream = new FileOutputStream(file);
+            OutputStream outputStream = Files.newOutputStream(file.toPath());
             qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
