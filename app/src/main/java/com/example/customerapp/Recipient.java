@@ -32,9 +32,9 @@ public class Recipient {
     private String lastName;
     private List<Address> addresses;
 
-    public Recipient(String firstName, String lastName) {
-        this.firstName = firstName;
+    public Recipient(String lastName, String firstName) {
         this.lastName = lastName;
+        this.firstName = firstName;
         this.addresses = new ArrayList<>();
         this.qrCodeCounter = 0;
     }
