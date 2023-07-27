@@ -60,7 +60,10 @@ public class SettingFragment extends Fragment {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-
+        addAddressButton = view.findViewById(R.id.addAddressButton);
+        view.findViewById(R.id.addAddressButton).setOnClickListener(v -> {
+            goToCodeFragment();
+        });
 
         deleteAllButton = view.findViewById(R.id.deleteAllButton);
         deleteAllButton.setOnClickListener(new View.OnClickListener() {
