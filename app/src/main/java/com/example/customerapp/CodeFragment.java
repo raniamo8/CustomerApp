@@ -127,7 +127,7 @@ public class CodeFragment extends Fragment {
     }
 
     @SuppressLint("NewApi")
-    private void createAndSaveRecipient(String firstName, String lastName, String street, String streetNr, String plz) {
+    private void createAndSaveRecipient(String lastName, String firstName, String street, String streetNr, String plz) {
         Recipient recipient = new Recipient(lastName, firstName);
         Address address = new Address(street, streetNr, plz);
         int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
