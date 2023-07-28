@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.customerapp.databinding.ActivitymainBinding;
 
-
+//TODO: transform margin top to the layouts!!!!!!!
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
