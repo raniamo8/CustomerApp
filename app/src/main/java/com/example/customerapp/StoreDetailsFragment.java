@@ -1,6 +1,8 @@
 package com.example.customerapp;
 
 import android.os.Bundle;
+
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -15,6 +17,9 @@ public class StoreDetailsFragment extends Fragment {
     private static final String ARG_STORE_DETAILS = "storeDetails";
 
     private StoreDetails storeDetails;
+    TextView ownerNameTextView, ownerAddressTextView, ownerPhoneTextView, ownerEmailTextView;
+    ImageView shopLogoBig;
+    private AppCompatImageButton backButton;
 
     public StoreDetailsFragment() {}
 
@@ -38,11 +43,11 @@ public class StoreDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_store_details, container, false);
 
-        ImageView shopLogoBig = view.findViewById(R.id.shopLogoBig);
-        TextView ownerNameTextView = view.findViewById(R.id.ownerNameTextView);
-        TextView ownerAddressTextView = view.findViewById(R.id.ownerAddressTextView);
-        TextView ownerPhoneTextView = view.findViewById(R.id.ownerPhoneTextView);
-        TextView ownerEmailTextView = view.findViewById(R.id.ownerEmailTextView);
+        shopLogoBig = view.findViewById(R.id.shopLogoBig);
+        ownerNameTextView = view.findViewById(R.id.ownerNameTextView);
+        ownerAddressTextView = view.findViewById(R.id.ownerAddressTextView);
+        ownerPhoneTextView = view.findViewById(R.id.ownerPhoneTextView);
+        ownerEmailTextView = view.findViewById(R.id.ownerEmailTextView);
 
         // Daten in die Views setzen
         if (storeDetails != null) {
@@ -52,6 +57,11 @@ public class StoreDetailsFragment extends Fragment {
             ownerPhoneTextView.setText(storeDetails.getPhonenumber());
             ownerEmailTextView.setText(storeDetails.getEmail());
         }
+
+        backButton = view.findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            goBackToPreviousFragment();
+        });
 
         return view;
     }
