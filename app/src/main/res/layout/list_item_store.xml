@@ -6,11 +6,11 @@
     android:layout_marginTop="60dp"
     android:padding="16dp">
 
-
     <ImageView
         android:id="@+id/storeLogoImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:background="@color/white"
         android:src="@drawable/baseline_delivery_dining_24"/>
 
     <TextView
