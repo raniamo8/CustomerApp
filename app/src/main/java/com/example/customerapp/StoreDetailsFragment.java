@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+//TODO: Goolge Maps view integration
 public class StoreDetailsFragment extends Fragment {
 
     private static final String ARG_STORE_DETAILS = "storeDetails";
