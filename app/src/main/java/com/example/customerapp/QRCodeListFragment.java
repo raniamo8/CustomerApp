@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 public class QRCodeListFragment extends Fragment {
     private List<String> qrCodeFilePaths;
     private QRCodeAdapter qrCodeAdapter;

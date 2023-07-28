@@ -20,8 +20,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class Recipient {
     private static int qrCodeCounter = 1;
     private static final int WIDTH_HEIGHT_NR = 400;

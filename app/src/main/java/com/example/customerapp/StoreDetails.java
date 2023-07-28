@@ -2,7 +2,6 @@ package com.example.customerapp;
 
 import java.io.Serializable;
 
-//TODO: define the class and its attributes
 public class StoreDetails implements Serializable {
     private String shopname;
     private String owner;
