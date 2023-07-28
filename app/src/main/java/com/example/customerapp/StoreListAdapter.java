@@ -1,0 +1,74 @@
+package com.example.customerapp;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.StoreViewHolder> {
+
+    private List<StoreDetails> storeList;
+    private Context context;
+
+    public StoreListAdapter(Context context, List<StoreDetails> storeList) {
+        this.context = context;
+        this.storeList = storeList;
+    }
+
+
+    @NonNull
+    @Override
+    public StoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_store, parent, false);
+        return new StoreViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
+        StoreDetails store = storeList.get(position);
+        holder.storeNameTextView.setText(store.getShopname());
+        holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
+
+        holder.openStoreDetails.setOnClickListener(view -> {
+            goToStoreDetailsFragment(store);
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return storeList.size();
+    }
+
+    static class StoreViewHolder extends RecyclerView.ViewHolder {
+        ImageView storeLogoImageView;
+        TextView storeNameTextView;
+        ImageView openStoreDetails;
+
+        StoreViewHolder(@NonNull View itemView) {
+            super(itemView);
+            storeLogoImageView = itemView.findViewById(R.id.storeLogoImageView);
+            storeNameTextView = itemView.findViewById(R.id.storeNameTextView);
+            openStoreDetails = itemView.findViewById(R.id.openStoreDetails);
+        }
+    }
+
+    private void goToStoreDetailsFragment(StoreDetails store) {
+        StoreDetailsFragment storeDetailsFragment = StoreDetailsFragment.newInstance(store);
+
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, storeDetailsFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="60dp"
+    android:padding="16dp">
+
+
+    <ImageView
+        android:id="@+id/storeLogoImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/baseline_delivery_dining_24"/>
+
+    <TextView
+        android:id="@+id/storeNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@android:dimen/app_icon_size"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        style="@style/Text"/>
+
+    <ImageButton
+        android:id="@+id/openStoreDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        style="@style/Text"
+        android:layout_marginStart="@dimen/text_margin"
+        android:src="@drawable/baseline_arrow_forward_ios_24"/>
+
+</LinearLayout>

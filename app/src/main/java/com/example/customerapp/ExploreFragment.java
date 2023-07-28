@@ -1,64 +1,56 @@
 package com.example.customerapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExploreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExploreFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private List<StoreDetails> storeList;
+    private StoreListAdapter storeListAdapter;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ExploreFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExploreFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ExploreFragment newInstance(String param1, String param2) {
-        ExploreFragment fragment = new ExploreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        storeList = getDummyStoreData();
+        storeListAdapter = new StoreListAdapter(requireContext(), storeList);
     }
 
+    @SuppressLint("MissingInflatedId")
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStores);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(storeListAdapter);
+
+        return view;
+    }
+
+
+    // Dummy-Daten für die Liste der Läden (ersetze sie durch deine eigenen Daten)
+    private List<StoreDetails> getDummyStoreData() {
+        List<StoreDetails> dummyData = new ArrayList<>();
+        dummyData.add(new StoreDetails("Willenbrock", "Owner 1", new Address("Street 1", "1", "12345"), "123456789", "email1@example.com", R.drawable.logo1));
+        dummyData.add(new StoreDetails("Hochschule Osnabrück", "Owner 2", new Address("Street 2", "2", "67890"), "987654321", "email2@example.com", R.drawable.logo2));
+        return dummyData;
     }
 }

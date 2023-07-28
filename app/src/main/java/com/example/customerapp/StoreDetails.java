@@ -1,7 +1,9 @@
 package com.example.customerapp;
 
+import java.io.Serializable;
+
 //TODO: define the class and its attributes
-public class StoreDetails {
+public class StoreDetails implements Serializable {
 
     private String shopname;
     private String owner;
@@ -9,12 +11,15 @@ public class StoreDetails {
     private String phonenumber;
     private String email;
 
-    public StoreDetails(String shopname, String owner, Address address, String phonenumber, String email) {
+    private int logoResourceId;
+
+    public StoreDetails(String shopname, String owner, Address address, String phonenumber, String email, int logoResourceId) {
         this.shopname = shopname;
         this.owner = owner;
         this.address = address;
         this.phonenumber = phonenumber;
         this.email = email;
+        this.logoResourceId = logoResourceId;
     }
 
     public String getShopname() {
@@ -57,5 +62,11 @@ public class StoreDetails {
         this.email = email;
     }
 
+    public int getLogoResourceId() {
+        return logoResourceId;
+    }
 
+    public void setLogoResourceId(int logoResourceId) {
+        this.logoResourceId = logoResourceId;
+    }
 }
