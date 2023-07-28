@@ -25,6 +25,7 @@ public class Address {
         this.street = street;
         this.streetNr = streetNr;
         this.plz = plz;
+        getCity();
     }
 
     public String getStreet() {
@@ -50,5 +51,9 @@ public class Address {
     private boolean isValidPlz() {
         List<String> plzList = Arrays.asList("49808", "49809", "49811");
         return plzList.contains(plz);
+    }
+
+    public String getFullAddress(){
+        return street + " " + streetNr + "\n" + plz + " " + city;
     }
 }

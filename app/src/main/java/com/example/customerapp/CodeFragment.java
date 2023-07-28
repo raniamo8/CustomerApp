@@ -79,7 +79,7 @@ public class CodeFragment extends Fragment {
 
         backButton = rootView.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            goBackToQRCodeListFragment();
+            goBackToPreviousFragment();
         });
 
         return rootView;
@@ -106,7 +106,7 @@ public class CodeFragment extends Fragment {
         clearInputFields();
     }
 
-    private void goBackToQRCodeListFragment() {
+    private void goBackToPreviousFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();
     }

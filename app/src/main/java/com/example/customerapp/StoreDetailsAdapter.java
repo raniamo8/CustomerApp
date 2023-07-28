@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.StoreViewHolder> {
+public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapter.StoreViewHolder> {
 
     private List<StoreDetails> storeList;
     private Context context;
 
-    public StoreListAdapter(Context context, List<StoreDetails> storeList) {
+    public StoreDetailsAdapter(Context context, List<StoreDetails> storeList) {
         this.context = context;
         this.storeList = storeList;
     }

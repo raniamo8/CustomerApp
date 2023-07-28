@@ -38,8 +38,7 @@
                 android:id="@+id/ownerNameTextView"
                 style="@style/Text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TestInhaber" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -61,8 +60,7 @@
                 android:id="@+id/ownerAddressTextView"
                 style="@style/Text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TestAdresse" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -84,8 +82,7 @@
                 android:id="@+id/ownerPhoneTextView"
                 style="@style/Text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TestTelefonnummer" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -107,8 +104,7 @@
                 android:id="@+id/ownerEmailTextView"
                 style="@style/Text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TestEmail" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
