@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-//TODO: display the QRCode information (Strings)
-
 public class QRCodeDisplayActivity extends AppCompatActivity {
 
     ImageButton backButton;
