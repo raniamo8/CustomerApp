@@ -17,10 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExploreFragment extends Fragment {
-
     private List<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +38,6 @@ public class ExploreFragment extends Fragment {
 
         return view;
     }
-
-
 
     private List<StoreDetails> createAndGetStoreData() {
         List<StoreDetails> dummyData = new ArrayList<>();

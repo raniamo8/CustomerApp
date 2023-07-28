@@ -58,9 +58,7 @@ public class StoreDetailsFragment extends Fragment {
         }
 
         backButton = view.findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
-            goBackToPreviousFragment();
-        });
+        backButton.setOnClickListener(v -> goBackToPreviousFragment());
 
         return view;
     }

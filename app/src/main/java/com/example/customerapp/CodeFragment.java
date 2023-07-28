@@ -26,7 +26,6 @@ import java.util.Objects;
 //TODO: Plz Spinner with dark mode!
 
 public class CodeFragment extends Fragment {
-
     private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
     private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
     private ImageView qrCodeImageView;

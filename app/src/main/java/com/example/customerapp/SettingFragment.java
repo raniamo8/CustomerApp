@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class SettingFragment extends Fragment {
-
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch darkModeSwitch;
     Button deleteAllButton, addAddressButton;
@@ -61,18 +60,10 @@ public class SettingFragment extends Fragment {
         }
 
         addAddressButton = view.findViewById(R.id.addAddressButton);
-        view.findViewById(R.id.addAddressButton).setOnClickListener(v -> {
-            goToCodeFragment();
-        });
+        view.findViewById(R.id.addAddressButton).setOnClickListener(v -> goToCodeFragment());
 
         deleteAllButton = view.findViewById(R.id.deleteAllButton);
-        deleteAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteAllQRandRecipients();
-            }
-        });
-
+        deleteAllButton.setOnClickListener(v -> deleteAllQRandRecipients());
 
         darkModeSwitch.setOnClickListener(view1 -> {
             nightMode = !nightMode;

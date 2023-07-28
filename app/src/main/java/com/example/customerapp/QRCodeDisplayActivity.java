@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class QRCodeDisplayActivity extends AppCompatActivity {
-
     ImageButton backButton;
 
     @Override

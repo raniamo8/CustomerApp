@@ -44,15 +44,6 @@ public class Address {
         return city;
     }
 
-    public boolean isValidAddress() {
-        return !street.isEmpty() && !streetNr.isEmpty() && isValidPlz();
-    }
-
-    private boolean isValidPlz() {
-        List<String> plzList = Arrays.asList("49808", "49809", "49811");
-        return plzList.contains(plz);
-    }
-
     public String getFullAddress(){
         return street + " " + streetNr + "\n" + plz + " " + city;
     }

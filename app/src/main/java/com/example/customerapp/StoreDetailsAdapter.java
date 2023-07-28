@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapter.StoreViewHolder> {
-
     private List<StoreDetails> storeList;
     private Context context;
 
@@ -40,9 +39,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         holder.storeNameTextView.setText(store.getShopname());
         holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
 
-        holder.openDetails.setOnClickListener(view -> {
-            goToStoreDetailsFragment(store);
-        });
+        holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
     }
 
     @Override
