@@ -30,7 +30,7 @@ public class CodeFragment extends Fragment {
     private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
     private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
     private ImageView qrCodeImageView;
-
+    Button generateQRCodeButton;
     private AppCompatImageButton backButton;
 
     private AddressBook addressBook= new AddressBook();
@@ -72,7 +72,7 @@ public class CodeFragment extends Fragment {
 
         qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
 
-        Button generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
+        generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
         generateQRCodeButton.setOnClickListener(v -> {
             generateQRCode(selectedPLZ);
         });

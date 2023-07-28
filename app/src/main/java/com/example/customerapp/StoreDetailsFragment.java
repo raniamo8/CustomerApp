@@ -15,7 +15,6 @@ import android.widget.TextView;
 public class StoreDetailsFragment extends Fragment {
 
     private static final String ARG_STORE_DETAILS = "storeDetails";
-
     private StoreDetails storeDetails;
     TextView ownerNameTextView, ownerAddressTextView, ownerPhoneTextView, ownerEmailTextView;
     ImageView shopLogoBig;
@@ -49,7 +48,7 @@ public class StoreDetailsFragment extends Fragment {
         ownerPhoneTextView = view.findViewById(R.id.ownerPhoneTextView);
         ownerEmailTextView = view.findViewById(R.id.ownerEmailTextView);
 
-        // Daten in die Views setzen
+        // submitting data in the View
         if (storeDetails != null) {
             shopLogoBig.setImageResource(storeDetails.getLogoResourceId());
             ownerNameTextView.setText(storeDetails.getOwner());

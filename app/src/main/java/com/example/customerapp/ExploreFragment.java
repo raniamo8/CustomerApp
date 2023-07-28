@@ -20,13 +20,12 @@ public class ExploreFragment extends Fragment {
 
     private List<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
-    List<StoreDetails> dummyData = new ArrayList<>();
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        storeList = getDummyStoreData();
+        storeList = createAndGetStoreData();
         storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
     }
 
@@ -44,7 +43,7 @@ public class ExploreFragment extends Fragment {
 
 
 
-    private List<StoreDetails> getDummyStoreData() {
+    private List<StoreDetails> createAndGetStoreData() {
         List<StoreDetails> dummyData = new ArrayList<>();
         dummyData.add(new StoreDetails("Willenbrock", "Hendrick Willenbrock", new Address("Bernd-Rosen-Meyer", "40", "49809"), "0591 963360", "wb@wb.de", R.drawable.logo1));
         dummyData.add(new StoreDetails("Hochschule Osnabrück", "Land Niedersachsen", new Address("Kaiserstraße", "10C", "49809"), "0591 80098402", "webmaster@hs-osnabrueck.de", R.drawable.logo2));
