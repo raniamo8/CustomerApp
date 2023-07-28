@@ -34,6 +34,15 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     }
 
 
+    public void onItemClick(View view, int position) {
+        String qrCodeFilePath = qrCodeFilePaths.get(position);
+        Intent intent = new Intent(context, QRCodeDisplayActivity.class);
+        intent.putExtra("qrCodeFilePath", qrCodeFilePath);
+        intent.putExtra("recipientIndex", position);
+        context.startActivity(intent);
+    }
+
+
     @NonNull
     @Override
     public QRCodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -121,6 +130,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
             String filePath = qrCodeFilePaths.get(position);
             Intent intent = new Intent(context, QRCodeDisplayActivity.class);
             intent.putExtra("qrCodeFilePath", filePath);
+            intent.putExtra("recipientIndex", position);
             context.startActivity(intent);
         }
     }
