@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,7 +40,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         holder.storeNameTextView.setText(store.getShopname());
         holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
 
-        holder.openStoreDetails.setOnClickListener(view -> {
+        holder.openDetails.setOnClickListener(view -> {
             goToStoreDetailsFragment(store);
         });
     }
@@ -53,12 +54,14 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         ImageView storeLogoImageView;
         TextView storeNameTextView;
         ImageView openStoreDetails;
+        LinearLayout openDetails;
 
         StoreViewHolder(@NonNull View itemView) {
             super(itemView);
             storeLogoImageView = itemView.findViewById(R.id.storeLogoImageView);
             storeNameTextView = itemView.findViewById(R.id.storeNameTextView);
             openStoreDetails = itemView.findViewById(R.id.openStoreDetails);
+            openDetails = itemView.findViewById(R.id.openDetails);
         }
     }
 
