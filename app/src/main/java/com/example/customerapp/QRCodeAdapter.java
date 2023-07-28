@@ -21,27 +21,15 @@ import java.io.File;
 import java.util.List;
 
 public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeViewHolder> {
-
     private List<String> qrCodeFilePaths;
     private Context context;
     private AddressBook addressBook;
-
 
     public QRCodeAdapter(Context context, List<String> qrCodeFilePaths, AddressBook addressBook) {
         this.context = context;
         this.qrCodeFilePaths = qrCodeFilePaths;
         this.addressBook = addressBook;
     }
-
-
-    public void onItemClick(View view, int position) {
-        String qrCodeFilePath = qrCodeFilePaths.get(position);
-        Intent intent = new Intent(context, QRCodeDisplayActivity.class);
-        intent.putExtra("qrCodeFilePath", qrCodeFilePath);
-        intent.putExtra("recipientIndex", position);
-        context.startActivity(intent);
-    }
-
 
     @NonNull
     @Override
