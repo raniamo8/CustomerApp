@@ -8,7 +8,6 @@ public class StoreDetails implements Serializable {
     private Address address;
     private String phonenumber;
     private String email;
-
     private int logoResourceId;
 
     public StoreDetails(String shopname, String owner, Address address, String phonenumber, String email, int logoResourceId) {

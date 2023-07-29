@@ -8,6 +8,8 @@ public class Address {
     private String streetNr;
     private String plz;
     private final String city = "Lingen";
+    private double latitude;
+    private double longitude;
 
     public void setStreet(String street) {
         this.street = street;
@@ -46,5 +48,13 @@ public class Address {
 
     public String getFullAddress(){
         return street + " " + streetNr + "\n" + plz + " " + city;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }
