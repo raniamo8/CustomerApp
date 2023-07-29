@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 
 //TODO: Goolge Maps view integration
+/**
+ * A fragment that displays detailed information about a specific store.
+ * It takes a StoreDetails object as an argument and displays its data, including the store's logo, owner name, etc.
+ */
 public class StoreDetailsFragment extends Fragment {
 
     private static final String ARG_STORE_DETAILS = "storeDetails";

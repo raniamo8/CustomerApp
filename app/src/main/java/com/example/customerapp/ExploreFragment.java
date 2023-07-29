@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing the Explore screen, which displays a list of stores.
+ * Represents a fragment the Explore screen, which displays a list of stores.
  * The fragment contains a list of store data and uses a RecyclerView with the StoreDetailsAdapter to display the store details.
  */
 public class ExploreFragment extends Fragment {
