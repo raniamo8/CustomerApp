@@ -198,6 +198,9 @@ public class AddressBookUnitTest {
         assertEquals(0, addressBook.getRecipients().size());
     }
 
+    /**
+     * Checks if loading data with null data in shared preferences results in an empty recipients list.
+     */
     @Test
     public void testLoadData_WithNullData() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -207,6 +210,9 @@ public class AddressBookUnitTest {
         assertEquals(0, addressBook.getRecipients().size());
     }
 
+    /**
+     * Checks if loading data with empty data in shared preferences results in an empty recipients list.
+     */
     @Test
     public void testLoadData_WithEmptyData() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -216,6 +222,9 @@ public class AddressBookUnitTest {
         assertEquals(0, addressBook.getRecipients().size());
     }
 
+    /**
+     * Checks if setting and getting the QR code counter works correctly.
+     */
     @Test
     public void testSetAndGetQRCodeCounter() {
         int testCounter = 5;
@@ -223,6 +232,9 @@ public class AddressBookUnitTest {
         assertEquals(AddressBook.getQRCodeCounter(context), testCounter);
     }
 
+    /**
+     * Checks if incrementing the QR code counter works correctly.
+     */
     @Test
     public void testSetAndGetQRCodIncrement() {
         int initialCounter = AddressBook.getQRCodeCounter(context);
