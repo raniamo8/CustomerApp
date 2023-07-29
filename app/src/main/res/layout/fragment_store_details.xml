@@ -41,8 +41,9 @@
             <TextView
                 android:id="@+id/nameTextView"
                 style="@style/Text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Inhaber:" />
 
             <TextView
@@ -52,6 +53,7 @@
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,8 +65,9 @@
             <TextView
                 android:id="@+id/addressTextView"
                 style="@style/Text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Adresse:" />
 
             <TextView
@@ -85,8 +88,9 @@
             <TextView
                 android:id="@+id/phoneTextView"
                 style="@style/Text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Telefonnummer:" />
 
             <TextView
@@ -107,8 +111,9 @@
             <TextView
                 android:id="@+id/emailTextView"
                 style="@style/Text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Email:" />
 
             <TextView
