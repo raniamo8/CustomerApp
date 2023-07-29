@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A fragment that allows users to manage app settings, including enabling or disabling dark mode,
+ * adding addresses to recipients, and deleting all QR codes and recipients.
+ */
 public class SettingFragment extends Fragment {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch darkModeSwitch;
