@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Represents an adapter for the RecyclerView in the ExploreFragment, responsible for displaying a list of store details.
+ * When a store details item is clicked, it navigates to the StoreDetailsFragment to show more information about the selected store.
+ */
 public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapter.StoreViewHolder> {
     private List<StoreDetails> storeList;
     private Context context;
