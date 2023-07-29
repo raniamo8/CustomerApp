@@ -13,6 +13,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an address book that stores a list of recipients and their information.
+ * Provides methods to add, delete, and retrieve recipients, as well as manage the QR code counter.
+ */
 public class AddressBook {
     private static AddressBook instance;
     private static final String KEY_QR_CODE_COUNTER = "qr_code_counter";
