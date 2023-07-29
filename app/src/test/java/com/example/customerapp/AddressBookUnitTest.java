@@ -189,6 +189,9 @@ public class AddressBookUnitTest {
         assertEquals(addressBook.getRecipients().size(), 1);
     }
 
+    /**
+     * Checks if loading data with no data in shared preferences results in an empty recipients list.
+     */
     @Test
     public void testLoadData_WithNoData() {
         addressBook.loadData(context);
