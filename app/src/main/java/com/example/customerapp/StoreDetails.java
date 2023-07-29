@@ -2,6 +2,10 @@ package com.example.customerapp;
 
 import java.io.Serializable;
 
+/**
+ * Represents store details, including shop name, owner name, address, phone number, email, and logo resource ID.
+ * This class implements Serializable to enable passing store details between activities using Intent.
+ */
 public class StoreDetails implements Serializable {
     private String shopname;
     private String owner;
