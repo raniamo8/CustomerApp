@@ -53,6 +53,14 @@ public class AddressBook {
     }
 
     public void addRecipient(Recipient recipient, Context context) {
+        if (recipient == null || (recipient.getFirstName().isEmpty() && recipient.getLastName().isEmpty())) {
+            System.out.println("Der Recipient ist null.");
+            return;
+        }
+        if (recipients.contains(recipient)) {
+            System.out.println("Recipient ist bereits im AddressBook vorhanden.");
+            return;
+        }
         int qrCodeCounter = getQRCodeCounter(context);
         setQRCodeCounter(context, qrCodeCounter + 1);
         recipient.setQRCodeCounter(qrCodeCounter);
