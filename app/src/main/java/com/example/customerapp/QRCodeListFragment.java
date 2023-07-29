@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents a fragment that displays a list of QR codes generated for recipients.
+ * This fragment allows the user to view and manage the list of QR codes and associated recipients.
+ */
 public class QRCodeListFragment extends Fragment {
     private List<String> qrCodeFilePaths;
     private QRCodeAdapter qrCodeAdapter;
