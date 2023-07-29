@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Adapter class for displaying and managing QR codes and associated recipient information in a RecyclerView.
+ */
 public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeViewHolder> {
     private List<String> qrCodeFilePaths;
     private Context context;
