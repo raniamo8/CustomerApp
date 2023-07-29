@@ -16,6 +16,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.customerapp.databinding.ActivitymainBinding;
 
+//TODO Code Fragment: PLz spinner color
+//TODO Setting Fragment: build impressum (func)
+//TODO: StoreDetails Fragment: textSize and text appearance
+//TODO: StoreDetails Fragment: logo appearance
+//TODO: StoreDetails Fragment: integration of open street map view
+//TODO for all activities and fragments: Shadow for the Buttons?
+//TODO RecipientUnitTest: Writing UnitTests
+//TODO for test: integration of tools alike jacoco
+//TODO: UI tests
+//TODO: integration test/s
+//TODO: stress test?
+//TODO: performance test?
+//TODO (could affect all classes!!): refactor methode replaceFragment and creat a manager class for the fragments and activities?
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
