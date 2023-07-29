@@ -20,6 +20,10 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a recipient with its information.
+ * The recipient can generate a QR code based on their information, and save it to the internal storage of the app.
+ */
 public class Recipient {
     private static int qrCodeCounter = 1;
     private static final int WIDTH_HEIGHT_NR = 400;
