@@ -176,7 +176,9 @@ public class AddressBookUnitTest {
         assertEquals(0, AddressBook.getQRCodeCounter(context));
     }
 
-
+    /**
+     * Checks if loading data from shared preferences works correctly.
+     */
     @Test
     public void testLoadDataAndSaveData() {
         addressBook.addRecipient(recipient, context);
