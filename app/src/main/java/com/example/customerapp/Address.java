@@ -3,6 +3,10 @@ package com.example.customerapp;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents an address with street, street number, postal code, and city.
+ * Use this class to store recipient addresses in the application.
+ */
 public class Address {
     private String street;
     private String streetNr;
