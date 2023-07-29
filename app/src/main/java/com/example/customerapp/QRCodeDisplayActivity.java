@@ -11,6 +11,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Activity for displaying a QR code and recipient details. It loads the QR code image and recipient information
+ * from the provided file path and recipient index, respectively. The recipient's full address is displayed below
+ * the QR code image.
+ */
 public class QRCodeDisplayActivity extends AppCompatActivity {
     ImageButton backButton;
 
