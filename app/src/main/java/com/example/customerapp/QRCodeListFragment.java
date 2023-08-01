@@ -55,9 +55,7 @@ public class QRCodeListFragment extends Fragment {
 
         loadQRCodeFilePaths();
 
-        view.findViewById(R.id.fabAddQRCode).setOnClickListener(v -> {
-            goToCodeFragment();
-        });
+        view.findViewById(R.id.fabAddQRCode).setOnClickListener(v -> goToCodeFragment());
 
         return view;
     }
