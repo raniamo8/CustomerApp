@@ -7,7 +7,7 @@ import java.io.Serializable;
  * This class implements Serializable to enable passing store details between activities using Intent.
  */
 public class StoreDetails implements Serializable {
-    private String shopname;
+    private String storename;
     private String owner;
     private Address address;
     private String phonenumber;
@@ -15,7 +15,7 @@ public class StoreDetails implements Serializable {
     private int logoResourceId;
 
     public StoreDetails(String shopname, String owner, Address address, String phonenumber, String email, int logoResourceId) {
-        this.shopname = shopname;
+        this.storename = shopname;
         this.owner = owner;
         this.address = address;
         this.phonenumber = phonenumber;
@@ -23,12 +23,12 @@ public class StoreDetails implements Serializable {
         this.logoResourceId = logoResourceId;
     }
 
-    public String getShopname() {
-        return shopname;
+    public String getStorename() {
+        return storename;
     }
 
-    public void setShopname(String shopname) {
-        this.shopname = shopname;
+    public void setStorename(String storename) {
+        this.storename = storename;
     }
 
     public String getOwner() {

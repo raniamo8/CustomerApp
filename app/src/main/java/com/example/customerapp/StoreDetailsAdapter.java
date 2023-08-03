@@ -40,7 +40,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
-        holder.storeNameTextView.setText(store.getShopname());
+        holder.storeNameTextView.setText(store.getStorename());
         holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
 
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
