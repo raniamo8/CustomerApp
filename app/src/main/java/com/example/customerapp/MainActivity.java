@@ -28,7 +28,6 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 //TODO: integration test/s
 //TODO: stress test?
 //TODO: performance test?
-//TODO (could affect all classes!!): refactor methode replaceFragment and creat a manager class for the fragments and activities?
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
