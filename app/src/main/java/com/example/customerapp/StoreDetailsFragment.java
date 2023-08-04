@@ -56,7 +56,7 @@ public class StoreDetailsFragment extends Fragment {
 
         // submitting data in the View
         if (storeDetails != null) {
-            shopLogoBig.setImageResource(storeDetails.getLogoResourceId());
+            //shopLogoBig.setImageResource(storeDetails.getLogoResourceId());
             ownerNameTextView.setText(storeDetails.getOwner());
             ownerAddressTextView.setText(storeDetails.getAddress().getFullAddress());
             ownerPhoneTextView.setText(storeDetails.getPhonenumber());

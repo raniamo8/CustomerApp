@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +22,10 @@ import java.util.List;
  * When a store details item is clicked, it navigates to the StoreDetailsFragment to show more information about the selected store.
  */
 public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapter.StoreViewHolder> {
-    private List<StoreDetails> storeList;
+    private ArrayList<StoreDetails> storeList;
     private Context context;
 
-    public StoreDetailsAdapter(Context context, List<StoreDetails> storeList) {
+    public StoreDetailsAdapter(Context context, ArrayList<StoreDetails> storeList) {
         this.context = context;
         this.storeList = storeList;
     }
@@ -41,7 +42,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
         holder.storeNameTextView.setText(store.getStorename());
-        holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
+        //holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
 
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
     }

@@ -28,6 +28,11 @@ public class Address implements Serializable {
         this.plz = plz;
     }
 
+    public Address( String street, String streetNr){
+        this.street = street;
+        this.streetNr = streetNr;
+    }
+
     public Address(String street, String streetNr, String plz) {
         this.street = street;
         this.streetNr = streetNr;

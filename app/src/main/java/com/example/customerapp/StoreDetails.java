@@ -12,9 +12,9 @@ public class StoreDetails implements Serializable {
     private Address address;
     private String phonenumber;
     private String email;
-    private int logoResourceId;
+    private String logoResourceId;
 
-    public StoreDetails(String shopname, String owner, Address address, String phonenumber, String email, int logoResourceId) {
+    public StoreDetails(String shopname, String owner, Address address, String phonenumber, String email, String logoResourceId) {
         this.storename = shopname;
         this.owner = owner;
         this.address = address;
@@ -63,11 +63,11 @@ public class StoreDetails implements Serializable {
         this.email = email;
     }
 
-    public int getLogoResourceId() {
+    public String getLogoResourceId() {
         return logoResourceId;
     }
 
-    public void setLogoResourceId(int logoResourceId) {
+    public void setLogoResourceId(String logoResourceId) {
         this.logoResourceId = logoResourceId;
     }
 }
