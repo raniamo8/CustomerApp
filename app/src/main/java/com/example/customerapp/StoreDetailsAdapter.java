@@ -14,6 +14,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -41,6 +44,25 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
         holder.storeNameTextView.setText(store.getName());
+
+        // Das Bild herunterladen und in das ImageView anzeigen
+        String imageUrl = store.getLogo(); // Hier die URL zum Bild des Stores abrufen
+        Picasso.get()
+                .load(imageUrl)
+                .into(holder.storeLogoImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild erfolgreich geladen wurde.
+                        // Zum Beispiel könntest du die ProgressBar für das Bild ausblenden, falls vorhanden.
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild nicht geladen werden konnte.
+                        // Zum Beispiel könntest du ein Standardbild anzeigen oder eine Fehlermeldung anzeigen.
+                    }
+                });
+
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
     }
 

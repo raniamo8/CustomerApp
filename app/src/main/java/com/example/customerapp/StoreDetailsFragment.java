@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 
 //TODO: Goolge Maps view integration
 /**
@@ -56,11 +59,27 @@ public class StoreDetailsFragment extends Fragment {
 
         // submitting data in the View
         if (storeDetails != null) {
-            //shopLogoBig.setImageResource(storeDetails.getLogoResourceId());
             ownerNameTextView.setText(storeDetails.getOwner());
-            //ownerAddressTextView.setText(storeDetails.getAddress().getFullAddress());
+            ownerAddressTextView.setText(storeDetails.getStreet() + " " + storeDetails.getHouseNumber());
             ownerPhoneTextView.setText(storeDetails.getTelephone());
             ownerEmailTextView.setText(storeDetails.getEmail());
+
+            // Laden und Anzeigen des Bildes mit Picasso
+            String imageUrl = storeDetails.getLogo(); // Hier die URL zum Logo-Bild des Shops abrufen
+            Picasso.get()
+                    .load(imageUrl)
+                    .into(shopLogoBig, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild erfolgreich geladen wurde.
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild nicht geladen werden konnte.
+                            // Zum Beispiel könntest du ein Standardbild anzeigen oder eine Fehlermeldung anzeigen.
+                        }
+                    });
         }
 
         backButton = view.findViewById(R.id.backButton);
