@@ -34,6 +34,7 @@ import java.util.List;
  * The fragment contains a list of store data and uses a RecyclerView with the StoreDetailsAdapter to display the store details.
  */
 public class ExploreFragment extends Fragment {
+
     private ArrayList<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
 
@@ -41,10 +42,61 @@ public class ExploreFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storeList = new ArrayList<>();
-        System.out.println("Download");
-        new DownloadJsonTask().execute("http://131.173.65.77:3000/store-details");
-        System.out.println("Download complete");
-        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
+
+        // Start the data download and update the UI directly
+        new Thread(() -> {
+            ArrayList<StoreDetails> result = downloadData("http://131.173.65.77:3000/store-details");
+            if (result != null) {
+                requireActivity().runOnUiThread(() -> updateUI(result));
+            } else {
+                // Handle data download failure here if needed
+            }
+        }).start();
+    }
+
+    private ArrayList<StoreDetails> downloadData(String urlStr) {
+        try {
+            URL url = new URL(urlStr);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+            connection.connect();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+            bufferedReader.close();
+            JSONArray jsonArray = new JSONArray(stringBuilder.toString());
+            ArrayList<StoreDetails> storeList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String id = jsonObject.getString("id");
+                String name = jsonObject.getString("name");
+                String owner = jsonObject.getString("owner");
+                String street = jsonObject.getString("street");
+                String houseNumber = jsonObject.getString("houseNumber");
+                String zip = jsonObject.getString("zip");
+                String city = jsonObject.getString("city");
+                String telephone = jsonObject.getString("telephone");
+                String email = jsonObject.getString("email");
+                String logo = jsonObject.getString("logo");
+
+                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo);
+                storeList.add(storeDetails);
+            }
+            return storeList;
+        } catch (IOException | JSONException e) {
+            Log.e(TAG, "Error downloading or decoding JSON data", e);
+            return null;
+        }
+    }
+
+    private void updateUI(ArrayList<StoreDetails> result) {
+        storeList.clear();
+        storeList.addAll(result);
+        storeListAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("MissingInflatedId")
@@ -52,75 +104,14 @@ public class ExploreFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStores);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        // Create the adapter with the empty list for now
+        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
         recyclerView.setAdapter(storeListAdapter);
 
         return view;
     }
-
-    /*private List<StoreDetails> createAndGetStoreData() {
-        List<StoreDetails> dummyData = new ArrayList<>();
-        dummyData.add(new StoreDetails("Willenbrock", "Hendrick Willenbrock", new Address("Bernd-Rosen-Meyer", "40", "49809"), "0591 963360", "wb@wb.de", "R.drawable.logo1"));
-        dummyData.add(new StoreDetails("Hochschule Osnabrück", "Land Niedersachsen", new Address("Kaiserstraße", "10C", "49809"), "0591 80098402", "webmaster@hs-osnabrueck.de", "R.drawable.logo2"));
-        return dummyData;
-    }*/
-
-    private class DownloadJsonTask extends AsyncTask<String, Void, ArrayList<StoreDetails>> {
-
-        @Nullable
-        @Override
-        protected ArrayList<StoreDetails> doInBackground(String... urls) {
-            try {
-                URL url = new URL(urls[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setDoInput(true);
-                connection.connect();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line).append("\n");
-                }
-                bufferedReader.close();
-                JSONArray jsonArray = new JSONArray(stringBuilder.toString());
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String id = jsonObject.getString("id");
-                    String name = jsonObject.getString("name");
-                    String owner = jsonObject.getString("owner");
-                    String street = jsonObject.getString("street");
-                    String houseNumber = jsonObject.getString("houseNumber");
-                    String zip = jsonObject.getString("street");
-                    String city = jsonObject.getString("houseNumber");
-                    String telephone = jsonObject.getString("telephone");
-                    String email = jsonObject.getString("email");
-                    String logo = jsonObject.getString("logo");
-
-                    StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo);
-                    storeList.add(storeDetails);
-                    System.out.println(storeDetails.getOwner());
-                    Log.e(owner, "owner erfolgreich hinzugefügt");
-                }
-
-                return storeList;
-
-            } catch (IOException | JSONException e) {
-                Log.d(TAG, "Error downloading or decoding JSON data");
-                return null;
-            }
-        }
-
-        @SuppressLint("NotifyDataSetChanged")
-        @Override
-        protected void onPostExecute(ArrayList<StoreDetails> result) {
-            if (result != null) {
-                storeList.clear();
-                storeList.addAll(result);
-                storeListAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
 }
