@@ -107,7 +107,7 @@ public class ExploreFragment extends Fragment {
                 return storeList;
 
             } catch (IOException | JSONException e) {
-                Log.e(TAG, "Error downloading or decoding JSON data", e);
+                Log.d(TAG, "Error downloading or decoding JSON data", e);
                 return null;
             }
         }
