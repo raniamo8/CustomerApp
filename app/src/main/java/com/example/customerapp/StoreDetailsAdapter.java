@@ -41,8 +41,6 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
         holder.storeNameTextView.setText(store.getName());
-        //holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
-
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
     }
 
@@ -74,4 +72,5 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
 }
