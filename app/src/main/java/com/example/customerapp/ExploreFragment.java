@@ -40,6 +40,7 @@ public class ExploreFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        storeList = new ArrayList<>();
         System.out.println("Download");
         new DownloadJsonTask().execute("http://131.173.65.77:3000/store-details");
         System.out.println("Download complete");
@@ -107,6 +108,7 @@ public class ExploreFragment extends Fragment {
             }
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void onPostExecute(ArrayList<StoreDetails> result) {
             if (result != null) {
