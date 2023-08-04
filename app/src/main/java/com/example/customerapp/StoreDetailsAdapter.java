@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents an adapter for the RecyclerView in the ExploreFragment, responsible for displaying a list of store details.
@@ -41,7 +40,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
-        holder.storeNameTextView.setText(store.getStorename());
+        holder.storeNameTextView.setText(store.getName());
         //holder.storeLogoImageView.setImageResource(store.getLogoResourceId());
 
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));

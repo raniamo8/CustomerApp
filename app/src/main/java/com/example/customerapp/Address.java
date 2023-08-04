@@ -1,8 +1,6 @@
 package com.example.customerapp;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Represents an address with street, street number, postal code, and city.
@@ -10,9 +8,9 @@ import java.util.List;
  */
 public class Address implements Serializable {
     private String street;
-    private String streetNr;
-    private String plz;
-    private final String city = "Lingen";
+    private String houseNumber;
+    private String zip;
+    private String city = "Lingen";
     private double latitude;
     private double longitude;
 
@@ -20,23 +18,23 @@ public class Address implements Serializable {
         this.street = street;
     }
 
-    public void setStreetNr(String streetNr) {
-        this.streetNr = streetNr;
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
-    public void setPlz(String plz) {
-        this.plz = plz;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public Address( String street, String streetNr){
         this.street = street;
-        this.streetNr = streetNr;
+        this.houseNumber = streetNr;
     }
 
-    public Address(String street, String streetNr, String plz) {
+    public Address(String street, String streetNr, String zip) {
         this.street = street;
-        this.streetNr = streetNr;
-        this.plz = plz;
+        this.houseNumber = streetNr;
+        this.zip = zip;
         getCity();
     }
 
@@ -44,12 +42,12 @@ public class Address implements Serializable {
         return street;
     }
 
-    public String getStreetNr() {
-        return streetNr;
+    public String getHouseNumber() {
+        return houseNumber;
     }
 
-    public String getPlz() {
-        return plz;
+    public String getZip() {
+        return zip;
     }
 
     public String getCity() {
@@ -57,7 +55,7 @@ public class Address implements Serializable {
     }
 
     public String getFullAddress(){
-        return street + " " + streetNr + "\n" + plz + " " + city;
+        return street + " " + houseNumber + "\n" + zip + " " + city;
     }
 
     public double getLatitude() {

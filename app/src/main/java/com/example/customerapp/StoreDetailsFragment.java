@@ -58,8 +58,8 @@ public class StoreDetailsFragment extends Fragment {
         if (storeDetails != null) {
             //shopLogoBig.setImageResource(storeDetails.getLogoResourceId());
             ownerNameTextView.setText(storeDetails.getOwner());
-            ownerAddressTextView.setText(storeDetails.getAddress().getFullAddress());
-            ownerPhoneTextView.setText(storeDetails.getPhonenumber());
+            //ownerAddressTextView.setText(storeDetails.getAddress().getFullAddress());
+            ownerPhoneTextView.setText(storeDetails.getTelephone());
             ownerEmailTextView.setText(storeDetails.getEmail());
         }
 

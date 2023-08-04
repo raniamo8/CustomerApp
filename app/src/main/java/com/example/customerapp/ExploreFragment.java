@@ -87,17 +87,21 @@ public class ExploreFragment extends Fragment {
                 JSONArray jsonArray = new JSONArray(stringBuilder.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String storename = jsonObject.getString("name");
+                    String id = jsonObject.getString("id");
+                    String name = jsonObject.getString("name");
                     String owner = jsonObject.getString("owner");
                     String street = jsonObject.getString("street");
-                    String streetNr = jsonObject.getString("streetNr");
-                    String phonenumber = jsonObject.getString("phonenumber");
+                    String houseNumber = jsonObject.getString("houseNumber");
+                    String zip = jsonObject.getString("street");
+                    String city = jsonObject.getString("houseNumber");
+                    String telephone = jsonObject.getString("telephone");
                     String email = jsonObject.getString("email");
-                    String logoResourceId = jsonObject.getString("logo"); // Replace with the default logo resource ID
+                    String logo = jsonObject.getString("logo");
 
-                    StoreDetails storeDetails = new StoreDetails(storename, owner, new Address(street, streetNr), phonenumber, email, logoResourceId);
+                    StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo);
                     storeList.add(storeDetails);
                     System.out.println(storeDetails.getOwner());
+                    Log.e(owner, "owner erfolgreich hinzugefügt");
                 }
 
                 return storeList;

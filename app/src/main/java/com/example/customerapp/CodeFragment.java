@@ -68,14 +68,14 @@ public class CodeFragment extends Fragment {
         streetErrorTextView = rootView.findViewById(R.id.streetErrorTextView);
         streetNrErrorTextView = rootView.findViewById(R.id.streetNrErrorTextView);
 
-        Spinner plzSpinner = rootView.findViewById(R.id.plzSpinner);
-        String selectedPLZ = plzSpinner.getSelectedItem().toString();
+        Spinner zipSpinner = rootView.findViewById(R.id.plzSpinner);
+        String selectedZIP = zipSpinner.getSelectedItem().toString();
 
         qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
 
         generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
         generateQRCodeButton.setOnClickListener(v -> {
-            generateQRCode(selectedPLZ);
+            generateQRCode(selectedZIP);
         });
 
         backButton = rootView.findViewById(R.id.backButton);
@@ -112,15 +112,15 @@ public class CodeFragment extends Fragment {
         fragmentManager.popBackStack();
     }
 
-    private void generateQRCode(String plz) {
+    private void generateQRCode(String zip) {
         String lastName = lastNameEditText.getText().toString().trim();
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
-        String streetNr = streetNrEditText.getText().toString().trim();
-        String selectedPlz = ((Spinner) Objects.requireNonNull(getView()).findViewById(R.id.plzSpinner)).getSelectedItem().toString();
+        String houseNumber = streetNrEditText.getText().toString().trim();
+        String selectedZIP = ((Spinner) Objects.requireNonNull(getView()).findViewById(R.id.plzSpinner)).getSelectedItem().toString();
 
-        if (isInputValid(lastName, firstName, street, streetNr)) {
-            createAndSaveRecipient(lastName, firstName, street, streetNr, selectedPlz);
+        if (isInputValid(lastName, firstName, street, houseNumber)) {
+            createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);
             addressBook.saveData(getContext());
         } else {
             Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor.", Toast.LENGTH_SHORT).show();
@@ -128,9 +128,9 @@ public class CodeFragment extends Fragment {
     }
 
     @SuppressLint("NewApi")
-    private void createAndSaveRecipient(String lastName, String firstName, String street, String streetNr, String plz) {
+    private void createAndSaveRecipient(String lastName, String firstName, String street, String houseNumber, String zip) {
         Recipient recipient = new Recipient(lastName, firstName);
-        Address address = new Address(street, streetNr, plz);
+        Address address = new Address(street, houseNumber, zip);
         int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
         address.getCity();
         recipient.addAddress(address);
@@ -138,8 +138,8 @@ public class CodeFragment extends Fragment {
         Log.d("Recipient Info", "First Name: " + firstName +
                 ", Last Name: " + lastName +
                 ", Street: " + street +
-                ", Street Nr: " + streetNr +
-                ", PLZ: " + plz +
+                ", Street Nr: " + houseNumber +
+                ", PLZ: " + zip +
                 ", City: " + address.getCity());
 
         addressBook.addRecipient(recipient, getContext());
@@ -157,7 +157,7 @@ public class CodeFragment extends Fragment {
         clearInputFields();
     }
 
-    private boolean isInputValid(String lastName, String firstName, String street, String streetNr) {
+    private boolean isInputValid(String lastName, String firstName, String street, String houseNumber) {
         boolean isValid = true;
 
         if (!isValidLastName(lastName)) {
@@ -181,7 +181,7 @@ public class CodeFragment extends Fragment {
             streetErrorTextView.setVisibility(View.GONE);
         }
 
-        if (!isValidStreetNr(streetNr)) {
+        if (!isValidStreetNr(houseNumber)) {
             streetNrErrorTextView.setVisibility(View.VISIBLE);
             isValid = false;
         } else {
@@ -202,8 +202,8 @@ public class CodeFragment extends Fragment {
         return !street.isEmpty();
     }
 
-    private boolean isValidStreetNr(@NonNull String streetNr) {
-        return !streetNr.isEmpty();
+    private boolean isValidStreetNr(@NonNull String houseNumber) {
+        return !houseNumber.isEmpty();
     }
 
 

@@ -7,28 +7,45 @@ import java.io.Serializable;
  * This class implements Serializable to enable passing store details between activities using Intent.
  */
 public class StoreDetails implements Serializable {
-    private String storename;
+
+    private String id;
+    private String name;
     private String owner;
-    private Address address;
-    private String phonenumber;
+    private String street;
+    private String houseNumber;
+    private String zip;
+    private String city;
+    private String telephone;
     private String email;
-    private String logoResourceId;
+    private String logo;
 
-    public StoreDetails(String shopname, String owner, Address address, String phonenumber, String email, String logoResourceId) {
-        this.storename = shopname;
+    public StoreDetails(String id, String name, String owner, String street, String houseNumber, String zip, String city, String telephone, String email, String logo) {
+        this.id = id;
+        this.name = name;
         this.owner = owner;
-        this.address = address;
-        this.phonenumber = phonenumber;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zip = zip;
+        this.city = city;
+        this.telephone = telephone;
         this.email = email;
-        this.logoResourceId = logoResourceId;
+        this.logo = logo;
     }
 
-    public String getStorename() {
-        return storename;
+    public String getId() {
+        return id;
     }
 
-    public void setStorename(String storename) {
-        this.storename = storename;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getOwner() {
@@ -39,20 +56,44 @@ public class StoreDetails implements Serializable {
         this.owner = owner;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getHouseNumber() {
+        return houseNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getEmail() {
@@ -63,11 +104,11 @@ public class StoreDetails implements Serializable {
         this.email = email;
     }
 
-    public String getLogoResourceId() {
-        return logoResourceId;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setLogoResourceId(String logoResourceId) {
-        this.logoResourceId = logoResourceId;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }
