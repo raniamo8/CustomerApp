@@ -101,13 +101,13 @@ public class ExploreFragment extends Fragment {
                     StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo);
                     storeList.add(storeDetails);
                     System.out.println(storeDetails.getOwner());
-                    Log.e(owner, "owner erfolgreich hinzugefügt");
+                    Log.d(owner, "owner erfolgreich hinzugefügt");
                 }
 
                 return storeList;
 
             } catch (IOException | JSONException e) {
-                Log.d(TAG, "Error downloading or decoding JSON data");
+                Log.e(TAG, "Error downloading or decoding JSON data");
                 return null;
             }
         }
