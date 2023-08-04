@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.customerapp.databinding.ActivitymainBinding;
 
 //TODO Code Fragment: PLz spinner color
+//TODO: App crash after switching dark mode
+//TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
 //TODO Setting Fragment: build impressum (func)
 //TODO: StoreDetails Fragment: textSize and text appearance
 //TODO: StoreDetails Fragment: logo appearance
