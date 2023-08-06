@@ -3,11 +3,15 @@ package com.example.customerapp;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +29,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Represents a fragment the Explore screen, which displays a list of stores.
@@ -39,16 +45,37 @@ public class ExploreFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storeList = new ArrayList<>();
+        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
+    }
 
-        // Start the data download and update the UI directly
-        new Thread(() -> {
-            ArrayList<StoreDetails> result = downloadData("http://131.173.65.77:3000/store-details");
-            if (result != null) {
-                requireActivity().runOnUiThread(() -> updateUI(result));
-            } else {
-                // Handle data download failure here if needed
-            }
-        }).start();
+    @SuppressLint("MissingInflatedId")
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStores);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
+        recyclerView.setAdapter(storeListAdapter);
+
+        if (isNetworkAvailable()) {
+            executorService.execute(() -> {
+                ArrayList<StoreDetails> result = downloadData("http://131.173.65.77:3000/store-details");
+                if (result != null) {
+                    requireActivity().runOnUiThread(() -> updateUI(result));
+                } else {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_LONG).show());
+                }
+            });
+        } else {
+            Log.e(TAG, "Keine Netzwerkverbindung");
+            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show());
+        }
+
+        return view;
     }
 
     private ArrayList<StoreDetails> downloadData(String urlStr) {
@@ -90,25 +117,20 @@ public class ExploreFragment extends Fragment {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void updateUI(ArrayList<StoreDetails> result) {
         storeList.clear();
         storeList.addAll(result);
-        storeListAdapter.notifyDataSetChanged();
+        if (storeListAdapter != null) {
+            storeListAdapter.notifyDataSetChanged();
+        }
     }
 
-    @SuppressLint("MissingInflatedId")
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_explore, container, false);
-
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStores);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-        // Create the adapter with the empty list for now
-        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
-        recyclerView.setAdapter(storeListAdapter);
-
-        return view;
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
     }
+
+
 }

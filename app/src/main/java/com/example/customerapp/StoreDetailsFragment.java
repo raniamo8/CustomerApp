@@ -1,5 +1,6 @@
 package com.example.customerapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -16,7 +17,6 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
-//TODO: Goolge Maps view integration
 /**
  * A fragment that displays detailed information about a specific store.
  * It takes a StoreDetails object as an argument and displays its data, including the store's logo, owner name, etc.
@@ -47,6 +47,7 @@ public class StoreDetailsFragment extends Fragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_store_details, container, false);
@@ -63,9 +64,8 @@ public class StoreDetailsFragment extends Fragment {
             ownerAddressTextView.setText(storeDetails.getStreet() + " " + storeDetails.getHouseNumber());
             ownerPhoneTextView.setText(storeDetails.getTelephone());
             ownerEmailTextView.setText(storeDetails.getEmail());
+            String imageUrl = storeDetails.getLogo();
 
-            // Laden und Anzeigen des Bildes mit Picasso
-            String imageUrl = storeDetails.getLogo(); // Hier die URL zum Logo-Bild des Shops abrufen
             Picasso.get()
                     .load(imageUrl)
                     .into(shopLogoBig, new Callback() {

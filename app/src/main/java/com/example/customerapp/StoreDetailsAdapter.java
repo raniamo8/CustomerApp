@@ -44,9 +44,8 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
         holder.storeNameTextView.setText(store.getName());
+        String imageUrl = store.getLogo();
 
-        // Das Bild herunterladen und in das ImageView anzeigen
-        String imageUrl = store.getLogo(); // Hier die URL zum Bild des Stores abrufen
         Picasso.get()
                 .load(imageUrl)
                 .into(holder.storeLogoImageView, new Callback() {
