@@ -20,14 +20,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".QRCodeDisplayActivity"
-            android:theme="@style/Theme.CustomerApp.NoActionBar"/>
+            android:theme="@style/Theme.CustomerApp.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.CustomerApp.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.CustomerApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
