@@ -22,7 +22,7 @@
             android:src="@drawable/intro2" />
 
         <TextView
-            android:id="@+id/welcomeTextView"
+            android:id="@+id/addAddressTextView"
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/info1TextView"
+            android:id="@+id/info2TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -43,7 +43,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/addressButton"
+            android:id="@+id/introAddAddressButton"
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

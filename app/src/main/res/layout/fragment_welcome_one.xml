@@ -43,7 +43,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/backButton"
+            android:id="@+id/nextButton"
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
