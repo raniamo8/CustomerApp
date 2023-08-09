@@ -105,9 +105,11 @@ public class MainActivity extends AppCompatActivity {
         boolean isFirstRun = preferences.getBoolean("is_first_run", true);
 
         if (isFirstRun) {
-            replaceFragment(new WelcomeFragmentOne());
             preferences.edit().putBoolean("is_first_run", false).apply();
+            preferences.edit().putBoolean("is_in_intro_mode", true).apply();
+            replaceFragment(new WelcomeFragmentOne());
             binding.bottomNavigationView.setVisibility(View.GONE);
+
         } else {
             if (savedInstanceState == null) {
                 replaceFragment(new QRCodeListFragment());
@@ -115,7 +117,5 @@ public class MainActivity extends AppCompatActivity {
             binding.bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
-
-
 
 }
