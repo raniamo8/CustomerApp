@@ -71,17 +71,12 @@ public class ExploreFragment extends Fragment {
                 }
             });
         } else {
-            Log.e(TAG, "Keine Netzwerkverbindung");
             requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show());
         }
         return view;
     }
 
     private ArrayList<StoreDetails> downloadData(String urlStr) {
-        if (!isNetworkAvailable()) {
-            Log.e(TAG, "Keine Netzwerkverbindung");
-            return null;
-        }
         try {
             URL url = new URL(urlStr);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
