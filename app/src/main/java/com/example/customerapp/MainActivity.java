@@ -1,5 +1,6 @@
 package com.example.customerapp;
 
+import com.example.customerapp.databinding.ActivitymainBinding;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.customerapp.databinding.ActivitymainBinding;
+
 
 //TODO Code Fragment: PLz spinner color
 //TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
