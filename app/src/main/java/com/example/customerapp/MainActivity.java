@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,9 +56,7 @@ public class MainActivity extends AppCompatActivity {
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getApplicationContext());
 
-        if (savedInstanceState == null) {
-            replaceFragment(new QRCodeListFragment());
-        }
+        checkFirstRun(savedInstanceState);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         addressBook.saveData(getApplicationContext());
     }
 
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment){
         currentFragment = fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -100,5 +99,23 @@ public class MainActivity extends AppCompatActivity {
             CodeFragment.instance = (CodeFragment) fragment;
         }
     }
+
+    private void checkFirstRun(Bundle savedInstanceState) {
+        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
+
+        if (isFirstRun) {
+            replaceFragment(new WelcomeFragmentOne());
+            preferences.edit().putBoolean("is_first_run", false).apply();
+            binding.bottomNavigationView.setVisibility(View.GONE);
+        } else {
+            if (savedInstanceState == null) {
+                replaceFragment(new QRCodeListFragment());
+            }
+            binding.bottomNavigationView.setVisibility(View.VISIBLE);
+        }
+    }
+
+
 
 }

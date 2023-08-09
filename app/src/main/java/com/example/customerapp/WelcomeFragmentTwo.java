@@ -35,8 +35,11 @@ public class WelcomeFragmentTwo extends Fragment {
         intro2 = welcomeView.findViewById(R.id.intro2);
         introAddAddressButton = welcomeView.findViewById(R.id.introAddAddressButton);
 
-
-
+        introAddAddressButton.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).replaceFragment(new CodeFragment());
+            }
+        });
 
         return welcomeView;
     }
