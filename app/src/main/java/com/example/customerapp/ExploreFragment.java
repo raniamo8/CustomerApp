@@ -63,7 +63,7 @@ public class ExploreFragment extends Fragment {
 
         if (isNetworkAvailable()) {
             executorService.execute(() -> {
-                ArrayList<StoreDetails> result = downloadData("http://131.173.65.77:3000/store-details");
+                ArrayList<StoreDetails> result = downloadData("http://131.173.65.77:8080/store-details");
                 if (result != null) {
                     requireActivity().runOnUiThread(() -> updateUI(result));
                 } else {
@@ -74,16 +74,21 @@ public class ExploreFragment extends Fragment {
             Log.e(TAG, "Keine Netzwerkverbindung");
             requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show());
         }
-
         return view;
     }
 
     private ArrayList<StoreDetails> downloadData(String urlStr) {
+        if (!isNetworkAvailable()) {
+            Log.e(TAG, "Keine Netzwerkverbindung");
+            return null;
+        }
         try {
             URL url = new URL(urlStr);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
+            connection.setConnectTimeout(2000);
+            connection.setReadTimeout(2000);
             connection.connect();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
@@ -111,6 +116,7 @@ public class ExploreFragment extends Fragment {
                 storeList.add(storeDetails);
             }
             return storeList;
+            //catch block problem
         } catch (IOException | JSONException e) {
             Log.e(TAG, "Error downloading or decoding JSON data", e);
             return null;

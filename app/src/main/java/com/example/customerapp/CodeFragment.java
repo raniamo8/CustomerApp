@@ -33,7 +33,6 @@ public class CodeFragment extends Fragment {
     private ImageView qrCodeImageView;
     Button generateQRCodeButton;
     private AppCompatImageButton backButton;
-
     private AddressBook addressBook= new AddressBook();
 
     @SuppressLint("StaticFieldLeak")
