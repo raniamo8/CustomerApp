@@ -99,8 +99,8 @@ public class ExploreFragment extends Fragment {
             bufferedReader.close();
             JSONArray jsonArray = new JSONArray(stringBuilder.toString());
             ArrayList<StoreDetails> storeList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            for (int storeindex = 0; storeindex < jsonArray.length(); storeindex++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(storeindex);
                 String id = jsonObject.getString("id");
                 String name = jsonObject.getString("name");
                 String owner = jsonObject.getString("owner");
