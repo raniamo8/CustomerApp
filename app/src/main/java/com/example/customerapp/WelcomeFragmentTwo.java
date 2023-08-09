@@ -3,6 +3,7 @@ package com.example.customerapp;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,34 +16,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 
 public class WelcomeFragmentTwo extends Fragment {
 
-    private TextView addAddressTextView, info2TextView;
-    private ImageView intro2;
-    Button introAddAddressButton;
+    private Button introAddAddressButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @SuppressLint("MissingInflatedId")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_two, container, false);
 
-        addAddressTextView = welcomeView.findViewById(R.id.addAddressTextView);
-        info2TextView = welcomeView.findViewById(R.id.info2TextView);
-        intro2 = welcomeView.findViewById(R.id.intro2);
         introAddAddressButton = welcomeView.findViewById(R.id.introAddAddressButton);
 
-        introAddAddressButton.setOnClickListener(v -> {
-            SharedPreferences preferences = getActivity().getSharedPreferences("app_preferences", MODE_PRIVATE);
-            preferences.edit().putBoolean("is_in_intro_mode", false).apply();
-            if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).replaceFragment(new CodeFragment());
+        // Setze einen OnClickListener für den Button, der die nächste Activity oder das Fragment öffnet
+        introAddAddressButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+
+                getActivity().finish();
             }
         });
 

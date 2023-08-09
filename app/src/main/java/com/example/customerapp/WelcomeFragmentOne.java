@@ -12,37 +12,31 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 
 public class WelcomeFragmentOne extends Fragment {
 
-    private TextView welcomeTextView, info1TextView;
-    private ImageView intro1;
-    Button nextButton;
+    private Button nextButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @SuppressLint("MissingInflatedId")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_one, container, false);
 
-        welcomeTextView = welcomeView.findViewById(R.id.welcomeTextView);
-        info1TextView = welcomeView.findViewById(R.id.info1TextView);
-        intro1 = welcomeView.findViewById(R.id.intro1);
         nextButton = welcomeView.findViewById(R.id.nextButton);
 
-        nextButton.setOnClickListener(v -> {
-            if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).replaceFragment(new WelcomeFragmentTwo());
+        // Setze einen OnClickListener für den Button, der WelcomeFragmentTwo öffnet
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new WelcomeFragmentTwo();
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.welcome_frame_layout, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
-
         return welcomeView;
     }
-
 }

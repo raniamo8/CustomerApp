@@ -3,6 +3,7 @@ package com.example.customerapp;
 import com.example.customerapp.databinding.ActivitymainBinding;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +57,18 @@ public class MainActivity extends AppCompatActivity {
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getApplicationContext());
 
-        checkFirstRun(savedInstanceState);
+        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
+
+        if (isFirstRun) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        if (savedInstanceState == null) {
+            replaceFragment(new QRCodeListFragment());
+        }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -73,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -97,24 +110,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
         if (fragment instanceof CodeFragment) {
             CodeFragment.instance = (CodeFragment) fragment;
-        }
-    }
-
-    private void checkFirstRun(Bundle savedInstanceState) {
-        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
-        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
-
-        if (isFirstRun) {
-            preferences.edit().putBoolean("is_first_run", false).apply();
-            preferences.edit().putBoolean("is_in_intro_mode", true).apply();
-            replaceFragment(new WelcomeFragmentOne());
-            binding.bottomNavigationView.setVisibility(View.GONE);
-
-        } else {
-            if (savedInstanceState == null) {
-                replaceFragment(new QRCodeListFragment());
-            }
-            binding.bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 

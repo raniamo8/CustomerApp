@@ -1,7 +1,11 @@
 package com.example.customerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -10,5 +14,20 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
+
+        if (isFirstRun) {
+            replaceFragment(new WelcomeFragmentOne());
+            preferences.edit().putBoolean("is_first_run", false).apply();
+        }
+    }
+
+    public void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.welcome_frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }
