@@ -1,6 +1,9 @@
 package com.example.customerapp;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -36,6 +39,8 @@ public class WelcomeFragmentTwo extends Fragment {
         introAddAddressButton = welcomeView.findViewById(R.id.introAddAddressButton);
 
         introAddAddressButton.setOnClickListener(v -> {
+            SharedPreferences preferences = getActivity().getSharedPreferences("app_preferences", MODE_PRIVATE);
+            preferences.edit().putBoolean("is_in_intro_mode", false).apply();
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) getActivity()).replaceFragment(new CodeFragment());
             }
