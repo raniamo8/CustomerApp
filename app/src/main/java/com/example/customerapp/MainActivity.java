@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 //TODO: UI Design Store Details
 //TODO: Google Maps // open street map
 //TODO: UI tests scenarios
+//TODO: Checkstyle
 
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
