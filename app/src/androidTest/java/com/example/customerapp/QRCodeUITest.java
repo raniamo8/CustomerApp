@@ -24,6 +24,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+
+
 import android.view.View;
 
 @RunWith(AndroidJUnit4.class)
@@ -50,11 +54,10 @@ public class QRCodeUITest {
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.backButton)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
-
     }
 
     @Test
-    public void test2OpenQRCodeInforamtionTest() {
+    public void test2OpenQRCodeInforamtion() {
         onView(isRoot()).perform(waitFor(1000));
         onView(withId(R.id.buttonOpenQRCode)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
@@ -63,7 +66,7 @@ public class QRCodeUITest {
     }
 
     @Test
-    public void test3GenerateQRCodeNullValuesTest() {
+    public void test3GenerateQRCodeNullValues() {
         onView(isRoot()).perform(waitFor(1000));
         onView(withId(R.id.fabAddQRCode)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
@@ -75,7 +78,7 @@ public class QRCodeUITest {
     }
 
     @Test
-    public void test4generateQRCodeEmptyValuesTest() {
+    public void test4generateQRCodeEmptyValues() {
         onView(isRoot()).perform(waitFor(1000));
         onView(withId(R.id.fabAddQRCode)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
@@ -91,9 +94,39 @@ public class QRCodeUITest {
     }
 
     @Test
-    public void test5DeleteQRCodeTest() {
+    public void test5DeleteQRCode() {
         onView(isRoot()).perform(waitFor(1000));
         onView(withId(R.id.deleteButton)).perform(click());
+        onView(isRoot()).perform(waitFor(2000));
+    }
+
+    @Test
+    public void test6AddTwoQRCodes() {
+        onView(isRoot()).perform(waitFor(1000));
+        onView(withId(R.id.fabAddQRCode)).perform(click());
+        onView(withId(R.id.lastNameEditText)).perform(typeText("Mo"), closeSoftKeyboard());
+        onView(withId(R.id.firstNameEditText)).perform(typeText("R"), closeSoftKeyboard());
+        onView(withId(R.id.streetEditText)).perform(typeText("Teststr"), closeSoftKeyboard());
+        onView(withId(R.id.streetNrEditText)).perform(typeText("10C"), closeSoftKeyboard());
+        onView(isRoot()).perform(waitFor(2000));
+        onView(withId(R.id.buttonGenerate)).perform(click());
+        onView(isRoot()).perform(waitFor(2000));
+        onView(withId(R.id.lastNameEditText)).perform(typeText("Ps"), closeSoftKeyboard());
+        onView(withId(R.id.firstNameEditText)).perform(typeText("T"), closeSoftKeyboard());
+        onView(withId(R.id.streetEditText)).perform(typeText("Teststr"), closeSoftKeyboard());
+        onView(withId(R.id.streetNrEditText)).perform(typeText("10C"), closeSoftKeyboard());
+        onView(isRoot()).perform(waitFor(2000));
+        onView(withId(R.id.buttonGenerate)).perform(click());
+        onView(isRoot()).perform(waitFor(2000));
+        onView(withId(R.id.backButton)).perform(click());
+        onView(isRoot()).perform(waitFor(2000));
+    }
+
+    @Test
+    public void test7DeleteAllQRCode() {
+        onView(isRoot()).perform(waitFor(1000));
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(withText("Alle QR-Codes löschen")).perform(click());
         onView(isRoot()).perform(waitFor(2000));
     }
 
