@@ -22,13 +22,13 @@ import androidx.fragment.app.FragmentTransaction;
 //TODO Code Fragment: PLz spinner color
 //TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
 //TODO Setting Fragment: build impressum (func)
-//TODO: StoreDetails Fragment: textSize and text appearance
-//TODO: StoreDetails Fragment: logo appearance
-//TODO: StoreDetails Fragment: integration of open street map view
-//TODO for all activities and fragments: Shadow for the Buttons?
 //TODO for test: integration of tools alike jacoco
-//TODO: UI tests
 //TODO: performance test?
+//TODO: App crash when server is not connected
+//TODO: UI Design Store Details
+//TODO: Google Maps // open street map
+//TODO: UI tests scenarios
+
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
