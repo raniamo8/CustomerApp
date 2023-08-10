@@ -102,7 +102,7 @@ public class QRCodeListFragment extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void deleteAllQRandRecipients() {
+    protected void deleteAllQRandRecipients() {
         addressBook.deleteAllRecipients(getContext());
         qrCodeFilePaths.clear();
         qrCodeAdapter.notifyDataSetChanged();
