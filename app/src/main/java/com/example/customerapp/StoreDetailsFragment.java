@@ -148,7 +148,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         googleMap = map;
 
         // Hier kannst du die Koordinaten für den Testbereich festlegen
-        LatLng storeLocation = new LatLng(51.5074, -0.1278); // Beispielkoordinaten (London)
+        LatLng storeLocation = storeDetails.getCoordinates(); // Beispielkoordinaten (London)
 
         googleMap.addMarker(new MarkerOptions().position(storeLocation).title("Store Location"));
 

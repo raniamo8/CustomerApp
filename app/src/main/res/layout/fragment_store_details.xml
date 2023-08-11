@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/backgroundImage"
-        android:layout_width="414dp"
-        android:layout_height="415dp"
+        android:layout_width="485dp"
+        android:layout_height="410dp"
         android:alpha="0.7"
         android:fitsSystemWindows="true"
         android:scaleType="centerCrop"
@@ -33,7 +33,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="605dp"
+        android:layout_height="716dp"
         android:layout_gravity="start"
         android:layout_marginTop="30dp"
         android:orientation="vertical">
@@ -44,7 +44,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/circle_background"
+            android:background="@drawable/image"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -73,7 +73,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/baseline_person_24"/>
+                    android:drawableLeft="@drawable/baseline_person_24" />
 
                 <TextView
                     android:id="@+id/ownerNameTextView"
@@ -97,7 +97,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/baseline_house_24"/>
+                    android:drawableLeft="@drawable/baseline_house_24" />
 
                 <TextView
                     android:id="@+id/ownerAddressTextView"
@@ -120,7 +120,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/baseline_phone_24"/>
+                    android:drawableLeft="@drawable/baseline_phone_24" />
 
                 <TextView
                     android:id="@+id/ownerPhoneTextView"
@@ -143,7 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/baseline_email_24"/>
+                    android:drawableLeft="@drawable/baseline_email_24" />
 
                 <TextView
                     android:id="@+id/ownerEmailTextView"
@@ -157,9 +157,10 @@
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
-            android:layout_weight="0"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="264dp"
+            android:layout_weight="1" />
+
 
     </LinearLayout>
 
