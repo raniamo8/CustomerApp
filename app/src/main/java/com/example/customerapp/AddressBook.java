@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -99,7 +100,7 @@ public class AddressBook {
     }
 
 
-    public void deleteOneRecipient(Recipient recipient, Context context) {
+    public void deleteOneRecipient222(Recipient recipient, Context context) {
         if (recipients.contains(recipient)) {
             for (Address address : recipient.getAddresses()) {
                 recipient.removeAddress(address);
@@ -123,6 +124,34 @@ public class AddressBook {
             System.out.println("Der Recipient konnte nicht gefunden werden");
         }
     }
+
+    public void deleteOneRecipient(Recipient recipient, Context context) {
+        if (recipients.contains(recipient)) {
+            Iterator<Address> iterator = recipient.getAddresses().iterator();
+            while (iterator.hasNext()) {
+                Address address = iterator.next();
+                iterator.remove();  // Sicher entfernen der aktuellen Adresse
+                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
+            }
+
+            recipients.remove(recipient);
+            System.out.println("Der Recipient wurde erfolgreich entfernt");
+
+
+            int qrCodeCounter = getQRCodeCounter(context);
+            qrCodeCounter--;
+            setQRCodeCounter(context, qrCodeCounter);
+
+
+            if (recipients.isEmpty()) {
+                setQRCodeCounter(context, 0);
+            }
+            saveData(context);
+        } else {
+            System.out.println("Der Recipient konnte nicht gefunden werden");
+        }
+    }
+
 
     public void deleteAllRecipients(Context context) {
         recipients.clear();
