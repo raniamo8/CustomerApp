@@ -116,7 +116,7 @@ public class CodeFragment extends Fragment {
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
         String houseNumber = streetNrEditText.getText().toString().trim();
-        String selectedZIP = ((Spinner) Objects.requireNonNull(getView()).findViewById(R.id.plzSpinner)).getSelectedItem().toString();
+        String selectedZIP = ((Spinner) requireView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();
 
         if (isInputValid(lastName, firstName, street, houseNumber)) {
             createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);

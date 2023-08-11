@@ -136,6 +136,27 @@ public class AddressBookUnitTest {
         assertEquals(0, addressBook.getRecipients().size());
     }
 
+    @Test
+    public void testDeleteOneRecipientQRCodeCounterDecrement() {
+        Recipient recipient1 = new Recipient("TestFirstName1", "TestLastName1");
+        Recipient recipient2 = new Recipient("TestFirstName2", "TestLastName2");
+
+        // Sie sollten dem Empfänger eine Adresse hinzufügen, damit der QRCodeCounter dekrementiert wird
+        Address address = new Address("TestAddress", "2", "49808");
+        recipient1.addAddress(address);
+        addressBook.addRecipient(recipient, context);
+        addressBook.addRecipient(recipient1, context);
+        addressBook.addRecipient(recipient2, context);
+
+        int initialCounter = AddressBook.getQRCodeCounter(context);
+
+        addressBook.deleteOneRecipient(recipient1, context);
+
+        int finalCounter = AddressBook.getQRCodeCounter(context);
+
+        assertEquals(initialCounter - 1, finalCounter);
+    }
+
     /**
      * Checks if deleting one recipient resets the QR code counter when necessary.
      */
