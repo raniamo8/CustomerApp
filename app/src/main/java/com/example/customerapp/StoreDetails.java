@@ -1,5 +1,7 @@
 package com.example.customerapp;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 
 /**
@@ -18,10 +20,12 @@ public class StoreDetails implements Serializable {
     private String telephone;
     private String email;
     private String logo;
-
     private String backgroundImage;
 
-    public StoreDetails(String id, String name, String owner, String street, String houseNumber, String zip, String city, String telephone, String email, String logo, String backgroundImage) {
+    private LatLng coordinates;
+
+
+    public StoreDetails(String id, String name, String owner, String street, String houseNumber, String zip, String city, String telephone, String email, String logo, String backgroundImage, LatLng coordinates) {
         this.id = id;
         this.name = name;
         this.owner = owner;
@@ -33,6 +37,7 @@ public class StoreDetails implements Serializable {
         this.email = email;
         this.logo = logo;
         this.backgroundImage = backgroundImage;
+        this.coordinates = coordinates;
     }
 
     public String getId() {
@@ -120,5 +125,13 @@ public class StoreDetails implements Serializable {
 
     public void setBackgroundImage(String backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    public void setCoordinates(LatLng coordinates){
+        this.coordinates = coordinates;
+    }
+
+    public LatLng getCoordinates(){
+    return coordinates;
     }
 }

@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,7 +110,10 @@ public class ExploreFragment extends Fragment {
                 String email = jsonObject.getString("email");
                 String logo = jsonObject.getString("logo");
                 String backgroundImage = jsonObject.getString("backgroundImage");
-                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo, backgroundImage);
+                JSONObject coordinatesObject = jsonObject.getJSONObject("coordinates");
+                double latitude = coordinatesObject.getDouble("latitude");
+                double longitude = coordinatesObject.getDouble("longitude");
+                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo, backgroundImage, new LatLng(latitude, longitude));
                 storeList.add(storeDetails);
                 System.out.println(backgroundImage);
             }
