@@ -23,6 +23,8 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 //TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
 //TODO: performance test?
 //TODO: Checkstyle
+//TODO: Readme
+//TODO: Documentation
 //-------------------------//
 //TODO: App crash when server is not connected!!!!!
 //TODO: UnitTest Recipient
