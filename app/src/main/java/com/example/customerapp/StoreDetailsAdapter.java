@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.MapView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -44,23 +45,21 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
         holder.storeNameTextView.setText(store.getName());
-        String imageUrl = store.getLogo();
 
-        Picasso.get()
-                .load(imageUrl)
-                .into(holder.storeLogoImageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild erfolgreich geladen wurde.
-                        // Zum Beispiel könntest du die ProgressBar für das Bild ausblenden, falls vorhanden.
-                    }
+        String logoUrl = store.getLogo();
+        Picasso.get().load(logoUrl).into(holder.storeLogoImageView);
 
-                    @Override
-                    public void onError(Exception e) {
-                        // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild nicht geladen werden konnte.
-                        // Zum Beispiel könntest du ein Standardbild anzeigen oder eine Fehlermeldung anzeigen.
-                    }
-                });
+        Picasso.get().load(logoUrl).into(holder.storeLogoImageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                // Optional: Zusätzlicher Code für Erfolgsfall
+            }
+
+            @Override
+            public void onError(Exception e) {
+                // Optional: Zusätzlicher Code für Fehlerfall
+            }
+        });
 
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
     }
@@ -76,12 +75,16 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         ImageView openStoreDetails;
         LinearLayout openDetails;
 
+
+
         StoreViewHolder(@NonNull View itemView) {
             super(itemView);
             storeLogoImageView = itemView.findViewById(R.id.storeLogoImageView);
             storeNameTextView = itemView.findViewById(R.id.storeNameTextView);
             openStoreDetails = itemView.findViewById(R.id.openStoreDetails);
             openDetails = itemView.findViewById(R.id.openDetails);
+
+
         }
     }
 

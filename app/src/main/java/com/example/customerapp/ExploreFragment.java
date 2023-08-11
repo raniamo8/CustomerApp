@@ -107,9 +107,10 @@ public class ExploreFragment extends Fragment {
                 String telephone = jsonObject.getString("telephone");
                 String email = jsonObject.getString("email");
                 String logo = jsonObject.getString("logo");
-
-                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo);
+                String backgroundImage = jsonObject.getString("backgroundImage");
+                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo, backgroundImage);
                 storeList.add(storeDetails);
+                System.out.println(backgroundImage);
             }
             return storeList;
             //catch block problem

@@ -19,7 +19,9 @@ public class StoreDetails implements Serializable {
     private String email;
     private String logo;
 
-    public StoreDetails(String id, String name, String owner, String street, String houseNumber, String zip, String city, String telephone, String email, String logo) {
+    private String backgroundImage;
+
+    public StoreDetails(String id, String name, String owner, String street, String houseNumber, String zip, String city, String telephone, String email, String logo, String backgroundImage) {
         this.id = id;
         this.name = name;
         this.owner = owner;
@@ -30,6 +32,7 @@ public class StoreDetails implements Serializable {
         this.telephone = telephone;
         this.email = email;
         this.logo = logo;
+        this.backgroundImage = backgroundImage;
     }
 
     public String getId() {
@@ -107,8 +110,15 @@ public class StoreDetails implements Serializable {
     public String getLogo() {
         return logo;
     }
-
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
     }
 }
