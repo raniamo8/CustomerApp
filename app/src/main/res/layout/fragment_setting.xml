@@ -79,13 +79,6 @@
                 style="@style/Text"
                 android:text="Alle Addressen löschen" />
 
-            <Button
-                android:id="@+id/introButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#E42127"
-                style="@style/Text"
-                android:text="Intro Reset" />
 
             <LinearLayout
                 android:layout_width="match_parent"
