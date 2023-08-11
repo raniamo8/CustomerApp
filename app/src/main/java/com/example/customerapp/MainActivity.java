@@ -21,14 +21,16 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 
 //TODO Code Fragment: PLz spinner color
 //TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
+//TODO: performance test?
+//TODO: Checkstyle
+//-------------------------//
+//TODO: App crash when server is not connected!!!!!
+//TODO: UnitTest Recipient
+//TODO: Scroll view
 //TODO Setting Fragment: build impressum (func)
 //TODO for test: integration of tools alike jacoco
-//TODO: performance test?
-//TODO: App crash when server is not connected
-//TODO: UI Design Store Details
-//TODO: Google Maps // open street map
-//TODO: UI tests scenarios
-//TODO: Checkstyle
+//TODO: StoreDetails image as icon
+//TODO: Button intro bottom of the display
 
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
