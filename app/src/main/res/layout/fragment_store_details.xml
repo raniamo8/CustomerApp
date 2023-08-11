@@ -74,7 +74,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Inhaber:" />
+                    android:text="Inhaber:"
+                    android:drawableLeft="@drawable/baseline_person_24"/>
 
                 <TextView
                     android:id="@+id/ownerNameTextView"
@@ -98,7 +99,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Adresse:" />
+                    android:text="Adresse:"
+                    android:drawableLeft="@drawable/baseline_house_24"/>
 
                 <TextView
                     android:id="@+id/ownerAddressTextView"
@@ -121,7 +123,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Telefonnummer:" />
+                    android:text="Telefonnummer:"
+                    android:drawableLeft="@drawable/baseline_phone_24"/>
 
                 <TextView
                     android:id="@+id/ownerPhoneTextView"
@@ -144,7 +147,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Email:" />
+                    android:text="Email:"
+                    android:drawableLeft="@drawable/baseline_email_24"/>
 
                 <TextView
                     android:id="@+id/ownerEmailTextView"
@@ -158,8 +162,9 @@
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
+            android:layout_weight="0"
             android:layout_width="match_parent"
-            android:layout_height="262dp" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
