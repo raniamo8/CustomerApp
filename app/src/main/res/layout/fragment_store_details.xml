@@ -74,7 +74,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Inhaber:"
                     android:drawableLeft="@drawable/baseline_person_24"/>
 
                 <TextView
@@ -99,7 +98,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Adresse:"
                     android:drawableLeft="@drawable/baseline_house_24"/>
 
                 <TextView
@@ -123,7 +121,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Telefonnummer:"
                     android:drawableLeft="@drawable/baseline_phone_24"/>
 
                 <TextView
@@ -147,7 +144,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Email:"
                     android:drawableLeft="@drawable/baseline_email_24"/>
 
                 <TextView
