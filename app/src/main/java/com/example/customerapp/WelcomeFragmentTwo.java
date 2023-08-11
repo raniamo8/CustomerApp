@@ -18,13 +18,13 @@ public class WelcomeFragmentTwo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_two, container, false);
 
-        Button introAddAddressButton = welcomeView.findViewById(R.id.introAddAddressButton);
+        Button introEndButton = welcomeView.findViewById(R.id.introEndButton);
 
-        introAddAddressButton.setOnClickListener(v -> {
+        introEndButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
 
-            Objects.requireNonNull(getActivity()).finish();
+            requireActivity().finish();
         });
 
         return welcomeView;
