@@ -33,7 +33,9 @@ import org.junit.runners.MethodSorters;
 public class QRCodeUITest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityRule = new ActivityScenarioRule<>(MainActivity.class);
-
+    @AfterClass
+    public static void tearDownClass() {
+    }
 
     @Test
     public void test1GenerateQRCodeSuccessfully() {
@@ -149,9 +151,6 @@ public class QRCodeUITest {
         onView(isRoot()).perform(waitFor(2000));
     }
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
 
     public static ViewAction waitFor(final long millis) {
