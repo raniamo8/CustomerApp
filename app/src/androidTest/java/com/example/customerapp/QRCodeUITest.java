@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
 import org.hamcrest.Matcher;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -33,9 +34,6 @@ public class QRCodeUITest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityRule = new ActivityScenarioRule<>(MainActivity.class);
 
-    @Before
-    public void setUp() {
-    }
 
     @Test
     public void test1GenerateQRCodeSuccessfully() {
@@ -149,6 +147,10 @@ public class QRCodeUITest {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("Alle QR-Codes löschen")).perform(click());
         onView(isRoot()).perform(waitFor(2000));
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
     }
 
 
