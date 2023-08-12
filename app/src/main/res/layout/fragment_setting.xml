@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
     android:padding="16dp"
-    style="@style/Screen">
+    style="@style/Screen"
+    android:fillViewport="true">
 
     <!-- Text Button: style="@style/Widget.MaterialComponents.Button.TextButton" -->
 
