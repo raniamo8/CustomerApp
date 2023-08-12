@@ -27,7 +27,6 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 //TODO: Documentation
 //-------------------------//
 //TODO: App crash when server is not connected!!!!!
-//TODO: UnitTest Recipient
 //TODO: Scroll view
 //TODO Setting Fragment: build impressum (func)
 //TODO for test: integration of tools alike jacoco
