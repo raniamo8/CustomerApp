@@ -11,6 +11,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RunWith(RobolectricTestRunner.class)
 public class RecipientUnitTest {
 
@@ -78,7 +79,7 @@ public class RecipientUnitTest {
      * Checks if a QR code can be generated when an address is added to the recipient.
      */
     @Test
-    public  void testGenerateQRCode(){
+    public void testGenerateQRCode(){
         recipient.addAddress(address);
         Bitmap bitmap = recipient.generateQRCode();
         Assert.assertNotNull(bitmap);

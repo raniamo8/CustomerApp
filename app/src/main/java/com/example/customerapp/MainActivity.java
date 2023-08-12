@@ -25,13 +25,12 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 //TODO: Readme
 //TODO: Documentation
 //-------------------------//
+//TODO: No Test coverage!!!!!!!!!!!!
 //TODO: App crash when server is not connected!!!!!
-//TODO: Scroll view
 //TODO Setting Fragment: build impressum (func)
 //TODO for test: integration of tools alike jacoco
 //TODO: StoreDetails image as icon
 //TODO: Button intro bottom of the display
-
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
