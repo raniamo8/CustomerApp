@@ -5,8 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        //FirstTestClass.class,
-        //SecondTestClass.class,
+        AddressBookUnitTest.class,
+        RecipientUnitTest.class,
 })
 
 public class UnitTestSuite { }
