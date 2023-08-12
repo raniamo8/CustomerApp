@@ -8,6 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+
+/**
+ * Activity for the introduction of the App. It uses two fragments (WelcomeFragmentOne & WelcomeFragmentTwo).
+ * The Activity checks if the first run of the app.
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override

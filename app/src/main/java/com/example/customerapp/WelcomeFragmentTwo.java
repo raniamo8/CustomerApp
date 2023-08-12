@@ -9,7 +9,9 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-
+/**
+ * Second fragment of the introduction.
+ */
 public class WelcomeFragmentTwo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

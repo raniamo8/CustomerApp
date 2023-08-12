@@ -148,13 +148,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
-
-        // Hier kannst du die Koordinaten für den Testbereich festlegen
-        LatLng storeLocation = storeDetails.getCoordinates(); // Beispielkoordinaten (London)
-
+        LatLng storeLocation = storeDetails.getCoordinates();
         googleMap.addMarker(new MarkerOptions().position(storeLocation).title("Store Location"));
-
-        // Warte auf die vollständige Kartenrendering
         mapView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -164,8 +159,6 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
                 LatLngBounds bounds = boundsBuilder.build();
                 float zoomLevel = 14.0f;
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bounds.getCenter(), zoomLevel));
-
-                // Entferne den Listener, um wiederholtes Aufrufen zu vermeiden
                 mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
