@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,12 +88,12 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
                     .into(shopLogoBig, new Callback() {
                         @Override
                         public void onSuccess() {
-                            // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild erfolgreich geladen wurde.
+                            Log.d("Picasso", "Logo-Bild erfolgreich geladen");
                         }
 
                         @Override
                         public void onError(Exception e) {
-                            // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Bild nicht geladen werden konnte.
+                            Log.e("Picasso", "Fehler beim Laden des Logo-Bildes", e);
                         }
                     });
 
@@ -101,12 +102,12 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
                     .into(backgroundImage, new Callback() {
                         @Override
                         public void onSuccess() {
-                            // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Hintergrundbild erfolgreich geladen wurde.
+                            Log.d("Picasso", "Hintergrundbild erfolgreich geladen");
                         }
 
                         @Override
                         public void onError(Exception e) {
-                            // Optional: Hier kannst du zusätzlichen Code ausführen, wenn das Hintergrundbild nicht geladen werden konnte.
+                            Log.e("Picasso", "Fehler beim Laden des Hintergrundbildes", e);
                         }
                     });
         }

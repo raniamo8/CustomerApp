@@ -1,6 +1,7 @@
 package com.example.customerapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +53,12 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         Picasso.get().load(logoUrl).into(holder.storeLogoImageView, new Callback() {
             @Override
             public void onSuccess() {
-                // Optional: Zusätzlicher Code für Erfolgsfall
+                Log.d("Picasso", "Logo-Bild erfolgreich im Adapter geladen");
             }
 
             @Override
             public void onError(Exception e) {
-                // Optional: Zusätzlicher Code für Fehlerfall
+                Log.e("Picasso", "Fehler beim Laden des Logo-Bildes im Adapter", e);
             }
         });
 
