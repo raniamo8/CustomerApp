@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StoreDetailsFragment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">StoreDetailsFragment.java</span></div><h1>StoreDetailsFragment.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
+
+/**
+ * A fragment that displays detailed information about a specific store.
+ * It takes a StoreDetails object as an argument and displays its data, including the store's logo, owner name, etc.
+ */
+public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback {
+
+    private static final String ARG_STORE_DETAILS = &quot;storeDetails&quot;;
+    private StoreDetails storeDetails;
+    TextView ownerNameTextView, ownerAddressTextView, ownerPhoneTextView, ownerEmailTextView;
+    ImageView shopLogoBig, backgroundImage;
+    private AppCompatImageButton backButton;
+
+    private MapView mapView;
+    private GoogleMap googleMap;
+
+<span class="nc" id="L46">    public StoreDetailsFragment() {</span>
+<span class="nc" id="L47">    }</span>
+
+    public static StoreDetailsFragment newInstance(StoreDetails storeDetails) {
+<span class="nc" id="L50">        StoreDetailsFragment fragment = new StoreDetailsFragment();</span>
+<span class="nc" id="L51">        Bundle args = new Bundle();</span>
+<span class="nc" id="L52">        args.putSerializable(ARG_STORE_DETAILS, storeDetails);</span>
+<span class="nc" id="L53">        fragment.setArguments(args);</span>
+<span class="nc" id="L54">        return fragment;</span>
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L59">        super.onCreate(savedInstanceState);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (getArguments() != null) {</span>
+<span class="nc" id="L61">            storeDetails = (StoreDetails) getArguments().getSerializable(ARG_STORE_DETAILS);</span>
+        }
+<span class="nc" id="L63">    }</span>
+
+    @SuppressLint(&quot;SetTextI18n&quot;)
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<span class="nc" id="L68">        View view = inflater.inflate(R.layout.fragment_store_details, container, false);</span>
+
+<span class="nc" id="L70">        shopLogoBig = view.findViewById(R.id.shopLogoBig);</span>
+<span class="nc" id="L71">        backgroundImage = view.findViewById(R.id.backgroundImage);</span>
+<span class="nc" id="L72">        ownerNameTextView = view.findViewById(R.id.ownerNameTextView);</span>
+<span class="nc" id="L73">        ownerAddressTextView = view.findViewById(R.id.ownerAddressTextView);</span>
+<span class="nc" id="L74">        ownerPhoneTextView = view.findViewById(R.id.ownerPhoneTextView);</span>
+<span class="nc" id="L75">        ownerEmailTextView = view.findViewById(R.id.ownerEmailTextView);</span>
+
+        // submitting data in the View
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (storeDetails != null) {</span>
+<span class="nc" id="L79">            ownerNameTextView.setText(storeDetails.getOwner());</span>
+<span class="nc" id="L80">            ownerAddressTextView.setText(storeDetails.getStreet() + &quot; &quot; + storeDetails.getHouseNumber());</span>
+<span class="nc" id="L81">            ownerPhoneTextView.setText(storeDetails.getTelephone());</span>
+<span class="nc" id="L82">            ownerEmailTextView.setText(storeDetails.getEmail());</span>
+<span class="nc" id="L83">            String logoImageUrl = storeDetails.getLogo();</span>
+<span class="nc" id="L84">            String backgroundImageUrl = storeDetails.getBackgroundImage();</span>
+
+<span class="nc" id="L86">            Picasso.get()</span>
+<span class="nc" id="L87">                    .load(logoImageUrl)</span>
+<span class="nc" id="L88">                    .into(shopLogoBig, new Callback() {</span>
+                        @Override
+                        public void onSuccess() {
+<span class="nc" id="L91">                            Log.d(&quot;Picasso&quot;, &quot;Logo-Bild erfolgreich geladen&quot;);</span>
+<span class="nc" id="L92">                        }</span>
+
+                        @Override
+                        public void onError(Exception e) {
+<span class="nc" id="L96">                            Log.e(&quot;Picasso&quot;, &quot;Fehler beim Laden des Logo-Bildes&quot;, e);</span>
+<span class="nc" id="L97">                        }</span>
+                    });
+
+<span class="nc" id="L100">            Picasso.get()</span>
+<span class="nc" id="L101">                    .load(backgroundImageUrl)</span>
+<span class="nc" id="L102">                    .into(backgroundImage, new Callback() {</span>
+                        @Override
+                        public void onSuccess() {
+<span class="nc" id="L105">                            Log.d(&quot;Picasso&quot;, &quot;Hintergrundbild erfolgreich geladen&quot;);</span>
+<span class="nc" id="L106">                        }</span>
+
+                        @Override
+                        public void onError(Exception e) {
+<span class="nc" id="L110">                            Log.e(&quot;Picasso&quot;, &quot;Fehler beim Laden des Hintergrundbildes&quot;, e);</span>
+<span class="nc" id="L111">                        }</span>
+                    });
+        }
+
+<span class="nc" id="L115">        backButton = view.findViewById(R.id.backButton);</span>
+<span class="nc" id="L116">        backButton.setOnClickListener(v -&gt; goBackToPreviousFragment());</span>
+
+<span class="nc" id="L118">        mapView = view.findViewById(R.id.mapView);</span>
+<span class="nc" id="L119">        mapView.onCreate(savedInstanceState);</span>
+<span class="nc" id="L120">        mapView.getMapAsync(this);</span>
+
+<span class="nc" id="L122">        return view;</span>
+    }
+
+    @Override
+    public void onResume() {
+<span class="nc" id="L127">        super.onResume();</span>
+<span class="nc" id="L128">        mapView.onResume();</span>
+<span class="nc" id="L129">    }</span>
+
+    @Override
+    public void onPause() {
+<span class="nc" id="L133">        super.onPause();</span>
+<span class="nc" id="L134">        mapView.onPause();</span>
+<span class="nc" id="L135">    }</span>
+
+    @Override
+    public void onDestroy() {
+<span class="nc" id="L139">        super.onDestroy();</span>
+<span class="nc" id="L140">        mapView.onDestroy();</span>
+<span class="nc" id="L141">    }</span>
+
+    @Override
+    public void onLowMemory() {
+<span class="nc" id="L145">        super.onLowMemory();</span>
+<span class="nc" id="L146">        mapView.onLowMemory();</span>
+<span class="nc" id="L147">    }</span>
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap map) {
+<span class="nc" id="L151">        googleMap = map;</span>
+<span class="nc" id="L152">        LatLng storeLocation = storeDetails.getCoordinates();</span>
+<span class="nc" id="L153">        googleMap.addMarker(new MarkerOptions().position(storeLocation).title(&quot;Store Location&quot;));</span>
+<span class="nc" id="L154">        mapView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {</span>
+            @Override
+            public void onGlobalLayout() {
+<span class="nc" id="L157">                LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();</span>
+<span class="nc" id="L158">                boundsBuilder.include(storeLocation);</span>
+
+<span class="nc" id="L160">                LatLngBounds bounds = boundsBuilder.build();</span>
+<span class="nc" id="L161">                float zoomLevel = 14.0f;</span>
+<span class="nc" id="L162">                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bounds.getCenter(), zoomLevel));</span>
+<span class="nc" id="L163">                mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);</span>
+<span class="nc" id="L164">            }</span>
+        });
+
+<span class="nc" id="L167">        mapView.onResume();</span>
+<span class="nc" id="L168">    }</span>
+
+    private void goBackToPreviousFragment() {
+<span class="nc" id="L171">        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();</span>
+<span class="nc" id="L172">        fragmentManager.popBackStack();</span>
+<span class="nc" id="L173">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

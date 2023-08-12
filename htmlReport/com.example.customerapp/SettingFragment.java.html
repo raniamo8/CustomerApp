@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SettingFragment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">SettingFragment.java</span></div><h1>SettingFragment.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Switch;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * A fragment that allows users to manage app settings, including enabling or disabling dark mode,
+ * adding addresses to recipients, and deleting all QR codes and recipients.
+ */
+public class SettingFragment extends Fragment {
+    @SuppressLint(&quot;UseSwitchCompatOrMaterialCode&quot;)
+    Switch darkModeSwitch;
+    Button deleteAllButton, addAddressButton;
+    boolean nightMode;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private List&lt;String&gt; qrCodeFilePaths;
+    private QRCodeAdapter qrCodeAdapter;
+    private AddressBook addressBook;
+
+
+<span class="nc" id="L39">    public SettingFragment() {</span>
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L44">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L45">        qrCodeFilePaths = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L46">        addressBook = AddressBook.getInstance();</span>
+<span class="nc" id="L47">        addressBook.loadData(getContext());</span>
+<span class="nc" id="L48">        qrCodeAdapter = new QRCodeAdapter(getContext(), qrCodeFilePaths, addressBook);</span>
+<span class="nc" id="L49">        setHasOptionsMenu(true);</span>
+<span class="nc" id="L50">    }</span>
+
+    @SuppressLint(&quot;MissingInflatedId&quot;)
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+<span class="nc" id="L55">        View view = inflater.inflate(R.layout.fragment_setting, container, false);</span>
+<span class="nc" id="L56">        addressBook = AddressBook.getInstance();</span>
+
+<span class="nc" id="L58">        darkModeSwitch = view.findViewById(R.id.darkModeSwitch);</span>
+<span class="nc" id="L59">        sharedPreferences = requireActivity().getSharedPreferences(&quot;MODE&quot;, Context.MODE_PRIVATE);</span>
+<span class="nc" id="L60">        nightMode = sharedPreferences.getBoolean(&quot;night&quot;, false);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (nightMode) {</span>
+<span class="nc" id="L62">            darkModeSwitch.setChecked(true);</span>
+<span class="nc" id="L63">            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);</span>
+        }
+
+<span class="nc" id="L66">        addAddressButton = view.findViewById(R.id.addAddressButton);</span>
+<span class="nc" id="L67">        view.findViewById(R.id.addAddressButton).setOnClickListener(v -&gt; goToCodeFragment());</span>
+
+<span class="nc" id="L69">        deleteAllButton = view.findViewById(R.id.deleteAllButton);</span>
+<span class="nc" id="L70">        deleteAllButton.setOnClickListener(v -&gt; deleteAllQRandRecipients());</span>
+
+<span class="nc" id="L72">        darkModeSwitch.setOnClickListener(view1 -&gt; {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            nightMode = !nightMode;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (nightMode) {</span>
+<span class="nc" id="L75">                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);</span>
+<span class="nc" id="L76">                editor = sharedPreferences.edit();</span>
+<span class="nc" id="L77">                editor.putBoolean(&quot;night&quot;, true);</span>
+            } else {
+<span class="nc" id="L79">                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);</span>
+<span class="nc" id="L80">                editor = sharedPreferences.edit();</span>
+<span class="nc" id="L81">                editor.putBoolean(&quot;night&quot;, false);</span>
+            }
+<span class="nc" id="L83">            editor.apply();</span>
+<span class="nc" id="L84">        });</span>
+
+<span class="nc" id="L86">        return view;</span>
+    }
+
+    private void goToCodeFragment() {
+<span class="nc" id="L90">        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();</span>
+<span class="nc" id="L91">        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();</span>
+<span class="nc" id="L92">        fragmentTransaction.replace(R.id.frame_layout, CodeFragment.getInstance());</span>
+<span class="nc" id="L93">        fragmentTransaction.addToBackStack(null);</span>
+<span class="nc" id="L94">        fragmentTransaction.commit();</span>
+<span class="nc" id="L95">    }</span>
+
+    @SuppressLint(&quot;NotifyDataSetChanged&quot;)
+    private void deleteAllQRandRecipients() {
+<span class="nc" id="L99">        addressBook.deleteAllRecipients(getContext());</span>
+<span class="nc" id="L100">        Toast.makeText(getContext(), &quot;Alle QR-Codes wurden gelöscht.&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L101">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,318 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CodeFragment</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerapp</a>
+</div>
+
+<h1>Coverage Summary for Class: CodeFragment (com.example.customerapp)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CodeFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/89)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerapp;
+&nbsp;
+&nbsp;import android.annotation.SuppressLint;
+&nbsp;import android.graphics.Bitmap;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.util.Log;
+&nbsp;import android.view.LayoutInflater;
+&nbsp;import android.view.MenuItem;
+&nbsp;import android.view.View;
+&nbsp;import android.view.ViewGroup;
+&nbsp;import android.widget.Button;
+&nbsp;import android.widget.EditText;
+&nbsp;import android.widget.ImageView;
+&nbsp;import android.widget.Spinner;
+&nbsp;import android.widget.TextView;
+&nbsp;import android.widget.Toast;
+&nbsp;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;import androidx.annotation.Nullable;
+&nbsp;import androidx.appcompat.widget.AppCompatImageButton;
+&nbsp;import androidx.fragment.app.Fragment;
+&nbsp;import androidx.fragment.app.FragmentManager;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents a fragment where the user can enter recipient information and generate a QR code for the recipient.
+&nbsp; * The fragment also provides the functionality to save the generated QR code to the internal storage.
+&nbsp; */
+<b class="nc">&nbsp;public class CodeFragment extends Fragment {</b>
+&nbsp;    private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
+&nbsp;    private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
+&nbsp;    private ImageView qrCodeImageView;
+&nbsp;    Button generateQRCodeButton;
+&nbsp;    private AppCompatImageButton backButton;
+<b class="nc">&nbsp;    private AddressBook addressBook = new AddressBook();</b>
+&nbsp;
+&nbsp;    @SuppressLint(&quot;StaticFieldLeak&quot;)
+&nbsp;    public static CodeFragment instance;
+&nbsp;
+&nbsp;    public static CodeFragment getInstance() {
+<b class="nc">&nbsp;        if (instance == null) {</b>
+<b class="nc">&nbsp;            instance = new CodeFragment();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return instance;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        addressBook = AddressBook.getInstance();</b>
+<b class="nc">&nbsp;        addressBook.loadData(getContext());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Nullable
+&nbsp;    @Override
+&nbsp;    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+<b class="nc">&nbsp;        View rootView = inflater.inflate(R.layout.fragment_code, container, false);</b>
+&nbsp;
+<b class="nc">&nbsp;        lastNameEditText = rootView.findViewById(R.id.lastNameEditText);</b>
+<b class="nc">&nbsp;        firstNameEditText = rootView.findViewById(R.id.firstNameEditText);</b>
+<b class="nc">&nbsp;        streetEditText = rootView.findViewById(R.id.streetEditText);</b>
+<b class="nc">&nbsp;        streetNrEditText = rootView.findViewById(R.id.streetNrEditText);</b>
+&nbsp;
+<b class="nc">&nbsp;        lastNameErrorTextView = rootView.findViewById(R.id.lastNameErrorTextView);</b>
+<b class="nc">&nbsp;        firstNameErrorTextView = rootView.findViewById(R.id.firstNameErrorTextView);</b>
+<b class="nc">&nbsp;        streetErrorTextView = rootView.findViewById(R.id.streetErrorTextView);</b>
+<b class="nc">&nbsp;        streetNrErrorTextView = rootView.findViewById(R.id.streetNrErrorTextView);</b>
+&nbsp;
+<b class="nc">&nbsp;        Spinner zipSpinner = rootView.findViewById(R.id.plzSpinner);</b>
+<b class="nc">&nbsp;        String selectedZIP = zipSpinner.getSelectedItem().toString();</b>
+&nbsp;
+<b class="nc">&nbsp;        qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);</b>
+&nbsp;
+<b class="nc">&nbsp;        generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);</b>
+<b class="nc">&nbsp;        generateQRCodeButton.setOnClickListener(v -&gt; {</b>
+<b class="nc">&nbsp;            generateQRCode(selectedZIP);</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        backButton = rootView.findViewById(R.id.backButton);</b>
+<b class="nc">&nbsp;        backButton.setOnClickListener(v -&gt; {</b>
+<b class="nc">&nbsp;            goBackToPreviousFragment();</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        return rootView;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+<b class="nc">&nbsp;        if (item.getItemId() == android.R.id.home) {</b>
+<b class="nc">&nbsp;            requireActivity().onBackPressed();</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return super.onOptionsItemSelected(item);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onDestroyView() {
+<b class="nc">&nbsp;        super.onDestroyView();</b>
+<b class="nc">&nbsp;        addressBook.saveData(getContext());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onResume() {
+<b class="nc">&nbsp;        super.onResume();</b>
+<b class="nc">&nbsp;        clearInputFields();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void goBackToPreviousFragment() {
+<b class="nc">&nbsp;        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();</b>
+<b class="nc">&nbsp;        fragmentManager.popBackStack();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void generateQRCode(String zip) {
+<b class="nc">&nbsp;        String lastName = lastNameEditText.getText().toString().trim();</b>
+<b class="nc">&nbsp;        String firstName = firstNameEditText.getText().toString().trim();</b>
+<b class="nc">&nbsp;        String street = streetEditText.getText().toString().trim();</b>
+<b class="nc">&nbsp;        String houseNumber = streetNrEditText.getText().toString().trim();</b>
+<b class="nc">&nbsp;        String selectedZIP = ((Spinner) requireView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (isInputValid(lastName, firstName, street, houseNumber)) {</b>
+<b class="nc">&nbsp;            createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);</b>
+<b class="nc">&nbsp;            addressBook.saveData(getContext());</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            Toast.makeText(getContext(), &quot;Es liegt einen Fehler beim Ausfüllen vor.&quot;, Toast.LENGTH_SHORT).show();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @SuppressLint(&quot;NewApi&quot;)
+&nbsp;    private void createAndSaveRecipient(String lastName, String firstName, String street, String houseNumber, String zip) {
+<b class="nc">&nbsp;        Recipient recipient = new Recipient(lastName, firstName);</b>
+<b class="nc">&nbsp;        Address address = new Address(street, houseNumber, zip);</b>
+<b class="nc">&nbsp;        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());</b>
+<b class="nc">&nbsp;        address.getCity();</b>
+<b class="nc">&nbsp;        recipient.addAddress(address);</b>
+&nbsp;
+<b class="nc">&nbsp;        Log.d(&quot;Recipient Info&quot;, &quot;First Name: &quot; + firstName +</b>
+&nbsp;                &quot;, Last Name: &quot; + lastName +
+&nbsp;                &quot;, Street: &quot; + street +
+&nbsp;                &quot;, Street Nr: &quot; + houseNumber +
+&nbsp;                &quot;, PLZ: &quot; + zip +
+<b class="nc">&nbsp;                &quot;, City: &quot; + address.getCity());</b>
+&nbsp;
+<b class="nc">&nbsp;        addressBook.addRecipient(recipient, getContext());</b>
+<b class="nc">&nbsp;        recipient.setQRCodeCounter(qrCodeCounter);</b>
+<b class="nc">&nbsp;        Bitmap qrCodeBitmap = recipient.generateQRCode();</b>
+<b class="nc">&nbsp;        qrCodeImageView.setImageBitmap(qrCodeBitmap);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (recipient.saveQRCodeToInternalStorage(getContext())) {</b>
+<b class="nc">&nbsp;            qrCodeCounter++;</b>
+<b class="nc">&nbsp;            AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);</b>
+<b class="nc">&nbsp;            Toast.makeText(getContext(), &quot;Der QR-Code wurde erfolgreich generiert.&quot;, Toast.LENGTH_SHORT).show();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            Toast.makeText(getContext(), &quot;Fehler beim Speichern des QR-Codes&quot;, Toast.LENGTH_SHORT).show();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        clearInputFields();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean isInputValid(String lastName, String firstName, String street, String houseNumber) {
+<b class="nc">&nbsp;        boolean isValid = true;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (!isValidLastName(lastName)) {</b>
+<b class="nc">&nbsp;            lastNameErrorTextView.setVisibility(View.VISIBLE);</b>
+<b class="nc">&nbsp;            isValid = false;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            lastNameErrorTextView.setVisibility(View.GONE);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (!isValidFirstName(firstName)) {</b>
+<b class="nc">&nbsp;            firstNameErrorTextView.setVisibility(View.VISIBLE);</b>
+<b class="nc">&nbsp;            isValid = false;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            firstNameErrorTextView.setVisibility(View.GONE);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (!isValidStreet(street)) {</b>
+<b class="nc">&nbsp;            streetErrorTextView.setVisibility(View.VISIBLE);</b>
+<b class="nc">&nbsp;            isValid = false;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            streetErrorTextView.setVisibility(View.GONE);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (!isValidStreetNr(houseNumber)) {</b>
+<b class="nc">&nbsp;            streetNrErrorTextView.setVisibility(View.VISIBLE);</b>
+<b class="nc">&nbsp;            isValid = false;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            streetNrErrorTextView.setVisibility(View.GONE);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return isValid;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean isValidLastName(@NonNull String lastName) {
+<b class="nc">&nbsp;        return !lastName.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean isValidFirstName(@NonNull String firstName) {
+<b class="nc">&nbsp;        return !firstName.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean isValidStreet(@NonNull String street) {
+<b class="nc">&nbsp;        return !street.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean isValidStreetNr(@NonNull String houseNumber) {
+<b class="nc">&nbsp;        return !houseNumber.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private void clearInputFields() {
+<b class="nc">&nbsp;        lastNameEditText.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        firstNameEditText.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        streetEditText.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        streetNrEditText.setText(&quot;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-12 14:10</div>
+</div>
+</body>
+</html>

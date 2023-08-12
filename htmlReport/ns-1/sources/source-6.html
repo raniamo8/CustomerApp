@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > MainActivity</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerapp</a>
+</div>
+
+<h1>Coverage Summary for Class: MainActivity (com.example.customerapp)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerapp;
+&nbsp;
+&nbsp;import android.annotation.SuppressLint;
+&nbsp;import android.content.Context;
+&nbsp;import android.content.Intent;
+&nbsp;import android.content.SharedPreferences;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.util.Log;
+&nbsp;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;import androidx.appcompat.app.AppCompatActivity;
+&nbsp;import androidx.appcompat.app.AppCompatDelegate;
+&nbsp;import androidx.appcompat.widget.Toolbar;
+&nbsp;import androidx.fragment.app.Fragment;
+&nbsp;import androidx.fragment.app.FragmentManager;
+&nbsp;import androidx.fragment.app.FragmentTransaction;
+&nbsp;
+&nbsp;import com.example.customerapp.databinding.ActivitymainBinding;
+&nbsp;
+&nbsp;
+&nbsp;//TODO Code Fragment: PLz spinner color
+&nbsp;//TODO: problem Could not remove dir &#39;/data/data/com.example.customerapp/code_cache/.ll/&#39;: No such file or directory
+&nbsp;//TODO: performance test?
+&nbsp;//TODO: Checkstyle
+&nbsp;//TODO: Readme
+&nbsp;//TODO: Documentation
+&nbsp;//-------------------------//
+&nbsp;//TODO: No Test coverage!!!!!!!!!!!!
+&nbsp;//TODO: App crash when server is not connected!!!!!
+&nbsp;//TODO Setting Fragment: build impressum (func)
+&nbsp;//TODO for test: integration of tools alike jacoco
+&nbsp;//TODO: StoreDetails image as icon
+&nbsp;//TODO: Button intro bottom of the display
+<b class="nc">&nbsp;public class MainActivity extends AppCompatActivity {</b>
+&nbsp;    private static final String CURRENT_FRAGMENT_TAG = &quot;current_fragment_tag&quot;;
+&nbsp;    private Fragment currentFragment;
+&nbsp;    ActivitymainBinding binding;
+&nbsp;    private AddressBook addressBook;
+&nbsp;
+&nbsp;    @SuppressLint(&quot;NonConstantResourceId&quot;)
+&nbsp;    @Override
+&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        SharedPreferences sharedPreferences = getSharedPreferences(&quot;MODE&quot;, Context.MODE_PRIVATE);</b>
+<b class="nc">&nbsp;        boolean nightMode = sharedPreferences.getBoolean(&quot;night&quot;, false);</b>
+<b class="nc">&nbsp;        if (nightMode) {</b>
+<b class="nc">&nbsp;            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        binding = ActivitymainBinding.inflate(getLayoutInflater());</b>
+<b class="nc">&nbsp;        setContentView(binding.getRoot());</b>
+<b class="nc">&nbsp;        Log.d(&quot;MainActivity&quot;, &quot;onCreate&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        Toolbar toolbar = findViewById(R.id.toolbar);</b>
+<b class="nc">&nbsp;        setSupportActionBar(toolbar);</b>
+&nbsp;
+<b class="nc">&nbsp;        addressBook = AddressBook.getInstance();</b>
+<b class="nc">&nbsp;        addressBook.loadData(getApplicationContext());</b>
+&nbsp;
+<b class="nc">&nbsp;        SharedPreferences preferences = getSharedPreferences(&quot;app_preferences&quot;, MODE_PRIVATE);</b>
+<b class="nc">&nbsp;        boolean isFirstRun = preferences.getBoolean(&quot;is_first_run&quot;, true);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (isFirstRun) {</b>
+<b class="nc">&nbsp;            Intent intent = new Intent(this, WelcomeActivity.class);</b>
+<b class="nc">&nbsp;            startActivity(intent);</b>
+<b class="nc">&nbsp;            finish();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (savedInstanceState == null) {</b>
+<b class="nc">&nbsp;            replaceFragment(new QRCodeListFragment());</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        binding.bottomNavigationView.setOnItemSelectedListener(item -&gt; {</b>
+<b class="nc">&nbsp;            switch (item.getItemId()) {</b>
+&nbsp;                case R.id.code:
+<b class="nc">&nbsp;                    replaceFragment(new QRCodeListFragment());</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case R.id.explore:
+<b class="nc">&nbsp;                    replaceFragment(new ExploreFragment());</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case R.id.settings:
+<b class="nc">&nbsp;                    replaceFragment(new SettingFragment());</b>
+&nbsp;                    break;
+&nbsp;            }
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void onSaveInstanceState(@NonNull Bundle outState) {
+<b class="nc">&nbsp;        super.onSaveInstanceState(outState);</b>
+<b class="nc">&nbsp;        if (currentFragment != null) {</b>
+<b class="nc">&nbsp;            getSupportFragmentManager().putFragment(outState, CURRENT_FRAGMENT_TAG, currentFragment);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void onDestroy() {
+<b class="nc">&nbsp;        super.onDestroy();</b>
+<b class="nc">&nbsp;        Log.d(&quot;MainActivity&quot;, &quot;onDestroy&quot;);</b>
+<b class="nc">&nbsp;        addressBook.saveData(getApplicationContext());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void replaceFragment(Fragment fragment) {
+<b class="nc">&nbsp;        currentFragment = fragment;</b>
+<b class="nc">&nbsp;        FragmentManager fragmentManager = getSupportFragmentManager();</b>
+<b class="nc">&nbsp;        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();</b>
+<b class="nc">&nbsp;        fragmentTransaction.replace(R.id.frame_layout, fragment);</b>
+<b class="nc">&nbsp;        fragmentTransaction.commit();</b>
+<b class="nc">&nbsp;        if (fragment instanceof CodeFragment) {</b>
+<b class="nc">&nbsp;            CodeFragment.instance = (CodeFragment) fragment;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-12 14:10</div>
+</div>
+</body>
+</html>

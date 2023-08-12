@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
 }
 
+
 android {
     namespace 'com.example.customerapp'
     compileSdk 33
@@ -36,6 +37,7 @@ android {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:deprecation"
     }
+
 }
 
 dependencies {

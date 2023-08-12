@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CodeFragment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">CodeFragment.java</span></div><h1>CodeFragment.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+/**
+ * Represents a fragment where the user can enter recipient information and generate a QR code for the recipient.
+ * The fragment also provides the functionality to save the generated QR code to the internal storage.
+ */
+<span class="nc" id="L28">public class CodeFragment extends Fragment {</span>
+    private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
+    private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
+    private ImageView qrCodeImageView;
+    Button generateQRCodeButton;
+    private AppCompatImageButton backButton;
+<span class="nc" id="L34">    private AddressBook addressBook = new AddressBook();</span>
+
+    @SuppressLint(&quot;StaticFieldLeak&quot;)
+    public static CodeFragment instance;
+
+    public static CodeFragment getInstance() {
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (instance == null) {</span>
+<span class="nc" id="L41">            instance = new CodeFragment();</span>
+        }
+<span class="nc" id="L43">        return instance;</span>
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L48">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L49">        addressBook = AddressBook.getInstance();</span>
+<span class="nc" id="L50">        addressBook.loadData(getContext());</span>
+<span class="nc" id="L51">    }</span>
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+<span class="nc" id="L56">        View rootView = inflater.inflate(R.layout.fragment_code, container, false);</span>
+
+<span class="nc" id="L58">        lastNameEditText = rootView.findViewById(R.id.lastNameEditText);</span>
+<span class="nc" id="L59">        firstNameEditText = rootView.findViewById(R.id.firstNameEditText);</span>
+<span class="nc" id="L60">        streetEditText = rootView.findViewById(R.id.streetEditText);</span>
+<span class="nc" id="L61">        streetNrEditText = rootView.findViewById(R.id.streetNrEditText);</span>
+
+<span class="nc" id="L63">        lastNameErrorTextView = rootView.findViewById(R.id.lastNameErrorTextView);</span>
+<span class="nc" id="L64">        firstNameErrorTextView = rootView.findViewById(R.id.firstNameErrorTextView);</span>
+<span class="nc" id="L65">        streetErrorTextView = rootView.findViewById(R.id.streetErrorTextView);</span>
+<span class="nc" id="L66">        streetNrErrorTextView = rootView.findViewById(R.id.streetNrErrorTextView);</span>
+
+<span class="nc" id="L68">        Spinner zipSpinner = rootView.findViewById(R.id.plzSpinner);</span>
+<span class="nc" id="L69">        String selectedZIP = zipSpinner.getSelectedItem().toString();</span>
+
+<span class="nc" id="L71">        qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);</span>
+
+<span class="nc" id="L73">        generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);</span>
+<span class="nc" id="L74">        generateQRCodeButton.setOnClickListener(v -&gt; {</span>
+<span class="nc" id="L75">            generateQRCode(selectedZIP);</span>
+<span class="nc" id="L76">        });</span>
+
+<span class="nc" id="L78">        backButton = rootView.findViewById(R.id.backButton);</span>
+<span class="nc" id="L79">        backButton.setOnClickListener(v -&gt; {</span>
+<span class="nc" id="L80">            goBackToPreviousFragment();</span>
+<span class="nc" id="L81">        });</span>
+
+<span class="nc" id="L83">        return rootView;</span>
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (item.getItemId() == android.R.id.home) {</span>
+<span class="nc" id="L89">            requireActivity().onBackPressed();</span>
+<span class="nc" id="L90">            return true;</span>
+        }
+<span class="nc" id="L92">        return super.onOptionsItemSelected(item);</span>
+    }
+
+    @Override
+    public void onDestroyView() {
+<span class="nc" id="L97">        super.onDestroyView();</span>
+<span class="nc" id="L98">        addressBook.saveData(getContext());</span>
+<span class="nc" id="L99">    }</span>
+
+    @Override
+    public void onResume() {
+<span class="nc" id="L103">        super.onResume();</span>
+<span class="nc" id="L104">        clearInputFields();</span>
+<span class="nc" id="L105">    }</span>
+
+    private void goBackToPreviousFragment() {
+<span class="nc" id="L108">        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();</span>
+<span class="nc" id="L109">        fragmentManager.popBackStack();</span>
+<span class="nc" id="L110">    }</span>
+
+    private void generateQRCode(String zip) {
+<span class="nc" id="L113">        String lastName = lastNameEditText.getText().toString().trim();</span>
+<span class="nc" id="L114">        String firstName = firstNameEditText.getText().toString().trim();</span>
+<span class="nc" id="L115">        String street = streetEditText.getText().toString().trim();</span>
+<span class="nc" id="L116">        String houseNumber = streetNrEditText.getText().toString().trim();</span>
+<span class="nc" id="L117">        String selectedZIP = ((Spinner) requireView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (isInputValid(lastName, firstName, street, houseNumber)) {</span>
+<span class="nc" id="L120">            createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);</span>
+<span class="nc" id="L121">            addressBook.saveData(getContext());</span>
+        } else {
+<span class="nc" id="L123">            Toast.makeText(getContext(), &quot;Es liegt einen Fehler beim Ausfüllen vor.&quot;, Toast.LENGTH_SHORT).show();</span>
+        }
+<span class="nc" id="L125">    }</span>
+
+    @SuppressLint(&quot;NewApi&quot;)
+    private void createAndSaveRecipient(String lastName, String firstName, String street, String houseNumber, String zip) {
+<span class="nc" id="L129">        Recipient recipient = new Recipient(lastName, firstName);</span>
+<span class="nc" id="L130">        Address address = new Address(street, houseNumber, zip);</span>
+<span class="nc" id="L131">        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());</span>
+<span class="nc" id="L132">        address.getCity();</span>
+<span class="nc" id="L133">        recipient.addAddress(address);</span>
+
+<span class="nc" id="L135">        Log.d(&quot;Recipient Info&quot;, &quot;First Name: &quot; + firstName +</span>
+                &quot;, Last Name: &quot; + lastName +
+                &quot;, Street: &quot; + street +
+                &quot;, Street Nr: &quot; + houseNumber +
+                &quot;, PLZ: &quot; + zip +
+<span class="nc" id="L140">                &quot;, City: &quot; + address.getCity());</span>
+
+<span class="nc" id="L142">        addressBook.addRecipient(recipient, getContext());</span>
+<span class="nc" id="L143">        recipient.setQRCodeCounter(qrCodeCounter);</span>
+<span class="nc" id="L144">        Bitmap qrCodeBitmap = recipient.generateQRCode();</span>
+<span class="nc" id="L145">        qrCodeImageView.setImageBitmap(qrCodeBitmap);</span>
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (recipient.saveQRCodeToInternalStorage(getContext())) {</span>
+<span class="nc" id="L148">            qrCodeCounter++;</span>
+<span class="nc" id="L149">            AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);</span>
+<span class="nc" id="L150">            Toast.makeText(getContext(), &quot;Der QR-Code wurde erfolgreich generiert.&quot;, Toast.LENGTH_SHORT).show();</span>
+        } else {
+<span class="nc" id="L152">            Toast.makeText(getContext(), &quot;Fehler beim Speichern des QR-Codes&quot;, Toast.LENGTH_SHORT).show();</span>
+        }
+<span class="nc" id="L154">        clearInputFields();</span>
+<span class="nc" id="L155">    }</span>
+
+    private boolean isInputValid(String lastName, String firstName, String street, String houseNumber) {
+<span class="nc" id="L158">        boolean isValid = true;</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        if (!isValidLastName(lastName)) {</span>
+<span class="nc" id="L161">            lastNameErrorTextView.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L162">            isValid = false;</span>
+        } else {
+<span class="nc" id="L164">            lastNameErrorTextView.setVisibility(View.GONE);</span>
+        }
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        if (!isValidFirstName(firstName)) {</span>
+<span class="nc" id="L168">            firstNameErrorTextView.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L169">            isValid = false;</span>
+        } else {
+<span class="nc" id="L171">            firstNameErrorTextView.setVisibility(View.GONE);</span>
+        }
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (!isValidStreet(street)) {</span>
+<span class="nc" id="L175">            streetErrorTextView.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L176">            isValid = false;</span>
+        } else {
+<span class="nc" id="L178">            streetErrorTextView.setVisibility(View.GONE);</span>
+        }
+
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        if (!isValidStreetNr(houseNumber)) {</span>
+<span class="nc" id="L182">            streetNrErrorTextView.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L183">            isValid = false;</span>
+        } else {
+<span class="nc" id="L185">            streetNrErrorTextView.setVisibility(View.GONE);</span>
+        }
+
+<span class="nc" id="L188">        return isValid;</span>
+    }
+
+    private boolean isValidLastName(@NonNull String lastName) {
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        return !lastName.isEmpty();</span>
+    }
+
+    private boolean isValidFirstName(@NonNull String firstName) {
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        return !firstName.isEmpty();</span>
+    }
+
+    private boolean isValidStreet(@NonNull String street) {
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        return !street.isEmpty();</span>
+    }
+
+    private boolean isValidStreetNr(@NonNull String houseNumber) {
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        return !houseNumber.isEmpty();</span>
+    }
+
+
+    private void clearInputFields() {
+<span class="nc" id="L209">        lastNameEditText.setText(&quot;&quot;);</span>
+<span class="nc" id="L210">        firstNameEditText.setText(&quot;&quot;);</span>
+<span class="nc" id="L211">        streetEditText.setText(&quot;&quot;);</span>
+<span class="nc" id="L212">        streetNrEditText.setText(&quot;&quot;);</span>
+<span class="nc" id="L213">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

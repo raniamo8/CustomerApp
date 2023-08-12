@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QRCodeDisplayActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">QRCodeDisplayActivity.java</span></div><h1>QRCodeDisplayActivity.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+/**
+ * Activity for displaying a QR code and recipient details. It loads the QR code image and recipient information
+ * from the provided file path and recipient index, respectively. The recipient's full address is displayed below
+ * the QR code image.
+ */
+<span class="nc" id="L19">public class QRCodeDisplayActivity extends AppCompatActivity {</span>
+    ImageButton backButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L24">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L25">        setContentView(R.layout.activity_qrcode_display);</span>
+<span class="nc" id="L26">        ImageView imageViewQrCodeDisplay = findViewById(R.id.imageViewQRCode);</span>
+<span class="nc" id="L27">        loadQRCode(imageViewQrCodeDisplay);</span>
+<span class="nc" id="L28">        displayRecipientDetails();</span>
+<span class="nc" id="L29">        backButton = findViewById(R.id.backButtonToList);</span>
+<span class="nc" id="L30">        backButton.setOnClickListener(v -&gt; onBackPressed());</span>
+<span class="nc" id="L31">    }</span>
+
+    public void onBackPressed() {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (getSupportFragmentManager().getBackStackEntryCount() &gt; 0) {</span>
+<span class="nc" id="L35">            getSupportFragmentManager().popBackStack();</span>
+        } else {
+<span class="nc" id="L37">            super.onBackPressed();</span>
+        }
+<span class="nc" id="L39">    }</span>
+
+    private void loadQRCode(ImageView imageView) {
+<span class="nc" id="L42">        Intent intent = getIntent();</span>
+<span class="nc bnc" id="L43" title="All 4 branches missed.">        if (intent != null &amp;&amp; intent.hasExtra(&quot;qrCodeFilePath&quot;)) {</span>
+<span class="nc" id="L44">            String filePath = intent.getStringExtra(&quot;qrCodeFilePath&quot;);</span>
+<span class="nc" id="L45">            Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if (qrCodeBitmap != null) {</span>
+<span class="nc" id="L47">                imageView.setImageBitmap(qrCodeBitmap);</span>
+<span class="nc" id="L48">                displayRecipientDetails();</span>
+            } else {
+<span class="nc" id="L50">                displayToastAndFinish(&quot;Fehler beim Laden des QR-Codes.&quot;);</span>
+            }
+<span class="nc" id="L52">        } else {</span>
+<span class="nc" id="L53">            displayToastAndFinish(&quot;Fehler beim Öffnen des QR-Codes.&quot;);</span>
+        }
+<span class="nc" id="L55">    }</span>
+
+    private void displayRecipientDetails() {
+<span class="nc" id="L58">        Intent intent = getIntent();</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">        if (intent != null &amp;&amp; intent.hasExtra(&quot;recipientIndex&quot;)) {</span>
+<span class="nc" id="L60">            int recipientIndex = intent.getIntExtra(&quot;recipientIndex&quot;, -1);</span>
+<span class="nc bnc" id="L61" title="All 4 branches missed.">            if (recipientIndex &gt;= 0 &amp;&amp; recipientIndex &lt; AddressBook.getInstance().getRecipients().size()) {</span>
+<span class="nc" id="L62">                Recipient recipient = AddressBook.getInstance().getRecipients().get(recipientIndex);</span>
+<span class="nc" id="L63">                String recipientDetails = getFormattedRecipientDetails(recipient);</span>
+<span class="nc" id="L64">                TextView textViewRecipientDetails = findViewById(R.id.textViewRecipientDetails);</span>
+<span class="nc" id="L65">                textViewRecipientDetails.setText(recipientDetails);</span>
+            }
+        }
+<span class="nc" id="L68">    }</span>
+
+    private String getFormattedRecipientDetails(Recipient recipient) {
+<span class="nc" id="L71">        Address address = recipient.getAddresses().get(0);</span>
+<span class="nc" id="L72">        String formattedDetails = recipient.getFirstName() + &quot; &quot; + recipient.getLastName() + &quot;\n&quot;</span>
+<span class="nc" id="L73">                + address.getFullAddress();</span>
+<span class="nc" id="L74">        return formattedDetails;</span>
+    }
+
+    private void displayToastAndFinish(String message) {
+<span class="nc" id="L78">        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L79">        finish();</span>
+<span class="nc" id="L80">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

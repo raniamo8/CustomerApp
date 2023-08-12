@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AddressBook.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">AddressBook.java</span></div><h1>AddressBook.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * Represents an address book that stores a list of recipients and their information.
+ * Provides methods to add, delete, and retrieve recipients, as well as manage the QR code counter.
+ */
+public class AddressBook {
+    private static AddressBook instance;
+    private static final String KEY_QR_CODE_COUNTER = &quot;qr_code_counter&quot;;
+    private static final String ADDRESS_BOOK_PREFS_KEY = &quot;address_book_prefs_key&quot;;
+    private List&lt;Recipient&gt; recipients;
+
+
+<span class="nc" id="L28">    public AddressBook() {</span>
+<span class="nc" id="L29">        this.recipients = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L30">    }</span>
+
+    public static AddressBook getInstance() {
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (instance == null) {</span>
+<span class="nc" id="L34">            instance = new AddressBook();</span>
+        }
+<span class="nc" id="L36">        return instance;</span>
+    }
+
+    public List&lt;Recipient&gt; getRecipients() {
+<span class="nc" id="L40">        return recipients;</span>
+    }
+
+    public static int getQRCodeCounter(Context context) {
+<span class="nc" id="L44">        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);</span>
+<span class="nc" id="L45">        return preferences.getInt(KEY_QR_CODE_COUNTER, 1);</span>
+    }
+
+
+    public static void setQRCodeCounter(Context context, int qrCodeCounter) {
+<span class="nc" id="L50">        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);</span>
+<span class="nc" id="L51">        SharedPreferences.Editor editor = preferences.edit();</span>
+<span class="nc" id="L52">        editor.putInt(KEY_QR_CODE_COUNTER, qrCodeCounter);</span>
+<span class="nc" id="L53">        editor.apply();</span>
+<span class="nc" id="L54">    }</span>
+
+    public void reset() {
+<span class="nc" id="L57">        recipients.clear();</span>
+<span class="nc" id="L58">    }</span>
+
+    public void addRecipient(Recipient recipient, Context context) {
+<span class="nc bnc" id="L61" title="All 6 branches missed.">        if (recipient == null || (recipient.getFirstName().isEmpty() &amp;&amp; recipient.getLastName().isEmpty())) {</span>
+<span class="nc" id="L62">            System.out.println(&quot;Der Recipient ist null.&quot;);</span>
+<span class="nc" id="L63">            return;</span>
+        }
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (recipients.contains(recipient)) {</span>
+<span class="nc" id="L66">            System.out.println(&quot;Recipient ist bereits im AddressBook vorhanden.&quot;);</span>
+<span class="nc" id="L67">            return;</span>
+        }
+<span class="nc" id="L69">        int qrCodeCounter = getQRCodeCounter(context);</span>
+<span class="nc" id="L70">        setQRCodeCounter(context, qrCodeCounter + 1);</span>
+<span class="nc" id="L71">        recipient.setQRCodeCounter(qrCodeCounter);</span>
+<span class="nc" id="L72">        recipients.add(recipient);</span>
+<span class="nc" id="L73">        System.out.println(&quot;Hinzufügen eines Recipients: &quot; + recipient.getFirstName() + &quot; &quot; + recipient.getLastName());</span>
+<span class="nc" id="L74">        System.out.println(&quot;Recipient wurde zum AddressBook erfolgreich hinzugefügt&quot;);</span>
+<span class="nc" id="L75">        saveData(context);</span>
+<span class="nc" id="L76">    }</span>
+
+
+    public void loadData(Context context) {
+<span class="nc" id="L80">        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);</span>
+<span class="nc" id="L81">        Gson gson = new Gson();</span>
+<span class="nc" id="L82">        String json = preferences.getString(ADDRESS_BOOK_PREFS_KEY, &quot;&quot;);</span>
+<span class="nc" id="L83">        Type type = new TypeToken&lt;List&lt;Recipient&gt;&gt;() {</span>
+<span class="nc" id="L84">        }.getType();</span>
+<span class="nc" id="L85">        recipients = gson.fromJson(json, type);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (recipients == null) {</span>
+<span class="nc" id="L87">            recipients = new ArrayList&lt;&gt;();</span>
+        }
+<span class="nc" id="L89">        Log.d(&quot;AddressBook&quot;, &quot;Loaded data: &quot; + recipients);</span>
+<span class="nc" id="L90">    }</span>
+
+    public void saveData(Context context) {
+<span class="nc" id="L93">        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);</span>
+<span class="nc" id="L94">        SharedPreferences.Editor editor = preferences.edit();</span>
+<span class="nc" id="L95">        Gson gson = new Gson();</span>
+<span class="nc" id="L96">        String json = gson.toJson(recipients);</span>
+<span class="nc" id="L97">        editor.putString(ADDRESS_BOOK_PREFS_KEY, json);</span>
+<span class="nc" id="L98">        editor.apply();</span>
+<span class="nc" id="L99">        Log.d(&quot;AddressBook&quot;, &quot;Saved data: &quot; + json);</span>
+<span class="nc" id="L100">    }</span>
+
+/*
+    public void deleteOneRecipient222(Recipient recipient, Context context) {
+        if (recipients.contains(recipient)) {
+            for (Address address : recipient.getAddresses()) {
+                recipient.removeAddress(address);
+                Log.d(&quot;AddressBook&quot;, &quot;Adresse gelöscht: &quot; + address.toString());
+            }
+
+            recipients.remove(recipient);
+            System.out.println(&quot;Der Recipient wurde erfolgreich entfernt&quot;);
+
+            if (!recipient.getAddresses().isEmpty()) {
+                int qrCodeCounter = getQRCodeCounter(context);
+                qrCodeCounter--;
+                setQRCodeCounter(context, qrCodeCounter);
+            }
+
+            if (recipients.isEmpty()) {
+                setQRCodeCounter(context, 0);
+            }
+            saveData(context);
+        } else {
+            System.out.println(&quot;Der Recipient konnte nicht gefunden werden&quot;);
+        }
+    }
+    */
+
+    public void deleteOneRecipient(Recipient recipient, Context context) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (recipients.contains(recipient)) {</span>
+<span class="nc" id="L131">            Iterator&lt;Address&gt; iterator = recipient.getAddresses().iterator();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            while (iterator.hasNext()) {</span>
+<span class="nc" id="L133">                Address address = iterator.next();</span>
+<span class="nc" id="L134">                iterator.remove();  // Sicher entfernen der aktuellen Adresse</span>
+<span class="nc" id="L135">                Log.d(&quot;AddressBook&quot;, &quot;Adresse gelöscht: &quot; + address.toString());</span>
+<span class="nc" id="L136">            }</span>
+
+<span class="nc" id="L138">            recipients.remove(recipient);</span>
+<span class="nc" id="L139">            System.out.println(&quot;Der Recipient wurde erfolgreich entfernt&quot;);</span>
+
+
+<span class="nc" id="L142">            int qrCodeCounter = getQRCodeCounter(context);</span>
+<span class="nc" id="L143">            qrCodeCounter--;</span>
+<span class="nc" id="L144">            setQRCodeCounter(context, qrCodeCounter);</span>
+
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            if (recipients.isEmpty()) {</span>
+<span class="nc" id="L148">                setQRCodeCounter(context, 0);</span>
+            }
+<span class="nc" id="L150">            saveData(context);</span>
+<span class="nc" id="L151">        } else {</span>
+<span class="nc" id="L152">            System.out.println(&quot;Der Recipient konnte nicht gefunden werden&quot;);</span>
+        }
+<span class="nc" id="L154">    }</span>
+
+
+    public void deleteAllRecipients(Context context) {
+<span class="nc" id="L158">        recipients.clear();</span>
+<span class="nc" id="L159">        setQRCodeCounter(context, 0);</span>
+<span class="nc" id="L160">        saveData(context);</span>
+<span class="nc" id="L161">        deleteAllSavedQRCodes(context);</span>
+<span class="nc" id="L162">        System.out.println(&quot;Alle Recipients und QR-Codes wurden gelöscht.&quot;);</span>
+<span class="nc" id="L163">    }</span>
+
+    private void deleteAllSavedQRCodes(Context context) {
+<span class="nc" id="L166">        File directory = context.getDir(&quot;qr_codes&quot;, Context.MODE_PRIVATE);</span>
+<span class="nc" id="L167">        File[] files = directory.listFiles();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (files != null) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            for (File file : files) {</span>
+<span class="nc" id="L170">                file.delete();</span>
+            }
+        }
+<span class="nc" id="L173">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExploreFragment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">ExploreFragment.java</span></div><h1>ExploreFragment.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/**
+ * Represents a fragment the Explore screen, which displays a list of stores.
+ * The fragment contains a list of store data and uses a RecyclerView with the StoreDetailsAdapter to display the store details.
+ */
+<span class="nc" id="L41">public class ExploreFragment extends Fragment {</span>
+
+    private ArrayList&lt;StoreDetails&gt; storeList;
+    private StoreDetailsAdapter storeListAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L48">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L49">        storeList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L50">        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);</span>
+<span class="nc" id="L51">    }</span>
+
+    @SuppressLint(&quot;MissingInflatedId&quot;)
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+<span class="nc" id="L57">        View view = inflater.inflate(R.layout.fragment_explore, container, false);</span>
+<span class="nc" id="L58">        ExecutorService executorService = Executors.newSingleThreadExecutor();</span>
+
+<span class="nc" id="L60">        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStores);</span>
+<span class="nc" id="L61">        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));</span>
+
+<span class="nc" id="L63">        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);</span>
+<span class="nc" id="L64">        recyclerView.setAdapter(storeListAdapter);</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (isNetworkAvailable()) {</span>
+<span class="nc" id="L67">            executorService.execute(() -&gt; {</span>
+<span class="nc" id="L68">                ArrayList&lt;StoreDetails&gt; result = downloadData();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                if (result != null) {</span>
+<span class="nc" id="L70">                    requireActivity().runOnUiThread(() -&gt; updateUI(result));</span>
+                } else {
+<span class="nc" id="L72">                    requireActivity().runOnUiThread(() -&gt; Toast.makeText(requireContext(), &quot;Die Verbindung zum Server ist fehlgeschlagen&quot;, Toast.LENGTH_LONG).show());</span>
+                }
+<span class="nc" id="L74">            });</span>
+        } else {
+<span class="nc" id="L76">            requireActivity().runOnUiThread(() -&gt; Toast.makeText(requireContext(), &quot;Keine Netzwerkverbindung&quot;, Toast.LENGTH_LONG).show());</span>
+        }
+<span class="nc" id="L78">        return view;</span>
+    }
+
+    private ArrayList&lt;StoreDetails&gt; downloadData() {
+        try {
+<span class="nc" id="L83">            URL url = new URL(&quot;http://131.173.65.77:8080/store-details&quot;);</span>
+<span class="nc" id="L84">            HttpURLConnection connection = (HttpURLConnection) url.openConnection();</span>
+<span class="nc" id="L85">            connection.setRequestMethod(&quot;GET&quot;);</span>
+<span class="nc" id="L86">            connection.setDoInput(true);</span>
+<span class="nc" id="L87">            connection.setConnectTimeout(2000);</span>
+<span class="nc" id="L88">            connection.setReadTimeout(2000);</span>
+<span class="nc" id="L89">            connection.connect();</span>
+<span class="nc" id="L90">            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));</span>
+<span class="nc" id="L91">            StringBuilder stringBuilder = new StringBuilder();</span>
+            String line;
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            while ((line = bufferedReader.readLine()) != null) {</span>
+<span class="nc" id="L94">                stringBuilder.append(line).append(&quot;\n&quot;);</span>
+            }
+<span class="nc" id="L96">            bufferedReader.close();</span>
+<span class="nc" id="L97">            JSONArray jsonArray = new JSONArray(stringBuilder.toString());</span>
+<span class="nc" id="L98">            ArrayList&lt;StoreDetails&gt; storeList = new ArrayList&lt;&gt;();</span>
+            int storeIndex;
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            for (storeIndex = 0; storeIndex &lt; jsonArray.length(); storeIndex++) {</span>
+<span class="nc" id="L101">                JSONObject jsonObject = jsonArray.getJSONObject(storeIndex);</span>
+<span class="nc" id="L102">                String id = jsonObject.getString(&quot;id&quot;);</span>
+<span class="nc" id="L103">                String name = jsonObject.getString(&quot;name&quot;);</span>
+<span class="nc" id="L104">                String owner = jsonObject.getString(&quot;owner&quot;);</span>
+<span class="nc" id="L105">                String street = jsonObject.getString(&quot;street&quot;);</span>
+<span class="nc" id="L106">                String houseNumber = jsonObject.getString(&quot;houseNumber&quot;);</span>
+<span class="nc" id="L107">                String zip = jsonObject.getString(&quot;zip&quot;);</span>
+<span class="nc" id="L108">                String city = jsonObject.getString(&quot;city&quot;);</span>
+<span class="nc" id="L109">                String telephone = jsonObject.getString(&quot;telephone&quot;);</span>
+<span class="nc" id="L110">                String email = jsonObject.getString(&quot;email&quot;);</span>
+<span class="nc" id="L111">                String logo = jsonObject.getString(&quot;logo&quot;);</span>
+<span class="nc" id="L112">                String backgroundImage = jsonObject.getString(&quot;backgroundImage&quot;);</span>
+<span class="nc" id="L113">                JSONObject coordinatesObject = jsonObject.getJSONObject(&quot;coordinates&quot;);</span>
+<span class="nc" id="L114">                double latitude = coordinatesObject.getDouble(&quot;latitude&quot;);</span>
+<span class="nc" id="L115">                double longitude = coordinatesObject.getDouble(&quot;longitude&quot;);</span>
+<span class="nc" id="L116">                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo, backgroundImage, new LatLng(latitude, longitude));</span>
+<span class="nc" id="L117">                storeList.add(storeDetails);</span>
+<span class="nc" id="L118">                System.out.println(backgroundImage);</span>
+            }
+<span class="nc" id="L120">            return storeList;</span>
+            //catch block problem
+<span class="nc" id="L122">        } catch (IOException | JSONException e) {</span>
+<span class="nc" id="L123">            Log.e(TAG, &quot;Error downloading or decoding JSON data&quot;, e);</span>
+<span class="nc" id="L124">            return null;</span>
+        }
+    }
+
+    @SuppressLint(&quot;NotifyDataSetChanged&quot;)
+    private void updateUI(ArrayList&lt;StoreDetails&gt; result) {
+<span class="nc" id="L130">        storeList.clear();</span>
+<span class="nc" id="L131">        storeList.addAll(result);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (storeListAdapter != null) {</span>
+<span class="nc" id="L133">            storeListAdapter.notifyDataSetChanged();</span>
+        }
+<span class="nc" id="L135">    }</span>
+
+    private boolean isNetworkAvailable() {
+<span class="nc" id="L138">        ConnectivityManager connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);</span>
+<span class="nc" id="L139">        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();</span>
+<span class="nc bnc" id="L140" title="All 4 branches missed.">        return activeNetwork != null &amp;&amp; activeNetwork.isConnected();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

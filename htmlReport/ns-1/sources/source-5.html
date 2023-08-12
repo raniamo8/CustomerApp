@@ -1,0 +1,247 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ExploreFragment</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerapp</a>
+</div>
+
+<h1>Coverage Summary for Class: ExploreFragment (com.example.customerapp)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ExploreFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/62)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerapp;
+&nbsp;
+&nbsp;import static android.content.ContentValues.TAG;
+&nbsp;
+&nbsp;import android.annotation.SuppressLint;
+&nbsp;import android.content.Context;
+&nbsp;import android.net.ConnectivityManager;
+&nbsp;import android.net.NetworkInfo;
+&nbsp;import android.os.Bundle;
+&nbsp;import android.util.Log;
+&nbsp;import android.view.LayoutInflater;
+&nbsp;import android.view.View;
+&nbsp;import android.view.ViewGroup;
+&nbsp;import android.widget.Toast;
+&nbsp;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;import androidx.annotation.Nullable;
+&nbsp;import androidx.fragment.app.Fragment;
+&nbsp;import androidx.recyclerview.widget.LinearLayoutManager;
+&nbsp;import androidx.recyclerview.widget.RecyclerView;
+&nbsp;
+&nbsp;import com.google.android.gms.maps.model.LatLng;
+&nbsp;
+&nbsp;import org.json.JSONArray;
+&nbsp;import org.json.JSONException;
+&nbsp;import org.json.JSONObject;
+&nbsp;
+&nbsp;import java.io.BufferedReader;
+&nbsp;import java.io.IOException;
+&nbsp;import java.io.InputStreamReader;
+&nbsp;import java.net.HttpURLConnection;
+&nbsp;import java.net.URL;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.concurrent.ExecutorService;
+&nbsp;import java.util.concurrent.Executors;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents a fragment the Explore screen, which displays a list of stores.
+&nbsp; * The fragment contains a list of store data and uses a RecyclerView with the StoreDetailsAdapter to display the store details.
+&nbsp; */
+<b class="nc">&nbsp;public class ExploreFragment extends Fragment {</b>
+&nbsp;
+&nbsp;    private ArrayList&lt;StoreDetails&gt; storeList;
+&nbsp;    private StoreDetailsAdapter storeListAdapter;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc">&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc">&nbsp;        storeList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @SuppressLint(&quot;MissingInflatedId&quot;)
+&nbsp;    @Nullable
+&nbsp;    @Override
+&nbsp;    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+<b class="nc">&nbsp;        View view = inflater.inflate(R.layout.fragment_explore, container, false);</b>
+<b class="nc">&nbsp;        ExecutorService executorService = Executors.newSingleThreadExecutor();</b>
+&nbsp;
+<b class="nc">&nbsp;        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStores);</b>
+<b class="nc">&nbsp;        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));</b>
+&nbsp;
+<b class="nc">&nbsp;        storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);</b>
+<b class="nc">&nbsp;        recyclerView.setAdapter(storeListAdapter);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (isNetworkAvailable()) {</b>
+<b class="nc">&nbsp;            executorService.execute(() -&gt; {</b>
+<b class="nc">&nbsp;                ArrayList&lt;StoreDetails&gt; result = downloadData();</b>
+<b class="nc">&nbsp;                if (result != null) {</b>
+<b class="nc">&nbsp;                    requireActivity().runOnUiThread(() -&gt; updateUI(result));</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    requireActivity().runOnUiThread(() -&gt; Toast.makeText(requireContext(), &quot;Die Verbindung zum Server ist fehlgeschlagen&quot;, Toast.LENGTH_LONG).show());</b>
+&nbsp;                }
+&nbsp;            });
+&nbsp;        } else {
+<b class="nc">&nbsp;            requireActivity().runOnUiThread(() -&gt; Toast.makeText(requireContext(), &quot;Keine Netzwerkverbindung&quot;, Toast.LENGTH_LONG).show());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return view;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private ArrayList&lt;StoreDetails&gt; downloadData() {
+&nbsp;        try {
+<b class="nc">&nbsp;            URL url = new URL(&quot;http://131.173.65.77:8080/store-details&quot;);</b>
+<b class="nc">&nbsp;            HttpURLConnection connection = (HttpURLConnection) url.openConnection();</b>
+<b class="nc">&nbsp;            connection.setRequestMethod(&quot;GET&quot;);</b>
+<b class="nc">&nbsp;            connection.setDoInput(true);</b>
+<b class="nc">&nbsp;            connection.setConnectTimeout(2000);</b>
+<b class="nc">&nbsp;            connection.setReadTimeout(2000);</b>
+<b class="nc">&nbsp;            connection.connect();</b>
+<b class="nc">&nbsp;            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));</b>
+<b class="nc">&nbsp;            StringBuilder stringBuilder = new StringBuilder();</b>
+&nbsp;            String line;
+<b class="nc">&nbsp;            while ((line = bufferedReader.readLine()) != null) {</b>
+<b class="nc">&nbsp;                stringBuilder.append(line).append(&quot;\n&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            bufferedReader.close();</b>
+<b class="nc">&nbsp;            JSONArray jsonArray = new JSONArray(stringBuilder.toString());</b>
+<b class="nc">&nbsp;            ArrayList&lt;StoreDetails&gt; storeList = new ArrayList&lt;&gt;();</b>
+&nbsp;            int storeIndex;
+<b class="nc">&nbsp;            for (storeIndex = 0; storeIndex &lt; jsonArray.length(); storeIndex++) {</b>
+<b class="nc">&nbsp;                JSONObject jsonObject = jsonArray.getJSONObject(storeIndex);</b>
+<b class="nc">&nbsp;                String id = jsonObject.getString(&quot;id&quot;);</b>
+<b class="nc">&nbsp;                String name = jsonObject.getString(&quot;name&quot;);</b>
+<b class="nc">&nbsp;                String owner = jsonObject.getString(&quot;owner&quot;);</b>
+<b class="nc">&nbsp;                String street = jsonObject.getString(&quot;street&quot;);</b>
+<b class="nc">&nbsp;                String houseNumber = jsonObject.getString(&quot;houseNumber&quot;);</b>
+<b class="nc">&nbsp;                String zip = jsonObject.getString(&quot;zip&quot;);</b>
+<b class="nc">&nbsp;                String city = jsonObject.getString(&quot;city&quot;);</b>
+<b class="nc">&nbsp;                String telephone = jsonObject.getString(&quot;telephone&quot;);</b>
+<b class="nc">&nbsp;                String email = jsonObject.getString(&quot;email&quot;);</b>
+<b class="nc">&nbsp;                String logo = jsonObject.getString(&quot;logo&quot;);</b>
+<b class="nc">&nbsp;                String backgroundImage = jsonObject.getString(&quot;backgroundImage&quot;);</b>
+<b class="nc">&nbsp;                JSONObject coordinatesObject = jsonObject.getJSONObject(&quot;coordinates&quot;);</b>
+<b class="nc">&nbsp;                double latitude = coordinatesObject.getDouble(&quot;latitude&quot;);</b>
+<b class="nc">&nbsp;                double longitude = coordinatesObject.getDouble(&quot;longitude&quot;);</b>
+<b class="nc">&nbsp;                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo, backgroundImage, new LatLng(latitude, longitude));</b>
+<b class="nc">&nbsp;                storeList.add(storeDetails);</b>
+<b class="nc">&nbsp;                System.out.println(backgroundImage);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return storeList;</b>
+&nbsp;            //catch block problem
+<b class="nc">&nbsp;        } catch (IOException | JSONException e) {</b>
+<b class="nc">&nbsp;            Log.e(TAG, &quot;Error downloading or decoding JSON data&quot;, e);</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @SuppressLint(&quot;NotifyDataSetChanged&quot;)
+&nbsp;    private void updateUI(ArrayList&lt;StoreDetails&gt; result) {
+<b class="nc">&nbsp;        storeList.clear();</b>
+<b class="nc">&nbsp;        storeList.addAll(result);</b>
+<b class="nc">&nbsp;        if (storeListAdapter != null) {</b>
+<b class="nc">&nbsp;            storeListAdapter.notifyDataSetChanged();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean isNetworkAvailable() {
+<b class="nc">&nbsp;        ConnectivityManager connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);</b>
+<b class="nc">&nbsp;        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();</b>
+<b class="nc">&nbsp;        return activeNetwork != null &amp;&amp; activeNetwork.isConnected();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-12 14:10</div>
+</div>
+</body>
+</html>

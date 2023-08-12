@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recipient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">Recipient.java</span></div><h1>Recipient.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.util.Log;
+
+import androidx.annotation.RequiresApi;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
+
+/**
+ * Represents a recipient with its information.
+ * The recipient can generate a QR code based on their information, and save it to the internal storage of the app.
+ */
+public class Recipient {
+<span class="nc" id="L36">    private static int qrCodeCounter = 1;</span>
+    private static final int WIDTH_HEIGHT_NR = 400;
+    private String firstName;
+    private String lastName;
+    private List&lt;Address&gt; addresses;
+
+<span class="nc" id="L42">    public Recipient(String lastName, String firstName) {</span>
+<span class="nc" id="L43">        this.lastName = lastName;</span>
+<span class="nc" id="L44">        this.firstName = firstName;</span>
+<span class="nc" id="L45">        this.addresses = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L46">        this.qrCodeCounter = 0;</span>
+<span class="nc" id="L47">    }</span>
+
+    public int getQRCodeCounter() {
+<span class="nc" id="L50">        return qrCodeCounter;</span>
+    }
+
+    public void setQRCodeCounter(int qrCodeCounter) {
+<span class="nc" id="L54">        this.qrCodeCounter = qrCodeCounter;</span>
+<span class="nc" id="L55">    }</span>
+
+    public String getFirstName() {
+<span class="nc" id="L58">        return firstName;</span>
+    }
+
+    public String getLastName() {
+<span class="nc" id="L62">        return lastName;</span>
+    }
+
+    public List&lt;Address&gt; getAddresses() {
+<span class="nc" id="L66">        return addresses;</span>
+    }
+
+    public void addAddress(Address address) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (address != null) {</span>
+<span class="nc" id="L71">            addresses.add(address);</span>
+        }
+<span class="nc" id="L73">    }</span>
+
+    public void removeAddress(Address address) {
+<span class="nc" id="L76">        addresses.remove(address);</span>
+<span class="nc" id="L77">    }</span>
+
+    public Bitmap generateQRCode() {
+<span class="nc bnc" id="L80" title="All 6 branches missed.">        if (firstName == null || lastName == null || addresses.isEmpty()) {</span>
+<span class="nc" id="L81">            Log.e(&quot;Recipient&quot;, &quot;Cannot generate QR code. Incomplete recipient information.&quot;);</span>
+<span class="nc" id="L82">            return null;</span>
+        }
+
+<span class="nc" id="L85">        Address address = addresses.get(0);</span>
+<span class="nc" id="L86">        String text = lastName + &quot;&amp;&quot; + firstName + &quot;&amp;&quot; + address.getStreet() + &quot;&amp;&quot;</span>
+<span class="nc" id="L87">                + address.getHouseNumber() + &quot;&amp;&quot; + address.getZip() + &quot;&amp;&quot; + address.getCity();</span>
+<span class="nc" id="L88">        MultiFormatWriter writer = new MultiFormatWriter();</span>
+        try {
+<span class="nc" id="L90">            BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, WIDTH_HEIGHT_NR, WIDTH_HEIGHT_NR);</span>
+<span class="nc" id="L91">            BarcodeEncoder encoder = new BarcodeEncoder();</span>
+<span class="nc" id="L92">            return encoder.createBitmap(matrix);</span>
+<span class="nc" id="L93">        } catch (WriterException e) {</span>
+<span class="nc" id="L94">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L96">        return null;</span>
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean saveQRCodeToInternalStorage(Context context) {
+<span class="nc" id="L102">        Bitmap qrCodeBitmap = generateQRCode();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (qrCodeBitmap == null) {</span>
+<span class="nc" id="L104">            return false;</span>
+        }
+
+        try {
+<span class="nc" id="L108">            File directory = context.getDir(&quot;qr_codes&quot;, Context.MODE_PRIVATE);</span>
+<span class="nc" id="L109">            String fileName = &quot;qr_code&quot; + qrCodeCounter + &quot;.png&quot;;</span>
+<span class="nc" id="L110">            File file = new File(directory, fileName);</span>
+<span class="nc" id="L111">            OutputStream outputStream = Files.newOutputStream(file.toPath());</span>
+<span class="nc" id="L112">            qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);</span>
+<span class="nc" id="L113">            outputStream.flush();</span>
+<span class="nc" id="L114">            outputStream.close();</span>
+<span class="nc" id="L115">            Log.d(&quot;Recipient&quot;, &quot;QR code saved to: &quot; + file.getAbsolutePath());</span>
+<span class="nc" id="L116">            qrCodeCounter++;</span>
+
+<span class="nc" id="L118">            return true;</span>
+<span class="nc" id="L119">        } catch (IOException e) {</span>
+<span class="nc" id="L120">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L122">        return false;</span>
+    }
+
+
+    public static String decodeQR(Bitmap bitmap) {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (bitmap == null) {</span>
+<span class="nc" id="L128">            return null;</span>
+        }
+
+<span class="nc" id="L131">        int[] intArray = new int[bitmap.getWidth() * bitmap.getHeight()];</span>
+<span class="nc" id="L132">        bitmap.getPixels(intArray, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());</span>
+
+<span class="nc" id="L134">        LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), intArray);</span>
+<span class="nc" id="L135">        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));</span>
+
+        try {
+<span class="nc" id="L138">            MultiFormatReader multiFormatReader = new MultiFormatReader();</span>
+<span class="nc" id="L139">            Result result = multiFormatReader.decode(binaryBitmap);</span>
+<span class="nc" id="L140">            return result.getText();</span>
+<span class="nc" id="L141">        } catch (Exception e) {</span>
+            // Log or handle the exception
+<span class="nc" id="L143">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L145">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

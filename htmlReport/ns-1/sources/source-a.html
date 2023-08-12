@@ -1,0 +1,250 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Recipient</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerapp</a>
+</div>
+
+<h1>Coverage Summary for Class: Recipient (com.example.customerapp)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Recipient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/55)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerapp;
+&nbsp;
+&nbsp;import android.content.Context;
+&nbsp;import android.graphics.Bitmap;
+&nbsp;import android.os.Build;
+&nbsp;import android.util.Log;
+&nbsp;
+&nbsp;import androidx.annotation.RequiresApi;
+&nbsp;
+&nbsp;import com.google.zxing.BarcodeFormat;
+&nbsp;import com.google.zxing.MultiFormatWriter;
+&nbsp;import com.google.zxing.RGBLuminanceSource;
+&nbsp;import com.google.zxing.WriterException;
+&nbsp;import com.google.zxing.common.BitMatrix;
+&nbsp;import com.journeyapps.barcodescanner.BarcodeEncoder;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.IOException;
+&nbsp;import java.io.OutputStream;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import com.google.zxing.BinaryBitmap;
+&nbsp;import com.google.zxing.LuminanceSource;
+&nbsp;import com.google.zxing.MultiFormatReader;
+&nbsp;import com.google.zxing.Result;
+&nbsp;import com.google.zxing.common.HybridBinarizer;
+&nbsp;import com.google.zxing.qrcode.QRCodeReader;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents a recipient with its information.
+&nbsp; * The recipient can generate a QR code based on their information, and save it to the internal storage of the app.
+&nbsp; */
+&nbsp;public class Recipient {
+<b class="nc">&nbsp;    private static int qrCodeCounter = 1;</b>
+&nbsp;    private static final int WIDTH_HEIGHT_NR = 400;
+&nbsp;    private String firstName;
+&nbsp;    private String lastName;
+&nbsp;    private List&lt;Address&gt; addresses;
+&nbsp;
+<b class="nc">&nbsp;    public Recipient(String lastName, String firstName) {</b>
+<b class="nc">&nbsp;        this.lastName = lastName;</b>
+<b class="nc">&nbsp;        this.firstName = firstName;</b>
+<b class="nc">&nbsp;        this.addresses = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        this.qrCodeCounter = 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getQRCodeCounter() {
+<b class="nc">&nbsp;        return qrCodeCounter;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setQRCodeCounter(int qrCodeCounter) {
+<b class="nc">&nbsp;        this.qrCodeCounter = qrCodeCounter;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getFirstName() {
+<b class="nc">&nbsp;        return firstName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getLastName() {
+<b class="nc">&nbsp;        return lastName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Address&gt; getAddresses() {
+<b class="nc">&nbsp;        return addresses;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addAddress(Address address) {
+<b class="nc">&nbsp;        if (address != null) {</b>
+<b class="nc">&nbsp;            addresses.add(address);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void removeAddress(Address address) {
+<b class="nc">&nbsp;        addresses.remove(address);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Bitmap generateQRCode() {
+<b class="nc">&nbsp;        if (firstName == null || lastName == null || addresses.isEmpty()) {</b>
+<b class="nc">&nbsp;            Log.e(&quot;Recipient&quot;, &quot;Cannot generate QR code. Incomplete recipient information.&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Address address = addresses.get(0);</b>
+<b class="nc">&nbsp;        String text = lastName + &quot;&amp;&quot; + firstName + &quot;&amp;&quot; + address.getStreet() + &quot;&amp;&quot;</b>
+<b class="nc">&nbsp;                + address.getHouseNumber() + &quot;&amp;&quot; + address.getZip() + &quot;&amp;&quot; + address.getCity();</b>
+<b class="nc">&nbsp;        MultiFormatWriter writer = new MultiFormatWriter();</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, WIDTH_HEIGHT_NR, WIDTH_HEIGHT_NR);</b>
+<b class="nc">&nbsp;            BarcodeEncoder encoder = new BarcodeEncoder();</b>
+<b class="nc">&nbsp;            return encoder.createBitmap(matrix);</b>
+<b class="nc">&nbsp;        } catch (WriterException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @RequiresApi(api = Build.VERSION_CODES.O)
+&nbsp;    public boolean saveQRCodeToInternalStorage(Context context) {
+<b class="nc">&nbsp;        Bitmap qrCodeBitmap = generateQRCode();</b>
+<b class="nc">&nbsp;        if (qrCodeBitmap == null) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            File directory = context.getDir(&quot;qr_codes&quot;, Context.MODE_PRIVATE);</b>
+<b class="nc">&nbsp;            String fileName = &quot;qr_code&quot; + qrCodeCounter + &quot;.png&quot;;</b>
+<b class="nc">&nbsp;            File file = new File(directory, fileName);</b>
+<b class="nc">&nbsp;            OutputStream outputStream = Files.newOutputStream(file.toPath());</b>
+<b class="nc">&nbsp;            qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);</b>
+<b class="nc">&nbsp;            outputStream.flush();</b>
+<b class="nc">&nbsp;            outputStream.close();</b>
+<b class="nc">&nbsp;            Log.d(&quot;Recipient&quot;, &quot;QR code saved to: &quot; + file.getAbsolutePath());</b>
+<b class="nc">&nbsp;            qrCodeCounter++;</b>
+&nbsp;
+<b class="nc">&nbsp;            return true;</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public static String decodeQR(Bitmap bitmap) {
+<b class="nc">&nbsp;        if (bitmap == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int[] intArray = new int[bitmap.getWidth() * bitmap.getHeight()];</b>
+<b class="nc">&nbsp;        bitmap.getPixels(intArray, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());</b>
+&nbsp;
+<b class="nc">&nbsp;        LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), intArray);</b>
+<b class="nc">&nbsp;        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            MultiFormatReader multiFormatReader = new MultiFormatReader();</b>
+<b class="nc">&nbsp;            Result result = multiFormatReader.decode(binaryBitmap);</b>
+<b class="nc">&nbsp;            return result.getText();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+&nbsp;            // Log or handle the exception
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-12 14:10</div>
+</div>
+</body>
+</html>

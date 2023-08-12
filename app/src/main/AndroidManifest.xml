@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,6 +22,9 @@
         android:theme="@style/Theme.CustomerApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
+        <activity
+            android:name=".OwnerInformationActivity"
+            android:theme="@style/Theme.CustomerApp.NoActionBar" />
         <activity
             android:name=".WelcomeActivity"
             android:exported="false" />
@@ -42,8 +44,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAk1dzf_dCZO9T3qymWsaXcnWW6t4JH_ME"/>
-
+            android:value="AIzaSyAk1dzf_dCZO9T3qymWsaXcnWW6t4JH_ME" />
     </application>
 
 </manifest>

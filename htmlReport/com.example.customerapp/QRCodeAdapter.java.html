@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QRCodeAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">UnitTestSuite Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.example.customerapp</a> &gt; <span class="el_source">QRCodeAdapter.java</span></div><h1>QRCodeAdapter.java</h1><pre class="source lang-java linenums">package com.example.customerapp;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.File;
+import java.util.List;
+
+/**
+ * Adapter class for displaying and managing QR codes and associated recipient information in a RecyclerView.
+ */
+public class QRCodeAdapter extends RecyclerView.Adapter&lt;QRCodeAdapter.QRCodeViewHolder&gt; {
+    private List&lt;String&gt; qrCodeFilePaths;
+    private Context context;
+    private AddressBook addressBook;
+
+<span class="nc" id="L31">    public QRCodeAdapter(Context context, List&lt;String&gt; qrCodeFilePaths, AddressBook addressBook) {</span>
+<span class="nc" id="L32">        this.context = context;</span>
+<span class="nc" id="L33">        this.qrCodeFilePaths = qrCodeFilePaths;</span>
+<span class="nc" id="L34">        this.addressBook = addressBook;</span>
+<span class="nc" id="L35">    }</span>
+
+    @NonNull
+    @Override
+    public QRCodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+<span class="nc" id="L40">        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_qr_code, parent, false);</span>
+<span class="nc" id="L41">        return new QRCodeViewHolder(view);</span>
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull QRCodeViewHolder holder, int position) {
+<span class="nc" id="L46">        String filePath = qrCodeFilePaths.get(position);</span>
+<span class="nc" id="L47">        Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);</span>
+<span class="nc" id="L48">        holder.imageViewQrCode.setImageBitmap(qrCodeBitmap);</span>
+<span class="nc" id="L49">        setRecipientInfo(holder, position);</span>
+
+<span class="nc" id="L51">        holder.buttonOpenQRCode.setOnClickListener(v -&gt; {</span>
+<span class="nc" id="L52">            openQRCodeDisplayActivity(v.getContext(), position);</span>
+<span class="nc" id="L53">        });</span>
+
+<span class="nc" id="L55">        holder.deleteButton.setOnClickListener(v -&gt; {</span>
+<span class="nc" id="L56">            deleteQRCodeAndRecipient(position);</span>
+<span class="nc" id="L57">        });</span>
+<span class="nc" id="L58">    }</span>
+
+    @Override
+    public int getItemCount() {
+<span class="nc" id="L62">        return qrCodeFilePaths.size();</span>
+    }
+
+    static class QRCodeViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageViewQrCode;
+        Button deleteButton;
+        Button buttonOpenQRCode;
+        TextView textViewRecipientInfo;
+
+        public QRCodeViewHolder(@NonNull View itemView) {
+<span class="nc" id="L72">            super(itemView);</span>
+<span class="nc" id="L73">            imageViewQrCode = itemView.findViewById(R.id.imageViewQrCode);</span>
+<span class="nc" id="L74">            deleteButton = itemView.findViewById(R.id.deleteButton);</span>
+<span class="nc" id="L75">            buttonOpenQRCode = itemView.findViewById(R.id.buttonOpenQRCode);</span>
+<span class="nc" id="L76">            textViewRecipientInfo = itemView.findViewById(R.id.textViewRecipientInfo);</span>
+<span class="nc" id="L77">        }</span>
+    }
+
+    @SuppressLint(&quot;SetTextI18n&quot;)
+    private void setRecipientInfo(@NonNull QRCodeViewHolder holder, int position) {
+<span class="nc bnc" id="L82" title="All 4 branches missed.">        if (addressBook != null &amp;&amp; position &lt; addressBook.getRecipients().size()) {</span>
+<span class="nc" id="L83">            Recipient recipient = addressBook.getRecipients().get(position);</span>
+<span class="nc" id="L84">            String fullName = recipient.getFirstName() + &quot; &quot; + recipient.getLastName();</span>
+<span class="nc" id="L85">            holder.textViewRecipientInfo.setText(fullName);</span>
+<span class="nc" id="L86">            Log.d(&quot;QRCodeAdapter&quot;, &quot;Recipient at position &quot; + position + &quot;: &quot; + fullName);</span>
+<span class="nc" id="L87">        } else {</span>
+<span class="nc" id="L88">            holder.textViewRecipientInfo.setText(&quot;Unknown Recipient position problem&quot;);</span>
+        }
+<span class="nc" id="L90">    }</span>
+
+
+    private void deleteQRCodeAndRecipient(int position) {
+<span class="nc" id="L94">        Recipient recipient = addressBook.getRecipients().get(position);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (recipient != null) {</span>
+<span class="nc" id="L96">            String filePath = qrCodeFilePaths.get(position);</span>
+<span class="nc" id="L97">            File file = new File(filePath);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            if (file.exists()) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                if (file.delete()) {</span>
+<span class="nc" id="L100">                    qrCodeFilePaths.remove(position);</span>
+<span class="nc" id="L101">                    Address addressToRemove = recipient.getAddresses().get(0);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                    if (recipient.getAddresses().contains(addressToRemove)) {</span>
+<span class="nc" id="L103">                        Log.d(&quot;AddressBook&quot;, &quot;Adresse vor dem Löschen: &quot; + addressToRemove.toString());</span>
+                    } else {
+<span class="nc" id="L105">                        Log.d(&quot;AddressBook&quot;, &quot;Adresse nicht gefunden, bevor sie entfernt wird.&quot;);</span>
+                    }
+<span class="nc" id="L107">                    addressBook.deleteOneRecipient(recipient, context);</span>
+<span class="nc" id="L108">                    notifyItemRemoved(position);</span>
+<span class="nc" id="L109">                    notifyItemRangeChanged(position, qrCodeFilePaths.size());</span>
+<span class="nc" id="L110">                    Toast.makeText(context, &quot;QR-Code und Recipient gelöscht.&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L111">                } else {</span>
+<span class="nc" id="L112">                    Toast.makeText(context, &quot;Fehler beim Löschen des QR-Codes.&quot;, Toast.LENGTH_SHORT).show();</span>
+                }
+            }
+        }
+<span class="nc" id="L116">    }</span>
+
+
+    private void openQRCodeDisplayActivity(Context context, int position) {
+<span class="nc bnc" id="L120" title="All 4 branches missed.">        if (position &gt;= 0 &amp;&amp; position &lt; qrCodeFilePaths.size()) {</span>
+<span class="nc" id="L121">            String filePath = qrCodeFilePaths.get(position);</span>
+<span class="nc" id="L122">            Intent intent = new Intent(context, QRCodeDisplayActivity.class);</span>
+<span class="nc" id="L123">            intent.putExtra(&quot;qrCodeFilePath&quot;, filePath);</span>
+<span class="nc" id="L124">            intent.putExtra(&quot;recipientIndex&quot;, position);</span>
+<span class="nc" id="L125">            context.startActivity(intent);</span>
+        }
+<span class="nc" id="L127">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

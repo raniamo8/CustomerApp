@@ -2,12 +2,14 @@ package com.example.customerapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class SettingFragment extends Fragment {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch darkModeSwitch;
     Button deleteAllButton, addAddressButton;
+    ImageButton informationButton;
     boolean nightMode;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -82,6 +85,13 @@ public class SettingFragment extends Fragment {
             }
             editor.apply();
         });
+
+        informationButton = view.findViewById(R.id.informationButton);
+        informationButton.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), OwnerInformationActivity.class);
+            startActivity(intent);
+        });
+
 
         return view;
     }
