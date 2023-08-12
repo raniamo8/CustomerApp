@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
@@ -19,6 +20,13 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
 
 /**
  * Represents a recipient with its information.
@@ -59,7 +67,9 @@ public class Recipient {
     }
 
     public void addAddress(Address address) {
-        addresses.add(address);
+        if (address != null){
+            addresses.add(address);
+        }
     }
 
     public void removeAddress(Address address) {
@@ -112,4 +122,26 @@ public class Recipient {
         return false;
     }
 
+
+    public static String decodeQR(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
+
+        int[] intArray = new int[bitmap.getWidth() * bitmap.getHeight()];
+        bitmap.getPixels(intArray, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), intArray);
+        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+        try {
+            MultiFormatReader multiFormatReader = new MultiFormatReader();
+            Result result = multiFormatReader.decode(binaryBitmap);
+            return result.getText();
+        } catch (Exception e) {
+            // Log or handle the exception
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
