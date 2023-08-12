@@ -25,10 +25,9 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 //TODO: Readme
 //TODO: Documentation
 //-------------------------//
-//TODO: No Test coverage!!!!!!!!!!!!
+//TODO: app in normal mode is different to dark mode
+//TODO: test are configured as gradle
 //TODO: App crash when server is not connected!!!!!
-//TODO Setting Fragment: build impressum (func)
-//TODO for test: integration of tools alike jacoco
 //TODO: StoreDetails image as icon
 //TODO: Button intro bottom of the display
 public class MainActivity extends AppCompatActivity {
