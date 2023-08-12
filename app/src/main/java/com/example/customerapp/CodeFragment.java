@@ -21,8 +21,6 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.util.Objects;
-
 /**
  * Represents a fragment where the user can enter recipient information and generate a QR code for the recipient.
  * The fragment also provides the functionality to save the generated QR code to the internal storage.

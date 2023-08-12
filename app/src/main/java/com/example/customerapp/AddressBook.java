@@ -99,7 +99,7 @@ public class AddressBook {
         Log.d("AddressBook", "Saved data: " + json);
     }
 
-
+/*
     public void deleteOneRecipient222(Recipient recipient, Context context) {
         if (recipients.contains(recipient)) {
             for (Address address : recipient.getAddresses()) {
@@ -124,6 +124,7 @@ public class AddressBook {
             System.out.println("Der Recipient konnte nicht gefunden werden");
         }
     }
+    */
 
     public void deleteOneRecipient(Recipient recipient, Context context) {
         if (recipients.contains(recipient)) {

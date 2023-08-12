@@ -3,6 +3,7 @@ package com.example.customerapp;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -145,7 +146,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
 
         // Hier kannst du die Koordinaten für den Testbereich festlegen

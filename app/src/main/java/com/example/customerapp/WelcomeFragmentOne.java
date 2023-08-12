@@ -8,17 +8,12 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 
 public class WelcomeFragmentOne extends Fragment {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_one, container, false);
-
         Button nextButton = welcomeView.findViewById(R.id.nextButton);
-
         nextButton.setOnClickListener(v -> {
             Fragment fragment = new WelcomeFragmentTwo();
             requireActivity().getSupportFragmentManager().beginTransaction()
@@ -26,7 +21,6 @@ public class WelcomeFragmentOne extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-
         return welcomeView;
     }
 }

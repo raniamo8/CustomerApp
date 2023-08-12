@@ -65,7 +65,7 @@ public class ExploreFragment extends Fragment {
 
         if (isNetworkAvailable()) {
             executorService.execute(() -> {
-                ArrayList<StoreDetails> result = downloadData("http://131.173.65.77:8080/store-details");
+                ArrayList<StoreDetails> result = downloadData();
                 if (result != null) {
                     requireActivity().runOnUiThread(() -> updateUI(result));
                 } else {
@@ -78,9 +78,9 @@ public class ExploreFragment extends Fragment {
         return view;
     }
 
-    private ArrayList<StoreDetails> downloadData(String urlStr) {
+    private ArrayList<StoreDetails> downloadData() {
         try {
-            URL url = new URL(urlStr);
+            URL url = new URL("http://131.173.65.77:8080/store-details");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setDoInput(true);

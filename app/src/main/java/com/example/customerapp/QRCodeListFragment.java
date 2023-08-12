@@ -87,7 +87,7 @@ public class QRCodeListFragment extends Fragment {
     @SuppressLint("NotifyDataSetChanged")
     private void loadQRCodeFilePaths() {
         qrCodeFilePaths.clear();
-        File directory = Objects.requireNonNull(getContext()).getDir("qr_codes", Context.MODE_PRIVATE);
+        File directory = requireContext().getDir("qr_codes", Context.MODE_PRIVATE);
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
             if (files != null) {

@@ -56,7 +56,7 @@ public class SettingFragment extends Fragment {
         addressBook = AddressBook.getInstance();
 
         darkModeSwitch = view.findViewById(R.id.darkModeSwitch);
-        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        sharedPreferences = requireActivity().getSharedPreferences("MODE", Context.MODE_PRIVATE);
         nightMode = sharedPreferences.getBoolean("night", false);
         if (nightMode) {
             darkModeSwitch.setChecked(true);
