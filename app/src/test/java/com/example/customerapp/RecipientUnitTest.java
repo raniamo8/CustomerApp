@@ -1,26 +1,13 @@
 package com.example.customerapp;
 
-import static com.example.customerapp.Recipient.decodeQR;
+import android.graphics.Bitmap;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
