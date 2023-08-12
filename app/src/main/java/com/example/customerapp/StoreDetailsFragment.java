@@ -41,7 +41,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
     private MapView mapView;
     private GoogleMap googleMap;
 
-    public StoreDetailsFragment() {}
+    public StoreDetailsFragment() {
+    }
 
     public static StoreDetailsFragment newInstance(StoreDetails storeDetails) {
         StoreDetailsFragment fragment = new StoreDetailsFragment();

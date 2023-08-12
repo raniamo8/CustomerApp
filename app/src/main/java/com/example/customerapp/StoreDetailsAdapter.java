@@ -76,7 +76,6 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         LinearLayout openDetails;
 
 
-
         StoreViewHolder(@NonNull View itemView) {
             super(itemView);
             storeLogoImageView = itemView.findViewById(R.id.storeLogoImageView);

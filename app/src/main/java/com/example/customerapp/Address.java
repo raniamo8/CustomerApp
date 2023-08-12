@@ -26,7 +26,7 @@ public class Address implements Serializable {
         this.zip = zip;
     }
 
-    public Address( String street, String streetNr){
+    public Address(String street, String streetNr) {
         this.street = street;
         this.houseNumber = streetNr;
     }
@@ -54,7 +54,7 @@ public class Address implements Serializable {
         return city;
     }
 
-    public String getFullAddress(){
+    public String getFullAddress() {
         return street + " " + houseNumber + "\n" + zip + " " + city;
     }
 

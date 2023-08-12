@@ -115,6 +115,7 @@ public class StoreDetails implements Serializable {
     public String getLogo() {
         return logo;
     }
+
     public void setLogo(String logo) {
         this.logo = logo;
     }
@@ -127,11 +128,11 @@ public class StoreDetails implements Serializable {
         this.backgroundImage = backgroundImage;
     }
 
-    public void setCoordinates(LatLng coordinates){
+    public void setCoordinates(LatLng coordinates) {
         this.coordinates = coordinates;
     }
 
-    public LatLng getCoordinates(){
-    return coordinates;
+    public LatLng getCoordinates() {
+        return coordinates;
     }
 }

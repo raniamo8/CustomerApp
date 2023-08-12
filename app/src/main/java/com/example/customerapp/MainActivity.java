@@ -18,7 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.customerapp.databinding.ActivitymainBinding;
 
 
-
 //TODO Code Fragment: PLz spinner color
 //TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
 //TODO: performance test?
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         addressBook.saveData(getApplicationContext());
     }
 
-    public void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment) {
         currentFragment = fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

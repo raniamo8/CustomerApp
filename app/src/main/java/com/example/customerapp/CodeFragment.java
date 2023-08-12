@@ -33,7 +33,7 @@ public class CodeFragment extends Fragment {
     private ImageView qrCodeImageView;
     Button generateQRCodeButton;
     private AppCompatImageButton backButton;
-    private AddressBook addressBook= new AddressBook();
+    private AddressBook addressBook = new AddressBook();
 
     @SuppressLint("StaticFieldLeak")
     public static CodeFragment instance;
@@ -189,6 +189,7 @@ public class CodeFragment extends Fragment {
 
         return isValid;
     }
+
     private boolean isValidLastName(@NonNull String lastName) {
         return !lastName.isEmpty();
     }

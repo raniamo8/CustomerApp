@@ -21,7 +21,7 @@ public class WelcomeFragmentOne extends Fragment {
 
         nextButton.setOnClickListener(v -> {
             Fragment fragment = new WelcomeFragmentTwo();
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+            requireActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.welcome_frame_layout, fragment)
                     .addToBackStack(null)
                     .commit();
