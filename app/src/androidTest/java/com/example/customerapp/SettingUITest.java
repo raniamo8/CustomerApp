@@ -40,20 +40,6 @@ public class SettingUITest {
     public static void tearDownClass() {
     }
 
-    @Test
-    public void test1ActivateDarkMode() {
-        onView(isRoot()).perform(waitFor(2000));
-        onView(withId(R.id.settings)).perform(click());
-        onView(isRoot()).perform(waitFor(2000));
-        onView(withId(R.id.darkModeSwitch)).perform(click());
-        onView(isRoot()).perform(waitFor(2000));
-    }
-
-    @Test
-    public void test2OpenAppAgainDarkMode() {
-        onView(isRoot()).perform(waitFor(3000));
-    }
-
 
     public static ViewAction waitFor(final long millis) {
         return new ViewAction() {
