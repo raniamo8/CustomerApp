@@ -1,11 +1,17 @@
 package com.example.customerapp;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +23,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.customerapp.databinding.ActivitymainBinding;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 //TODO Code Fragment: PLz spinner color
 //TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
@@ -77,7 +86,17 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new QRCodeListFragment());
                     break;
                 case R.id.explore:
-                    replaceFragment(new ExploreFragment());
+
+                    new CheckServerReachabilityTask() {
+                        @Override
+                        protected void onPostExecute(Boolean isReachable) {
+                            if (isReachable) {
+                                replaceFragment(new ExploreFragment());
+                            } else {
+                                Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }.execute();
                     break;
                 case R.id.settings:
                     replaceFragment(new SettingFragment());
@@ -95,6 +114,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public boolean isServerReachable(String url, int timeoutMillis) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setConnectTimeout(timeoutMillis);
+            connection.setReadTimeout(timeoutMillis);
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return (responseCode == HttpURLConnection.HTTP_OK);
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -110,6 +148,22 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
         if (fragment instanceof CodeFragment) {
             CodeFragment.instance = (CodeFragment) fragment;
+        }
+    }
+    private class CheckServerReachabilityTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return isServerReachable("http://131.173.65.77:8080/store-details", 500);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isReachable) {
+            if (isReachable) {
+                // Der Server ist erreichbar, fahre fort
+            } else {
+                System.out.println("Server nicht erreichbar");
+                Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

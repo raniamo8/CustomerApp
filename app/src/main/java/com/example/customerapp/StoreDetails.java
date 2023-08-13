@@ -25,7 +25,9 @@ public class StoreDetails implements Serializable {
     private LatLng coordinates;
 
 
-    public StoreDetails(String id, String name, String owner, String street, String houseNumber, String zip, String city, String telephone, String email, String logo, String backgroundImage, LatLng coordinates) {
+    public StoreDetails(String id, String name, String owner, String street, String houseNumber,
+                        String zip, String city, String telephone, String email, String logo,
+                        String backgroundImage, LatLng coordinates) {
         this.id = id;
         this.name = name;
         this.owner = owner;

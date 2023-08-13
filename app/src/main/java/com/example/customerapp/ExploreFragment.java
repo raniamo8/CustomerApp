@@ -7,6 +7,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.DeadObjectException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,11 +44,15 @@ public class ExploreFragment extends Fragment {
     private ArrayList<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
 
+    private ExecutorService executorService;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storeList = new ArrayList<>();
         storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
+        executorService = Executors.newSingleThreadExecutor();
     }
 
     @SuppressLint("MissingInflatedId")
@@ -62,6 +67,7 @@ public class ExploreFragment extends Fragment {
 
         storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
         recyclerView.setAdapter(storeListAdapter);
+
 
         if (isNetworkAvailable()) {
             executorService.execute(() -> {
@@ -115,7 +121,6 @@ public class ExploreFragment extends Fragment {
                 double longitude = coordinatesObject.getDouble("longitude");
                 StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo, backgroundImage, new LatLng(latitude, longitude));
                 storeList.add(storeDetails);
-                System.out.println(backgroundImage);
             }
             return storeList;
             //catch block problem
@@ -140,5 +145,16 @@ public class ExploreFragment extends Fragment {
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Beende den executorService, um laufende Aufgaben abzubrechen
+        if (executorService != null) {
+            executorService.shutdownNow();
+        }
+    }
 
 }
