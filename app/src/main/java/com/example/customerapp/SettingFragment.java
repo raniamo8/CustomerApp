@@ -1,39 +1,29 @@
 package com.example.customerapp;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A fragment that allows users to manage app settings, including enabling or disabling dark mode,
  * adding addresses to recipients, and deleting all QR codes and recipients.
  */
 public class SettingFragment extends Fragment {
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
-    Switch darkModeSwitch;
     Button deleteAllButton, addAddressButton;
     ImageButton informationButton;
-    boolean nightMode;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
     private List<String> qrCodeFilePaths;
     private QRCodeAdapter qrCodeAdapter;
     private AddressBook addressBook;
@@ -58,13 +48,6 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         addressBook = AddressBook.getInstance();
 
-        darkModeSwitch = view.findViewById(R.id.darkModeSwitch);
-        sharedPreferences = requireActivity().getSharedPreferences("MODE", Context.MODE_PRIVATE);
-        nightMode = sharedPreferences.getBoolean("night", false);
-        if (nightMode) {
-            darkModeSwitch.setChecked(true);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
 
         addAddressButton = view.findViewById(R.id.addAddressButton);
         view.findViewById(R.id.addAddressButton).setOnClickListener(v -> goToCodeFragment());
@@ -72,19 +55,6 @@ public class SettingFragment extends Fragment {
         deleteAllButton = view.findViewById(R.id.deleteAllButton);
         deleteAllButton.setOnClickListener(v -> deleteAllQRandRecipients());
 
-        darkModeSwitch.setOnClickListener(view1 -> {
-            nightMode = !nightMode;
-            if (nightMode) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                editor = sharedPreferences.edit();
-                editor.putBoolean("night", true);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                editor = sharedPreferences.edit();
-                editor.putBoolean("night", false);
-            }
-            editor.apply();
-        });
 
         informationButton = view.findViewById(R.id.informationButton);
         informationButton.setOnClickListener(view1 -> {
