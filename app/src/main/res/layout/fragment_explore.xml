@@ -13,7 +13,6 @@
         style="@style/Text"
         android:text="Teilnehmende Geschäfte"
         android:textStyle="bold"
-        android:textColor="@color/lavender"
         android:textSize="20sp" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
