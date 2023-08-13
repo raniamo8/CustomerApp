@@ -29,7 +29,6 @@ import java.net.URL;
 
 //TODO Code Fragment: PLz spinner color
 //TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
-//TODO: performance test?
 //TODO: Checkstyle
 //TODO: Readme
 //TODO: Documentation
