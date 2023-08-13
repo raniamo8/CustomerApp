@@ -17,8 +17,7 @@ import static org.junit.Assert.*;
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = Build.VERSION_CODES.O)
 public class QRCodeStressUnitTest {
-
-    private static final int TEST_COUNT = 500;
+    private static final int TEST_COUNT = 10000;
 
     @Test
     public void testQRCodeCreationStress() {
