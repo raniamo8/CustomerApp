@@ -30,6 +30,7 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 //TODO: App crash when server is not connected!!!!!
 //TODO: StoreDetails image as icon
 //TODO: Button intro bottom of the display
+//TODO: Refresh by storedetails
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
@@ -40,13 +41,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
-        boolean nightMode = sharedPreferences.getBoolean("night", false);
-        if (nightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
 
         binding = ActivitymainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

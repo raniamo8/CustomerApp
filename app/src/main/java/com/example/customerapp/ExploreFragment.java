@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -39,9 +41,10 @@ import java.util.concurrent.Executors;
  * The fragment contains a list of store data and uses a RecyclerView with the StoreDetailsAdapter to display the store details.
  */
 public class ExploreFragment extends Fragment {
-
+    TextView allStores;
     private ArrayList<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,6 @@ public class ExploreFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStores);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -63,18 +65,12 @@ public class ExploreFragment extends Fragment {
         storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
         recyclerView.setAdapter(storeListAdapter);
 
-        if (isNetworkAvailable()) {
-            executorService.execute(() -> {
-                ArrayList<StoreDetails> result = downloadData();
-                if (result != null) {
-                    requireActivity().runOnUiThread(() -> updateUI(result));
-                } else {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_LONG).show());
-                }
-            });
-        } else {
-            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show());
-        }
+        allStores = view.findViewById(R.id.allStores);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(() -> refreshData());
+        refreshData();
+
         return view;
     }
 
@@ -138,6 +134,27 @@ public class ExploreFragment extends Fragment {
         ConnectivityManager connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+    private void refreshData() {
+        if (isNetworkAvailable()) {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                ArrayList<StoreDetails> result = downloadData();
+                requireActivity().runOnUiThread(() -> {
+                    if (result != null) {
+                        updateUI(result);
+                        Toast.makeText(requireContext(), "Die Daten wurden aktualisiert", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_LONG).show();
+                    }
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+            });
+        } else {
+            Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show();
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
 
