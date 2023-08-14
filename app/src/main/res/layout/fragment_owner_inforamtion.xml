@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <TextView
-            android:id="@+id/inormationTitle"
+            android:id="@+id/informationTitle"
             android:textColor="@color/lavender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

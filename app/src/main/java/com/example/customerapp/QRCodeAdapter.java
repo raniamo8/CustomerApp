@@ -2,9 +2,9 @@ package com.example.customerapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
@@ -49,7 +50,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         setRecipientInfo(holder, position);
 
         holder.buttonOpenQRCode.setOnClickListener(v -> {
-            openQRCodeDisplayActivity(v.getContext(), position);
+            openQRCodeDisplayFragment(v.getContext(), position);
         });
 
         holder.deleteButton.setOnClickListener(v -> {
@@ -115,15 +116,25 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         }
     }
 
-
-    private void openQRCodeDisplayActivity(Context context, int position) {
+    private void openQRCodeDisplayFragment(Context context, int position) {
         if (position >= 0 && position < qrCodeFilePaths.size()) {
             String filePath = qrCodeFilePaths.get(position);
-            Intent intent = new Intent(context, QRCodeDisplayActivity.class);
-            intent.putExtra("qrCodeFilePath", filePath);
-            intent.putExtra("recipientIndex", position);
-            context.startActivity(intent);
+            QRCodeDisplayFragment fragment = new QRCodeDisplayFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("qrCodeFilePath", filePath);
+            bundle.putInt("recipientIndex", position);
+            fragment.setArguments(bundle);
+
+            if (this.context instanceof AppCompatActivity) {
+                AppCompatActivity activity = (AppCompatActivity) this.context;
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_layout, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
         }
     }
+
 
 }

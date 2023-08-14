@@ -55,13 +55,8 @@ public class SettingFragment extends Fragment {
         deleteAllButton = view.findViewById(R.id.deleteAllButton);
         deleteAllButton.setOnClickListener(v -> deleteAllQRandRecipients());
 
-
         informationButton = view.findViewById(R.id.informationButton);
-        informationButton.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), OwnerInformationActivity.class);
-            startActivity(intent);
-        });
-
+        informationButton.setOnClickListener(view1 -> goToOwnerInformationFragment());
 
         return view;
     }
@@ -69,7 +64,18 @@ public class SettingFragment extends Fragment {
     private void goToCodeFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
         fragmentTransaction.replace(R.id.frame_layout, CodeFragment.getInstance());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void goToOwnerInformationFragment() {
+        OwnerInformationFragment ownerInformationFragment = new OwnerInformationFragment();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+        fragmentTransaction.replace(R.id.frame_layout, ownerInformationFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
