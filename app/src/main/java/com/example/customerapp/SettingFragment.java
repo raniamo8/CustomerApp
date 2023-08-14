@@ -64,7 +64,7 @@ public class SettingFragment extends Fragment {
     private void goToCodeFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out);
         fragmentTransaction.replace(R.id.frame_layout, CodeFragment.getInstance());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -74,7 +74,7 @@ public class SettingFragment extends Fragment {
         OwnerInformationFragment ownerInformationFragment = new OwnerInformationFragment();
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out);
         fragmentTransaction.replace(R.id.frame_layout, ownerInformationFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
