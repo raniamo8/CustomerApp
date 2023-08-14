@@ -56,6 +56,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             storeDetails = (StoreDetails) getArguments().getSerializable(ARG_STORE_DETAILS);
