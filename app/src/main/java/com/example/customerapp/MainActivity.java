@@ -35,10 +35,8 @@ import java.net.URL;
 //TODO: Documentation
 //-------------------------//
 //TODO: app in normal mode is different to dark mode
-//TODO: App crash problem similar to storedetails and qr code open, this time setting impressum
 //TODO: test are configured as gradle!!!!!!
 //TODO: App crash when server is not connected!!!!!
-//TODO: StoreDetails image as icon
 //TODO: Button intro bottom of the display
 //TODO: IntroReset
 //TODO: Pflichtfelder
