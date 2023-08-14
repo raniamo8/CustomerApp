@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.customerapp.databinding.ActivitymainBinding;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
 
         binding = ActivitymainBinding.inflate(getLayoutInflater());
