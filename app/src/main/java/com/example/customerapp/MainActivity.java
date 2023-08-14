@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ActivitymainBinding binding;
     private AddressBook addressBook;
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "StaticFieldLeak"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
