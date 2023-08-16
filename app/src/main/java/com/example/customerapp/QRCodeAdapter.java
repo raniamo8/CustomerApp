@@ -129,6 +129,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
                 AppCompatActivity activity = (AppCompatActivity) this.context;
                 activity.getSupportFragmentManager()
                         .beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out)
                         .replace(R.id.frame_layout, fragment)
                         .addToBackStack(null)
                         .commit();
