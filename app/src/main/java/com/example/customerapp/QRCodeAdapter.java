@@ -108,7 +108,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
                     addressBook.deleteOneRecipient(recipient, context);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, qrCodeFilePaths.size());
-                    Toast.makeText(context, "QR-Code und Recipient gelöscht.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "QR-Code gelöscht.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "Fehler beim Löschen des QR-Codes.", Toast.LENGTH_SHORT).show();
                 }

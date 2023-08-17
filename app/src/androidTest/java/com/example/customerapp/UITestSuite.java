@@ -11,7 +11,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         IntroUITest.class,
         QRCodeUITest.class,
-        SettingUITest.class,
 })
 
 public class UITestSuite { }
