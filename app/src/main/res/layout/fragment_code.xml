@@ -99,6 +99,7 @@
             android:hint="Straßennummer"
             style="@style/Text"
             android:inputType="text"
+            android:maxLength="5"
             android:imeOptions="actionNext"
             android:padding="12dp" />
 
