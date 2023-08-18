@@ -104,10 +104,14 @@ public class QRCodeListFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     protected void deleteAllQRandRecipients() {
-        addressBook.deleteAllRecipients(getContext());
-        qrCodeFilePaths.clear();
-        qrCodeAdapter.notifyDataSetChanged();
-        Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
+        if (qrCodeFilePaths.isEmpty()) {
+            Toast.makeText(getContext(), "Es gibt keine QR-Codes zum Löschen.", Toast.LENGTH_SHORT).show();
+        } else {
+            addressBook.deleteAllRecipients(getContext());
+            qrCodeFilePaths.clear();
+            qrCodeAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
