@@ -88,13 +88,16 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         }
     }
 
+
     private void goToStoreDetailsFragment(StoreDetails store) {
-        StoreDetailsFragment storeDetailsFragment = StoreDetailsFragment.newInstance(store);
-        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, storeDetailsFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        FragmentManagerHelper.goToFragment(
+                ((AppCompatActivity) context).getSupportFragmentManager(),
+                R.id.frame_layout,
+                StoreDetailsFragment.newInstance(store),
+                R.anim.slide_in,
+                R.anim.slide_out,
+                true
+        );
     }
 
 }

@@ -76,12 +76,14 @@ public class QRCodeListFragment extends Fragment {
     }
 
     private void goToCodeFragment() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
-        fragmentTransaction.replace(R.id.frame_layout, CodeFragment.getInstance());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        FragmentManagerHelper.goToFragment(
+                requireActivity().getSupportFragmentManager(),
+                R.id.frame_layout,
+                CodeFragment.getInstance(),
+                R.anim.slide_in,
+                R.anim.slide_out,
+                true
+        );
     }
 
 
