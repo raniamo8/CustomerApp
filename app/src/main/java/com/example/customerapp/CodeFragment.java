@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -75,6 +76,12 @@ public class CodeFragment extends Fragment {
         String selectedZIP = zipSpinner.getSelectedItem().toString();
 
         qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
+
+        EmojiExcludeFilter emojiFilter = new EmojiExcludeFilter();
+        lastNameEditText.setFilters(new InputFilter[]{emojiFilter});
+        firstNameEditText.setFilters(new InputFilter[]{emojiFilter});
+        streetEditText.setFilters(new InputFilter[]{emojiFilter});
+        streetNrEditText.setFilters(new InputFilter[]{emojiFilter});
 
         generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
         generateQRCodeButton.setOnClickListener(v -> {
