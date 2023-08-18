@@ -13,7 +13,11 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 public class QRCodeDisplayFragment extends Fragment {
+    TextView showScanTextView, homeTextView;
+    ImageView lingenliefertImageView, qrCodeTextImageView, homeImageView;
     ImageButton backButton;
 
     @Override
@@ -24,6 +28,11 @@ public class QRCodeDisplayFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        lingenliefertImageView = view.findViewById(R.id.lingenliefertImageView);
+        qrCodeTextImageView = view.findViewById(R.id.qrCodeTextImageView);
+        showScanTextView = view.findViewById(R.id.showScanTextView);
+        homeImageView = view.findViewById(R.id.homeImageView);
+        homeTextView = view.findViewById(R.id.homeTextView);
         ImageView imageViewQrCodeDisplay = view.findViewById(R.id.imageViewQRCode);
         loadQRCode(imageViewQrCodeDisplay);
         displayRecipientDetails();
@@ -54,7 +63,7 @@ public class QRCodeDisplayFragment extends Fragment {
             if (recipientIndex >= 0 && recipientIndex < AddressBook.getInstance().getRecipients().size()) {
                 Recipient recipient = AddressBook.getInstance().getRecipients().get(recipientIndex);
                 String recipientDetails = getFormattedRecipientDetails(recipient);
-                TextView textViewRecipientDetails = getView().findViewById(R.id.textViewRecipientDetails);
+                TextView textViewRecipientDetails = requireView().findViewById(R.id.textViewRecipientDetails);
                 textViewRecipientDetails.setText(recipientDetails);
             }
         }
