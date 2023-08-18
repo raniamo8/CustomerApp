@@ -41,6 +41,8 @@
             android:layout_height="wrap_content"
             android:hint="Nachname"
             style="@style/Text"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             android:padding="12dp" />
 
         <TextView
@@ -58,6 +60,8 @@
             android:layout_height="wrap_content"
             android:hint="Vorname"
             style="@style/Text"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             android:padding="12dp" />
 
         <TextView
@@ -75,6 +79,8 @@
             android:layout_height="wrap_content"
             android:hint="Straße"
             style="@style/Text"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             android:padding="12dp" />
 
         <TextView
@@ -92,6 +98,8 @@
             android:layout_height="wrap_content"
             android:hint="Straßennummer"
             style="@style/Text"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             android:padding="12dp" />
 
         <TextView

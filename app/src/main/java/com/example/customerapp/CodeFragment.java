@@ -1,6 +1,7 @@
 package com.example.customerapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,6 +83,8 @@ public class CodeFragment extends Fragment {
         backButton.setOnClickListener(v -> {
             goBackToPreviousFragment();
         });
+
+        setupEditTexts();
 
         return rootView;
     }
@@ -211,6 +216,41 @@ public class CodeFragment extends Fragment {
         firstNameEditText.setText("");
         streetEditText.setText("");
         streetNrEditText.setText("");
+    }
+
+    private void setupEditTexts() {
+        lastNameEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                firstNameEditText.requestFocus();
+                return true;
+            }
+            return false;
+        });
+
+        firstNameEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                streetEditText.requestFocus();
+                return true;
+            }
+            return false;
+        });
+
+        streetEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                streetNrEditText.requestFocus();
+                return true;
+            }
+            return false;
+        });
+
+        streetNrEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                return true;
+            }
+            return false;
+        });
     }
 
 }
