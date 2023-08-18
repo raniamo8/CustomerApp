@@ -33,6 +33,7 @@ import java.net.URL;
 //TODO: Checkstyle
 //TODO: Readme
 //TODO: Documentation
+//TODO: deprecated classes
 //-------------------------//
 //TODO: app in normal mode is different to dark mode
 //TODO: test are configured as gradle!!!!!!
@@ -40,6 +41,7 @@ import java.net.URL;
 //TODO: Button intro bottom of the display
 //TODO: IntroReset
 //TODO: Pflichtfelder
+//TODO: UI test time counter (animation)
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
