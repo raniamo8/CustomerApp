@@ -69,6 +69,7 @@ public class StoreDetails implements Serializable {
     public String getHouseNumber() {
         return houseNumber;
     }
+
     public String getTelephone() {
         return telephone;
     }

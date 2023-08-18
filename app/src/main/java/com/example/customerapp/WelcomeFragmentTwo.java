@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
  */
 public class WelcomeFragmentTwo extends Fragment {
     ImageButton backToIntroButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_two, container, false);

@@ -19,7 +19,8 @@ public class OwnerInformationFragment extends Fragment {
     ImageButton backButtonToSetting;
     ImageView lieferlogoImageView;
 
-    public OwnerInformationFragment() {}
+    public OwnerInformationFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

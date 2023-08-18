@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
             CodeFragment.instance = (CodeFragment) fragment;
         }
     }
+
     private class CheckServerReachabilityTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... voids) {

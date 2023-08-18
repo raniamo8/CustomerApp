@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
-    android:padding="16dp"
-    style="@style/Screen"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,27 +21,27 @@
 
             <TextView
                 android:id="@+id/address"
+                style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Adresse"
-                android:textStyle="bold"
-                style="@style/Text"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <View
+                style="@style/View"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                style="@style/View"/>
+                android:layout_marginBottom="8dp" />
 
             <Button
                 android:id="@+id/addAddressButton"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@color/lavender"
-                style="@style/Text"
                 android:text="Addresse hinzufügen" />
 
         </LinearLayout>
@@ -55,27 +55,27 @@
 
             <TextView
                 android:id="@+id/deleteData"
+                style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Daten löschen"
-                style="@style/Text"
-                android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <View
+                style="@style/View"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                style="@style/View"/>
+                android:layout_marginBottom="8dp" />
 
             <Button
                 android:id="@+id/deleteAllButton"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#E42127"
-                style="@style/Text"
                 android:text="Alle Addressen löschen" />
 
 
@@ -86,23 +86,23 @@
 
                 <TextView
                     android:id="@+id/informationTextView"
+                    style="@style/Text"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Impressum"
                     android:gravity="center_vertical"
-                    style="@style/Text"
+                    android:text="Impressum"
                     android:textSize="16sp"
                     tools:ignore="Suspicious0dp" />
 
                 <ImageButton
                     android:id="@+id/informationButton"
+                    style="@style/Text"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:textSize="16sp"
                     android:gravity="center"
-                    style="@style/Text"
-                    android:src="@drawable/baseline_info_24" />
+                    android:src="@drawable/baseline_info_24"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
