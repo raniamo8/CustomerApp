@@ -36,14 +36,10 @@ import java.net.URL;
 //-------------------------//
 //TODO: app in normal mode is different to dark mode
 //TODO: test are configured as gradle!!!!!!
-//TODO: gotToFragment method refactor into seperate class
 //TODO: App crash when server is not connected!!!!!
-//TODO: Animation in storeDetails
 //TODO: Button intro bottom of the display
 //TODO: IntroReset
 //TODO: Pflichtfelder
-//TODO: deleteAllQRCodes modification
-//TODO: Bug Enter
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
