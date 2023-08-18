@@ -1,5 +1,7 @@
 package com.example.customerapp;
 
+import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class OwnerInformationFragment extends Fragment {
 
@@ -30,9 +33,8 @@ public class OwnerInformationFragment extends Fragment {
         lieferlogoImageView = view.findViewById(R.id.lieferlogoImageView);
 
         backButtonToSetting.setOnClickListener(v -> {
-            if (getFragmentManager() != null && getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
-            }
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            goBackToPreviousFragment(fragmentManager);
         });
 
         return view;

@@ -1,5 +1,7 @@
 package com.example.customerapp;
 
+import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -81,7 +83,8 @@ public class CodeFragment extends Fragment {
 
         backButton = rootView.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            goBackToPreviousFragment();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            goBackToPreviousFragment(fragmentManager);
         });
 
         setupEditTexts();
@@ -110,10 +113,6 @@ public class CodeFragment extends Fragment {
         clearInputFields();
     }
 
-    private void goBackToPreviousFragment() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.popBackStack();
-    }
 
     private void generateQRCode(String zip) {
         String lastName = lastNameEditText.getText().toString().trim();

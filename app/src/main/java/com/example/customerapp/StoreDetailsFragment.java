@@ -1,5 +1,7 @@
 package com.example.customerapp;
 
+import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
@@ -114,7 +116,10 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         }
 
         backButton = view.findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> goBackToPreviousFragment());
+        backButton.setOnClickListener(v -> {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            goBackToPreviousFragment(fragmentManager);
+        });
 
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -168,9 +173,4 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         mapView.onResume();
     }
 
-    private void goBackToPreviousFragment() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.popBackStack();
-    }
 }
-

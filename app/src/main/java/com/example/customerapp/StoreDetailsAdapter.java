@@ -88,7 +88,6 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         }
     }
 
-
     private void goToStoreDetailsFragment(StoreDetails store) {
         FragmentManagerHelper.goToFragment(
                 ((AppCompatActivity) context).getSupportFragmentManager(),

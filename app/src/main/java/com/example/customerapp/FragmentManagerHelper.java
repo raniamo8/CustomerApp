@@ -15,4 +15,10 @@ public class FragmentManagerHelper {
         }
         transaction.commit();
     }
+
+    public static void goBackToPreviousFragment(FragmentManager fragmentManager) {
+        if (fragmentManager != null) {
+            fragmentManager.popBackStack();
+        }
+    }
 }

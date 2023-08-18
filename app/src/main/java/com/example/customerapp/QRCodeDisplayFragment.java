@@ -1,5 +1,7 @@
 package com.example.customerapp;
 
+import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.Objects;
 
@@ -36,8 +39,12 @@ public class QRCodeDisplayFragment extends Fragment {
         ImageView imageViewQrCodeDisplay = view.findViewById(R.id.imageViewQRCode);
         loadQRCode(imageViewQrCodeDisplay);
         displayRecipientDetails();
+
         backButton = view.findViewById(R.id.backButtonToList);
-        backButton.setOnClickListener(v -> getFragmentManager().popBackStack());
+        backButton.setOnClickListener(v -> {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            goBackToPreviousFragment(fragmentManager);
+        });
     }
 
     private void loadQRCode(ImageView imageView) {
