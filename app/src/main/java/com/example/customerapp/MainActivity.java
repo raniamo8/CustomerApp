@@ -1,7 +1,5 @@
 package com.example.customerapp;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,29 +13,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.customerapp.databinding.ActivitymainBinding;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 //TODO Code Fragment: PLz spinner color
-//TODO: problem Could not remove dir '/data/data/com.example.customerapp/code_cache/.ll/': No such file or directory
 //TODO: Checkstyle
 //TODO: Readme
 //TODO: Documentation
 //TODO: deprecated classes
 //-------------------------//
-//TODO: app in normal mode is different to dark mode
 //TODO: test are configured as gradle!!!!!!
-//TODO: App crash when server is not connected!!!!!
 //TODO: Button intro bottom of the display
 //TODO: IntroReset
 //TODO: Pflichtfelder
@@ -76,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            replaceFragment(new QRCodeListFragment());
+            replaceFragmentBottomNavigation(new QRCodeListFragment());
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.code:
-                    replaceFragment(new QRCodeListFragment());
+                    replaceFragmentBottomNavigation(new QRCodeListFragment());
                     break;
                 case R.id.explore:
 
@@ -90,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         protected void onPostExecute(Boolean isReachable) {
                             if (isReachable) {
-                                replaceFragment(new ExploreFragment());
+                                replaceFragmentBottomNavigation(new ExploreFragment());
                             } else {
                                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
                             }
@@ -98,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     }.execute();
                     break;
                 case R.id.settings:
-                    replaceFragment(new SettingFragment());
+                    replaceFragmentBottomNavigation(new SettingFragment());
                     break;
             }
             return true;
@@ -126,12 +119,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnected();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -139,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         addressBook.saveData(getApplicationContext());
     }
 
-    public void replaceFragment(Fragment fragment) {
+    public void replaceFragmentBottomNavigation(Fragment fragment) {
         currentFragment = fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -150,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class CheckServerReachabilityTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... voids) {
@@ -166,4 +154,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }
