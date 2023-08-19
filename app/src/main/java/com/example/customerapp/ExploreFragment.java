@@ -39,7 +39,6 @@ import java.util.concurrent.Executors;
  * The fragment contains a list of store data and uses a RecyclerView with the StoreDetailsAdapter to display the store details.
  */
 public class ExploreFragment extends Fragment {
-
     private ArrayList<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
 
@@ -80,7 +79,7 @@ public class ExploreFragment extends Fragment {
 
     private ArrayList<StoreDetails> downloadData() {
         try {
-            URL url = new URL("http://131.173.65.77:8080/store-details");
+            URL url = new URL("http://131.173.65.77:8080/api/store-details");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
@@ -118,7 +117,6 @@ public class ExploreFragment extends Fragment {
                 System.out.println(backgroundImage);
             }
             return storeList;
-            //catch block problem
         } catch (IOException | JSONException e) {
             Log.e(TAG, "Error downloading or decoding JSON data", e);
             return null;

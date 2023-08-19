@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragmentBottomNavigation(new QRCodeListFragment());
                     break;
                 case R.id.explore:
-
                     new CheckServerReachabilityTask() {
                         @Override
                         protected void onPostExecute(Boolean isReachable) {
@@ -146,9 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean isReachable) {
-            if (isReachable) {
-                // Der Server ist erreichbar, fahre fort
-            } else {
+            if (!isReachable) {
                 System.out.println("Server nicht erreichbar");
                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
             }
