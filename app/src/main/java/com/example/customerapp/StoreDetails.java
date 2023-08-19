@@ -21,7 +21,6 @@ public class StoreDetails implements Serializable {
     private String email;
     private String logo;
     private String backgroundImage;
-
     private LatLng coordinates;
 
 

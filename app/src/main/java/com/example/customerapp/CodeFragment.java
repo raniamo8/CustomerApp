@@ -75,7 +75,7 @@ public class CodeFragment extends Fragment {
         Spinner zipSpinner = rootView.findViewById(R.id.plzSpinner);
         String selectedZIP = zipSpinner.getSelectedItem().toString();
 
-        qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
+        //qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
 
         EmojiExcludeFilter emojiFilter = new EmojiExcludeFilter();
         lastNameEditText.setFilters(new InputFilter[]{emojiFilter});
@@ -153,8 +153,8 @@ public class CodeFragment extends Fragment {
 
         addressBook.addRecipient(recipient, getContext());
         recipient.setQRCodeCounter(qrCodeCounter);
-        Bitmap qrCodeBitmap = recipient.generateQRCode();
-        qrCodeImageView.setImageBitmap(qrCodeBitmap);
+        //Bitmap qrCodeBitmap = recipient.generateQRCode();
+        //qrCodeImageView.setImageBitmap(qrCodeBitmap);
 
         if (recipient.saveQRCodeToInternalStorage(getContext())) {
             qrCodeCounter++;
