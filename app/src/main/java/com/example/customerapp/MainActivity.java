@@ -33,7 +33,7 @@ import java.net.URL;
 //TODO: test are configured as gradle!!!!!!
 //TODO: Button intro bottom of the display
 //TODO: IntroReset
-//TODO: Pflichtfelder
+//TODO: Pflichtfelder!!
 //TODO: UI test time counter (animation)
 //TODO: Class description and xml id check
 public class MainActivity extends AppCompatActivity {
