@@ -16,8 +16,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.util.Objects;
-
 public class QRCodeDisplayFragment extends Fragment {
     TextView showScanTextView, homeTextView;
     ImageView lingenliefertImageView, qrCodeTextImageView, homeImageView;
@@ -25,7 +23,7 @@ public class QRCodeDisplayFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_qrcode_display, container, false);
+        return inflater.inflate(R.layout.fragment_qr_code_display, container, false);
     }
 
     @Override
