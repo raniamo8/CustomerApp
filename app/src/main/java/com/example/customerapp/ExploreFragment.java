@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -41,6 +42,7 @@ import java.util.concurrent.Executors;
 public class ExploreFragment extends Fragment {
     private ArrayList<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,18 +64,10 @@ public class ExploreFragment extends Fragment {
         storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
         recyclerView.setAdapter(storeListAdapter);
 
-        if (isNetworkAvailable()) {
-            executorService.execute(() -> {
-                ArrayList<StoreDetails> result = downloadData();
-                if (result != null) {
-                    requireActivity().runOnUiThread(() -> updateUI(result));
-                } else {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_LONG).show());
-                }
-            });
-        } else {
-            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show());
-        }
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(() -> refreshData(true));
+
+        refreshData(false);
         return view;
     }
 
@@ -101,10 +95,11 @@ public class ExploreFragment extends Fragment {
                 String id = jsonObject.getString("id");
                 String name = jsonObject.getString("name");
                 String owner = jsonObject.getString("owner");
-                String street = jsonObject.getString("street");
-                String houseNumber = jsonObject.getString("houseNumber");
-                String zip = jsonObject.getString("zip");
-                String city = jsonObject.getString("city");
+                JSONObject addressObject = jsonObject.getJSONObject("address");
+                String street = addressObject.getString("street");
+                String houseNumber = addressObject.getString("houseNumber");
+                String zip = addressObject.getString("zip");
+                String city = addressObject.getString("city");
                 String telephone = jsonObject.getString("telephone");
                 String email = jsonObject.getString("email");
                 String logo = jsonObject.getString("logo");
@@ -112,7 +107,7 @@ public class ExploreFragment extends Fragment {
                 JSONObject coordinatesObject = jsonObject.getJSONObject("coordinates");
                 double latitude = coordinatesObject.getDouble("latitude");
                 double longitude = coordinatesObject.getDouble("longitude");
-                StoreDetails storeDetails = new StoreDetails(id, name, owner, street, houseNumber, zip, city, telephone, email, logo, backgroundImage, new LatLng(latitude, longitude));
+                StoreDetails storeDetails = new StoreDetails(id, name, owner, new Address(street, houseNumber, zip, city), telephone, email, logo, backgroundImage, new LatLng(latitude, longitude));
                 storeList.add(storeDetails);
                 System.out.println(backgroundImage);
             }
@@ -138,5 +133,27 @@ public class ExploreFragment extends Fragment {
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
+    private void refreshData(boolean isSwipeRefresh) {
+        if (isNetworkAvailable()) {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                ArrayList<StoreDetails> result = downloadData();
+                requireActivity().runOnUiThread(() -> {
+                    if (result != null) {
+                        updateUI(result);
+                        if (isSwipeRefresh) {  // Nur bei Swipe to Refresh anzeigen
+                            Toast.makeText(requireContext(), "Die Daten wurden aktualisiert", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_LONG).show();
+                    }
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+            });
+        } else {
+            Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show();
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
 
 }

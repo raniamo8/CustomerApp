@@ -58,7 +58,6 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             storeDetails = (StoreDetails) getArguments().getSerializable(ARG_STORE_DETAILS);
@@ -80,7 +79,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         // submitting data in the View
         if (storeDetails != null) {
             ownerNameTextView.setText(storeDetails.getOwner());
-            ownerAddressTextView.setText(storeDetails.getStreet() + " " + storeDetails.getHouseNumber());
+            ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getHouseNumber());
             ownerPhoneTextView.setText(storeDetails.getTelephone());
             ownerEmailTextView.setText(storeDetails.getEmail());
             String logoImageUrl = storeDetails.getLogo();

@@ -26,9 +26,11 @@ public class Address implements Serializable {
         this.zip = zip;
     }
 
-    public Address(String street, String streetNr) {
+    public Address(String street, String streetNr, String zip, String city) {
         this.street = street;
         this.houseNumber = streetNr;
+        this.zip = zip;
+        this.city = city;
     }
 
     public Address(String street, String streetNr, String zip) {

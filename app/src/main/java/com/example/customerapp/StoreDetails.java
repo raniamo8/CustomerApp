@@ -13,10 +13,7 @@ public class StoreDetails implements Serializable {
     private String id;
     private String name;
     private String owner;
-    private String street;
-    private String houseNumber;
-    private String zip;
-    private String city;
+    private Address address;
     private String telephone;
     private String email;
     private String logo;
@@ -24,16 +21,12 @@ public class StoreDetails implements Serializable {
     private LatLng coordinates;
 
 
-    public StoreDetails(String id, String name, String owner, String street, String houseNumber,
-                        String zip, String city, String telephone, String email, String logo,
+    public StoreDetails(String id, String name, String owner, Address address, String telephone, String email, String logo,
                         String backgroundImage, LatLng coordinates) {
         this.id = id;
         this.name = name;
         this.owner = owner;
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.zip = zip;
-        this.city = city;
+        this.address = address;
         this.telephone = telephone;
         this.email = email;
         this.logo = logo;
@@ -61,12 +54,8 @@ public class StoreDetails implements Serializable {
         return owner;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
+    public Address getAddress(){
+        return address;
     }
 
     public String getTelephone() {

@@ -83,8 +83,6 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
             storeNameTextView = itemView.findViewById(R.id.storeNameTextView);
             openStoreDetails = itemView.findViewById(R.id.openStoreDetails);
             openDetails = itemView.findViewById(R.id.openDetails);
-
-
         }
     }
 
@@ -93,7 +91,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
                 ((AppCompatActivity) context).getSupportFragmentManager(),
                 R.id.frame_layout,
                 StoreDetailsFragment.newInstance(store),
-                R.anim.slide_in,
+                R.anim.slide_in_right,
                 R.anim.slide_out,
                 true
         );
