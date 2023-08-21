@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     private class CheckServerReachabilityTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... voids) {
-            return isServerReachable("http://131.173.65.77:8080/store-details", 500);
+            return isServerReachable("http://131.173.65.77:8080/api/store-details", 500);
         }
 
         @Override
