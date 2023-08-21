@@ -141,7 +141,7 @@ public class ExploreFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> {
                     if (result != null) {
                         updateUI(result);
-                        if (isSwipeRefresh) {  // Nur bei Swipe to Refresh anzeigen
+                        if (isSwipeRefresh) {
                             Toast.makeText(requireContext(), "Die Daten wurden aktualisiert", Toast.LENGTH_SHORT).show();
                         }
                     } else {
