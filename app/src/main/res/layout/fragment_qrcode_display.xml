@@ -4,7 +4,9 @@
     style="@style/Screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background_blur"
+    >
 
     <include
         android:id="@+id/toolbar"
@@ -26,83 +28,100 @@
     <ImageView
         android:id="@+id/lingenliefertImageView"
         android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_gravity="right"
         android:background="@drawable/logoklein"
         android:padding="12dp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:layout_width="350dp"
+        android:layout_height="500dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        style="@style/RoundedCornersQR"
+        android:alpha="0.45"
+        android:elevation="20dp">
 
-        <ImageView
-            android:id="@+id/qrCodeTextImageView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="left"
-            android:background="@drawable/baseline_qr_code_2_24"
-            android:padding="12dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/showScanTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:text="Vorzeigen zum Scannen"
-            android:textColor="@color/lavender"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/qrCodeTextImageView"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="left"
+                    android:background="@drawable/baseline_qr_code_2_24"
+                    android:padding="12dp" />
 
-    <ImageView
-        android:id="@+id/imageViewQRCode"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:padding="16dp"
-        android:scaleType="centerCrop" />
+                <TextView
+                    android:id="@+id/showScanTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:text="Vorzeigen zum Scannen"
+                    android:textColor="@color/lavender"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imageViewQRCode"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:padding="16dp"
+                android:scaleType="centerCrop" />
 
-        <ImageView
-            android:id="@+id/homeImageView"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="left"
-            android:background="@drawable/baseline_home_24"
-            android:padding="12dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/homeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:text="Lieferadresse"
-            android:textColor="@color/lavender"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/homeImageView"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="left"
+                    android:background="@drawable/baseline_home_24"
+                    android:padding="12dp" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/homeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:text="Lieferadresse"
+                    android:textColor="@color/lavender"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewRecipientDetails"
-        style="@style/Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewRecipientDetails"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
