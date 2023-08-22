@@ -59,7 +59,7 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Vorname"
+            android:hint="Vorname *"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:padding="12dp" />
@@ -78,7 +78,7 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Straße"
+            android:hint="Straße *"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:padding="12dp" />
@@ -97,7 +97,7 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Straßennummer"
+            android:hint="Straßennummer *"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLength="5"
