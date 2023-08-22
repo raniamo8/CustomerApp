@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean isReachable) {
             if (!isReachable) {
                 System.out.println("Server nicht erreichbar");
-                Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_SHORT).show();
             }
         }
     }

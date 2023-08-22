@@ -145,13 +145,13 @@ public class ExploreFragment extends Fragment {
                             Toast.makeText(requireContext(), "Die Daten wurden aktualisiert", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_SHORT).show();
                     }
                     swipeRefreshLayout.setRefreshing(false);
                 });
             });
         } else {
-            Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_SHORT).show();
             swipeRefreshLayout.setRefreshing(false);
         }
     }
