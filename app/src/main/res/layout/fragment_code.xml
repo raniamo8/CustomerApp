@@ -40,6 +40,8 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/edittext_bkg"
             android:hint="Nachname *"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -59,6 +61,8 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/edittext_bkg"
             android:hint="Vorname *"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -78,6 +82,8 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/edittext_bkg"
             android:hint="Straße *"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -97,6 +103,8 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/edittext_bkg"
             android:hint="Straßennummer *"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -129,6 +137,7 @@
             android:layout_height="wrap_content"
             android:entries="@array/plz_options"
             android:padding="12dp"
+
             android:prompt="@string/select_plz" />
 
         <TextView

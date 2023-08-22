@@ -4,9 +4,8 @@
     style="@style/Screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background_blur"
-    >
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
@@ -34,10 +33,10 @@
         android:padding="12dp" />
 
     <FrameLayout
+        style="@style/RoundedCornersQR"
         android:layout_width="350dp"
         android:layout_height="500dp"
         android:layout_gravity="center"
-        style="@style/RoundedCornersQR"
         android:elevation="20dp">
 
         <LinearLayout

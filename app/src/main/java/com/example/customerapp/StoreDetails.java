@@ -54,7 +54,7 @@ public class StoreDetails implements Serializable {
         return owner;
     }
 
-    public Address getAddress(){
+    public Address getAddress() {
         return address;
     }
 

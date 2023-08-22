@@ -83,8 +83,7 @@ public class Recipient {
         }
 
         Address address = addresses.get(0);
-        String text = lastName + "&" + firstName + "&" + address.getStreet() + "&"
-                + address.getHouseNumber() + "&" + address.getZip() + "&" + address.getCity();
+        String text = lastName + "&" + firstName + "&" + address.getStreet() + "&" + address.getHouseNumber() + "&" + address.getZip() + "&" + address.getCity();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, WIDTH_HEIGHT_NR, WIDTH_HEIGHT_NR);
