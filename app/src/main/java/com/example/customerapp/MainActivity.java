@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint({"NonConstantResourceId", "StaticFieldLeak"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
 
         binding = ActivitymainBinding.inflate(getLayoutInflater());
