@@ -3,6 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    style="@style/RoundedCorners"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     android:padding="8dp">
 
     <ImageView
@@ -16,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -25,16 +29,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/opnQRCodeButton"
             style="@style/Text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:backgroundTint="@color/lavender"
-            android:text="QR-Code öffnen" />
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"
+            android:text="Öffnen" />
 
         <Button
             android:id="@+id/deleteButton"
@@ -43,7 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:backgroundTint="@color/lavender"
-            android:text="QR-Code löschen" />
+            android:drawableRight="@drawable/baseline_close_24"
+            android:text="Löschen" />
 
     </LinearLayout>
 

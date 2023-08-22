@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,9 @@ public class QRCodeListFragment extends Fragment {
         loadQRCodeFilePaths();
 
         view.findViewById(R.id.fabAddQRCode).setOnClickListener(v -> goToCodeFragment());
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(qrCodeAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return view;
     }
@@ -115,6 +119,7 @@ public class QRCodeListFragment extends Fragment {
             Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }
 
