@@ -38,7 +38,6 @@
         android:layout_height="500dp"
         android:layout_gravity="center"
         style="@style/RoundedCornersQR"
-        android:alpha="0.45"
         android:elevation="20dp">
 
         <LinearLayout
