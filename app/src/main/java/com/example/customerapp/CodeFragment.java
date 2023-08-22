@@ -263,11 +263,16 @@ public class CodeFragment extends Fragment {
 
     private void showSuccessDialog() {
         new AlertDialog.Builder(requireContext())
-                //.setTitle("Erfolg!")
-                .setMessage("Der QR-Code wurde erfolgreich erstellt.")
+                .setTitle("QR-Code")
+                .setMessage("Der QR-Code wurde erfolgreich erstellt!")
                 .setPositiveButton("Zurück zur Übersicht", (dialog, which) -> {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    FragmentManagerHelper.goToFragment(fragmentManager, R.id.frame_layout, new QRCodeListFragment(), 0, 0, true);
+                    FragmentManagerHelper.goToFragment(fragmentManager,
+                            R.id.frame_layout,
+                            new QRCodeListFragment(),
+                            0,
+                            0,
+                            true);
                 })
                 //.setNegativeButton("Abbrechen", null)
                 .show();
