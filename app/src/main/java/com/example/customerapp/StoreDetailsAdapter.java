@@ -11,11 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.maps.MapView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -73,7 +70,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     static class StoreViewHolder extends RecyclerView.ViewHolder {
         ImageView storeLogoImageView;
         TextView storeNameTextView;
-        ImageView openStoreDetails;
+        ImageView openStoreDetailsImageView;
         LinearLayout openDetails;
 
 
@@ -81,7 +78,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
             super(itemView);
             storeLogoImageView = itemView.findViewById(R.id.storeLogoImageView);
             storeNameTextView = itemView.findViewById(R.id.storeNameTextView);
-            openStoreDetails = itemView.findViewById(R.id.openStoreDetails);
+            openStoreDetailsImageView = itemView.findViewById(R.id.openStoreDetailsImageView);
             openDetails = itemView.findViewById(R.id.openDetails);
         }
     }

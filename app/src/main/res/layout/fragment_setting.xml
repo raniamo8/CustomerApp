@@ -20,7 +20,7 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/address"
+                android:id="@+id/addressSettingTextView"
                 style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/deleteData"
+                android:id="@+id/deleteDataTextView"
                 style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

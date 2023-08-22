@@ -46,10 +46,10 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     public void onBindViewHolder(@NonNull QRCodeViewHolder holder, int position) {
         String filePath = qrCodeFilePaths.get(position);
         Bitmap qrCodeBitmap = BitmapFactory.decodeFile(filePath);
-        holder.imageViewQrCode.setImageBitmap(qrCodeBitmap);
+        holder.qrCodeItemImageView.setImageBitmap(qrCodeBitmap);
         setRecipientInfo(holder, position);
 
-        holder.buttonOpenQRCode.setOnClickListener(v -> {
+        holder.opnQRCodeButton.setOnClickListener(v -> {
             openQRCodeDisplayFragment(v.getContext(), position);
         });
 
@@ -64,17 +64,17 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     }
 
     static class QRCodeViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageViewQrCode;
+        ImageView qrCodeItemImageView;
         Button deleteButton;
-        Button buttonOpenQRCode;
-        TextView textViewRecipientInfo;
+        Button opnQRCodeButton;
+        TextView recipientInfoTextView;
 
         public QRCodeViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewQrCode = itemView.findViewById(R.id.imageViewQrCode);
+            qrCodeItemImageView = itemView.findViewById(R.id.qrCodeItemImageView);
             deleteButton = itemView.findViewById(R.id.deleteButton);
-            buttonOpenQRCode = itemView.findViewById(R.id.buttonOpenQRCode);
-            textViewRecipientInfo = itemView.findViewById(R.id.textViewRecipientInfo);
+            opnQRCodeButton = itemView.findViewById(R.id.opnQRCodeButton);
+            recipientInfoTextView = itemView.findViewById(R.id.recipientInfoTextView);
         }
     }
 
@@ -83,10 +83,10 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         if (addressBook != null && position < addressBook.getRecipients().size()) {
             Recipient recipient = addressBook.getRecipients().get(position);
             String fullName = recipient.getFirstName() + " " + recipient.getLastName();
-            holder.textViewRecipientInfo.setText(fullName);
+            holder.recipientInfoTextView.setText(fullName);
             Log.d("QRCodeAdapter", "Recipient at position " + position + ": " + fullName);
         } else {
-            holder.textViewRecipientInfo.setText("Unknown Recipient position problem");
+            holder.recipientInfoTextView.setText("Unknown Recipient position problem");
         }
     }
 

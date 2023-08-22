@@ -39,7 +39,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
     private static final String ARG_STORE_DETAILS = "storeDetails";
     private StoreDetails storeDetails;
     TextView ownerNameTextView, ownerAddressTextView, ownerPhoneTextView, ownerEmailTextView;
-    ImageView shopLogoBig, backgroundImage;
+    ImageView shopLogoBig, backgroundImageView;
     private AppCompatImageButton backButton;
 
     private MapView mapView;
@@ -70,7 +70,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         View view = inflater.inflate(R.layout.fragment_store_details, container, false);
 
         shopLogoBig = view.findViewById(R.id.shopLogoBig);
-        backgroundImage = view.findViewById(R.id.backgroundImage);
+        backgroundImageView = view.findViewById(R.id.backgroundImageView);
         ownerNameTextView = view.findViewById(R.id.ownerNameTextView);
         ownerAddressTextView = view.findViewById(R.id.ownerAddressTextView);
         ownerPhoneTextView = view.findViewById(R.id.ownerPhoneTextView);
@@ -101,7 +101,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
 
             Picasso.get()
                     .load(backgroundImageUrl)
-                    .into(backgroundImage, new Callback() {
+                    .into(backgroundImageView, new Callback() {
                         @Override
                         public void onSuccess() {
                             Log.d("Picasso", "Hintergrundbild erfolgreich geladen");

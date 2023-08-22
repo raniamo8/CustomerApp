@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 
 public class OwnerInformationFragment extends Fragment {
 
-    TextView informationTitle, generalsTextView, groupTextView, copyrightTextView;
+    TextView informationTitleTextView, generalsTextView, groupTextView, copyrightTextView;
     ImageButton backButtonToSetting;
     ImageView lieferlogoImageView;
 
@@ -26,7 +26,7 @@ public class OwnerInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_owner_inforamtion, container, false);
 
-        informationTitle = view.findViewById(R.id.informationTitle);
+        informationTitleTextView = view.findViewById(R.id.informationTitleTextView);
         generalsTextView = view.findViewById(R.id.generalsTextView);
         groupTextView = view.findViewById(R.id.groupTextView);
         copyrightTextView = view.findViewById(R.id.copyrightTextView);

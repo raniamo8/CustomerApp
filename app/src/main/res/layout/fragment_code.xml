@@ -49,7 +49,7 @@
             android:id="@+id/lastNameErrorTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inkorrekte Eingabe für Nachname"
+            android:text="Der Nachname ist erforderlich!"
             android:textColor="@android:color/holo_red_light"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -68,7 +68,7 @@
             android:id="@+id/firstNameErrorTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inkorrekte Eingabe für Vorname"
+            android:text="Der Vorname ist erforderlich!"
             android:textColor="@android:color/holo_red_light"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -87,7 +87,7 @@
             android:id="@+id/streetErrorTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inkorrekte Eingabe für Straße"
+            android:text="Die Straße ist erforderlich!"
             android:textColor="@android:color/holo_red_light"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -107,7 +107,7 @@
             android:id="@+id/streetNrErrorTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inkorrekte Eingabe für Straßennummer"
+            android:text="Die Straßennummer ist erforderlich!"
             android:textColor="@android:color/holo_red_light"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -136,7 +136,7 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inkorrekte Eingabe für Postleitzahl"
+            android:text="Der Postleitzahl ist erforderlich!"
             android:textColor="@android:color/holo_red_light"
             android:textSize="16sp"
             android:visibility="gone" />

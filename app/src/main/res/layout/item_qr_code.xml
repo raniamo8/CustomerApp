@@ -6,7 +6,7 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/imageViewQrCode"
+        android:id="@+id/qrCodeItemImageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
@@ -20,7 +20,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewRecipientInfo"
+            android:id="@+id/recipientInfoTextView"
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/buttonOpenQRCode"
+            android:id="@+id/opnQRCodeButton"
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -34,8 +34,8 @@ public class QRCodeDisplayFragment extends Fragment {
         showScanTextView = view.findViewById(R.id.showScanTextView);
         homeImageView = view.findViewById(R.id.homeImageView);
         homeTextView = view.findViewById(R.id.homeTextView);
-        ImageView imageViewQrCodeDisplay = view.findViewById(R.id.imageViewQRCode);
-        loadQRCode(imageViewQrCodeDisplay);
+        ImageView qrCodeImageView = view.findViewById(R.id.qrCodeImageView);
+        loadQRCode(qrCodeImageView);
         displayRecipientDetails();
 
         backButton = view.findViewById(R.id.backButtonToList);
