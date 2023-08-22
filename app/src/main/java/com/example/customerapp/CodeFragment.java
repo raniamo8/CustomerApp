@@ -3,6 +3,7 @@ package com.example.customerapp;
 import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -159,7 +160,8 @@ public class CodeFragment extends Fragment {
         if (recipient.saveQRCodeToInternalStorage(getContext())) {
             qrCodeCounter++;
             AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
-            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich generiert.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich generiert.", Toast.LENGTH_SHORT).show();
+            showSuccessDialog();
         } else {
             Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
         }
@@ -258,5 +260,18 @@ public class CodeFragment extends Fragment {
             return false;
         });
     }
+
+    private void showSuccessDialog() {
+        new AlertDialog.Builder(requireContext())
+                //.setTitle("Erfolg!")
+                .setMessage("Der QR-Code wurde erfolgreich erstellt.")
+                .setPositiveButton("Zurück zur Übersicht", (dialog, which) -> {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentManagerHelper.goToFragment(fragmentManager, R.id.frame_layout, new QRCodeListFragment(), 0, 0, true);
+                })
+                //.setNegativeButton("Abbrechen", null)
+                .show();
+    }
+
 
 }
