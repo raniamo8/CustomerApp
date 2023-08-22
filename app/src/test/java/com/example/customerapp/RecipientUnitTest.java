@@ -14,7 +14,6 @@ import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class RecipientUnitTest {
-
     private Recipient recipient;
     private Address address;
     private List<Address> addresses;

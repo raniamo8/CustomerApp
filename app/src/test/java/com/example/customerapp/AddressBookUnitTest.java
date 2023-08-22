@@ -75,6 +75,7 @@ public class AddressBookUnitTest {
     /**
      * Checks if the QR code counter increments correctly when adding a new recipient.
      */
+    //TODO: test not correct
     public void testQRCodeCounterIncrement() {
         Recipient validRecipient = new Recipient("Slim", "Shady");
         addressBook.addRecipient(validRecipient, context);

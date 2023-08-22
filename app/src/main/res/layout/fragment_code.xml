@@ -40,7 +40,7 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nachname"
+            android:hint="Nachname *"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:padding="12dp" />

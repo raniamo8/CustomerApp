@@ -40,6 +40,7 @@ public class IntroUITest {
     @AfterClass
     public static void tearDownClass() {
     }
+
     @Test
     public void test1Intro() {
         onView(isRoot()).perform(waitFor(1000));
