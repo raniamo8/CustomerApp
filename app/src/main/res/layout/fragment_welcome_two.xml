@@ -4,7 +4,6 @@
     style="@style/Screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="50dp"
     tools:context=".WelcomeFragmentOne">
 
 
@@ -16,8 +15,8 @@
 
         <ImageButton
             android:id="@+id/backToIntroButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="left"
             android:backgroundTint="@color/lavender"
             android:padding="12dp"
