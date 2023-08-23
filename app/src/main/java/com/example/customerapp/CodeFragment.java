@@ -95,8 +95,6 @@ public class CodeFragment extends Fragment {
             goBackToPreviousFragment(fragmentManager);
         });
 
-        setupEditTexts();
-
         return rootView;
     }
 
@@ -226,44 +224,9 @@ public class CodeFragment extends Fragment {
         streetNrEditText.setText("");
     }
 
-    private void setupEditTexts() {
-        lastNameEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                firstNameEditText.requestFocus();
-                return true;
-            }
-            return false;
-        });
-
-        firstNameEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                streetEditText.requestFocus();
-                return true;
-            }
-            return false;
-        });
-
-        streetEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                streetNrEditText.requestFocus();
-                return true;
-            }
-            return false;
-        });
-
-        streetNrEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                return true;
-            }
-            return false;
-        });
-    }
-
     private void showSuccessDialog() {
         new AlertDialog.Builder(requireContext())
-                .setTitle("QR-Code")
+                //.setTitle("QR-Code")
                 .setMessage("Der QR-Code wurde erfolgreich erstellt!")
                 .setPositiveButton("Zurück zur Übersicht", (dialog, which) -> {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
