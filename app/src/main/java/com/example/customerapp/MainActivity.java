@@ -34,7 +34,6 @@ import java.net.URL;
 //TODO: IntroReset
 //TODO: open qr code as layout clickable
 //TODO: control increment test in addressbook
-//TODO: refactor Code
 //TODO: refreshData
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
