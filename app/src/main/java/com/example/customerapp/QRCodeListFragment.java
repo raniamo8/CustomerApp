@@ -58,7 +58,7 @@ public class QRCodeListFragment extends Fragment {
 
         view.findViewById(R.id.fabAddQRCode).setOnClickListener(v -> goToCodeFragment());
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(qrCodeAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(qrCodeAdapter, getContext()));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return view;
