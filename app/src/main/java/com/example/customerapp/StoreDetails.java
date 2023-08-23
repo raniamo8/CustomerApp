@@ -9,7 +9,6 @@ import java.io.Serializable;
  * This class implements Serializable to enable passing store details between activities using Intent.
  */
 public class StoreDetails implements Serializable {
-
     private String id;
     private String name;
     private String owner;
@@ -74,9 +73,6 @@ public class StoreDetails implements Serializable {
         return backgroundImage;
     }
 
-    public void setBackgroundImage(String backgroundImage) {
-        this.backgroundImage = backgroundImage;
-    }
 
     public LatLng getCoordinates() {
         return coordinates;

@@ -126,7 +126,6 @@ public class Recipient {
         if (bitmap == null) {
             return null;
         }
-
         int[] intArray = new int[bitmap.getWidth() * bitmap.getHeight()];
         bitmap.getPixels(intArray, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
 
