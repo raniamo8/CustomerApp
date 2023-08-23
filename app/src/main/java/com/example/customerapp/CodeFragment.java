@@ -190,6 +190,7 @@ public class CodeFragment extends Fragment {
             streetErrorTextView.setVisibility(View.GONE);
         }
 
+        //TODO: error handle
         if (!isValidStreetNr(houseNumber)) {
             streetNrErrorTextView.setVisibility(View.VISIBLE);
             isValid = false;
@@ -213,7 +214,7 @@ public class CodeFragment extends Fragment {
     }
 
     private boolean isValidStreetNr(@NonNull String houseNumber) {
-        return !houseNumber.isEmpty();
+        return !houseNumber.isEmpty() && houseNumber.length() <= 5;
     }
 
 
