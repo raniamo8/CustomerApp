@@ -133,6 +133,7 @@ public class ExploreFragment extends Fragment {
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
+    //TODO: refactor
     private void refreshData(boolean isSwipeRefresh) {
         if (isNetworkAvailable()) {
             ExecutorService executorService = Executors.newSingleThreadExecutor();

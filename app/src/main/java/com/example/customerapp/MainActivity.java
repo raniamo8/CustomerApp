@@ -28,10 +28,14 @@ import java.net.URL;
 //TODO: Checkstyle
 //TODO: Readme
 //TODO: Documentation
+//TODO: language check
 //-------------------------//
 //TODO: test are configured as gradle!!!!!!
 //TODO: IntroReset
 //TODO: open qr code as layout clickable
+//TODO: control increment test in addressbook
+//TODO: refactor Code
+//TODO: refreshData
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getApplicationContext());
 
+        //TODO: refactor to methode
         SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
         boolean isFirstRun = preferences.getBoolean("is_first_run", true);
 
@@ -63,29 +68,36 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            replaceFragmentBottomNavigation(new QRCodeListFragment());
+            FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, new QRCodeListFragment());
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
             switch (item.getItemId()) {
                 case R.id.code:
-                    replaceFragmentBottomNavigation(new QRCodeListFragment());
+                    selectedFragment = new QRCodeListFragment();
                     break;
                 case R.id.explore:
                     new CheckServerReachabilityTask() {
                         @Override
                         protected void onPostExecute(Boolean isReachable) {
                             if (isReachable) {
-                                replaceFragmentBottomNavigation(new ExploreFragment());
+                                FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, new ExploreFragment());
                             } else {
                                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
                             }
                         }
                     }.execute();
-                    break;
+                    return true;
                 case R.id.settings:
-                    replaceFragmentBottomNavigation(new SettingFragment());
+                    selectedFragment = new SettingFragment();
                     break;
+            }
+            if (selectedFragment != null) {
+                FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, selectedFragment);
+                if (selectedFragment instanceof CodeFragment) {
+                    CodeFragment.instance = (CodeFragment) selectedFragment;
+                }
             }
             return true;
         });
@@ -117,17 +129,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("MainActivity", "onDestroy");
         addressBook.saveData(getApplicationContext());
-    }
-
-    public void replaceFragmentBottomNavigation(Fragment fragment) {
-        currentFragment = fragment;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
-        if (fragment instanceof CodeFragment) {
-            CodeFragment.instance = (CodeFragment) fragment;
-        }
     }
 
     @SuppressLint("StaticFieldLeak")
