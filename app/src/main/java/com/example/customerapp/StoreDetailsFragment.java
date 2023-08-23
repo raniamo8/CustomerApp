@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,13 +36,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
  * It takes a StoreDetails object as an argument and displays its data, including the store's logo, owner name, etc.
  */
 public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback {
-
     private static final String ARG_STORE_DETAILS = "storeDetails";
     private StoreDetails storeDetails;
     TextView ownerNameTextView, ownerAddressTextView, ownerPhoneTextView, ownerEmailTextView;
     ImageView shopLogoBig, backgroundImageView;
     private AppCompatImageButton backButton;
-
     private MapView mapView;
     private GoogleMap googleMap;
 
@@ -76,43 +75,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         ownerPhoneTextView = view.findViewById(R.id.ownerPhoneTextView);
         ownerEmailTextView = view.findViewById(R.id.ownerEmailTextView);
 
-        // submitting data in the View
-        if (storeDetails != null) {
-            ownerNameTextView.setText(storeDetails.getOwner());
-            ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getHouseNumber());
-            ownerPhoneTextView.setText(storeDetails.getTelephone());
-            ownerEmailTextView.setText(storeDetails.getEmail());
-            String logoImageUrl = storeDetails.getLogo();
-            String backgroundImageUrl = storeDetails.getBackgroundImage();
-
-            Picasso.get()
-                    .load(logoImageUrl)
-                    .into(shopLogoBig, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            Log.d("Picasso", "Logo-Bild erfolgreich geladen");
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            Log.e("Picasso", "Fehler beim Laden des Logo-Bildes", e);
-                        }
-                    });
-
-            Picasso.get()
-                    .load(backgroundImageUrl)
-                    .into(backgroundImageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            Log.d("Picasso", "Hintergrundbild erfolgreich geladen");
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            Log.e("Picasso", "Fehler beim Laden des Hintergrundbildes", e);
-                        }
-                    });
-        }
+        //submitting data into the view
+        submittingData();
 
         backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
@@ -172,4 +136,42 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         mapView.onResume();
     }
 
+    private void submittingData() {
+        if (storeDetails != null) {
+            ownerNameTextView.setText(storeDetails.getOwner());
+            ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getHouseNumber());
+            ownerPhoneTextView.setText(storeDetails.getTelephone());
+            ownerEmailTextView.setText(storeDetails.getEmail());
+            String logoImageUrl = storeDetails.getLogo();
+            String backgroundImageUrl = storeDetails.getBackgroundImage();
+
+            Picasso.get()
+                    .load(logoImageUrl)
+                    .into(shopLogoBig, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("Picasso", "Logo-Bild erfolgreich geladen");
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Log.e("Picasso", "Fehler beim Laden des Logo-Bildes", e);
+                        }
+                    });
+
+            Picasso.get()
+                    .load(backgroundImageUrl)
+                    .into(backgroundImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("Picasso", "Hintergrundbild erfolgreich geladen");
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Log.e("Picasso", "Fehler beim Laden des Hintergrundbildes", e);
+                        }
+                    });
+        }
+    }
 }
