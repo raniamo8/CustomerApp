@@ -30,7 +30,6 @@ import java.net.URL;
 //TODO: Documentation
 //-------------------------//
 //TODO: test are configured as gradle!!!!!!
-//TODO: Button intro bottom of the display
 //TODO: IntroReset
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";

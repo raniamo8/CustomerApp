@@ -15,7 +15,10 @@
         <item name="android:background">@drawable/rounded_background_with_alpha</item>
         <item name="android:layout_margin">8dp</item>
         <item name="android:padding">8dp</item>
+    </style>
 
+    <style name="circularImage">
+        <item name="cornerSize">10%</item>
     </style>
 
 
