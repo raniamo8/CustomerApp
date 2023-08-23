@@ -31,6 +31,7 @@ import java.net.URL;
 //-------------------------//
 //TODO: test are configured as gradle!!!!!!
 //TODO: IntroReset
+//TODO: open qr code as layout clickable
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
