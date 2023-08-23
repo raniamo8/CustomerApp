@@ -24,15 +24,9 @@ public class WelcomeActivity extends AppCompatActivity {
         boolean isFirstRun = preferences.getBoolean("is_first_run", true);
 
         if (isFirstRun) {
-            replaceFragment(new WelcomeFragmentOne());
+            FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, new WelcomeFragmentOne());
             preferences.edit().putBoolean("is_first_run", false).apply();
         }
     }
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.welcome_frame_layout, fragment);
-        fragmentTransaction.commit();
-    }
 }
