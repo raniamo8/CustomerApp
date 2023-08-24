@@ -35,7 +35,7 @@ import androidx.fragment.app.FragmentManager;
 public class CodeFragment extends Fragment {
     private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
     private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
-    private ImageView qrCodeImageView, addressImageView;
+    private ImageView qrCodeImageView;
     Button generateQRCodeButton;
     private AppCompatImageButton backButton;
     private AddressBook addressBook = new AddressBook();
@@ -62,7 +62,6 @@ public class CodeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_code, container, false);
 
-        addressImageView = rootView.findViewById(R.id.addressImageView);
         lastNameEditText = rootView.findViewById(R.id.lastNameEditText);
         firstNameEditText = rootView.findViewById(R.id.firstNameEditText);
         streetEditText = rootView.findViewById(R.id.streetEditText);
