@@ -36,27 +36,6 @@
             android:src="@drawable/address" />
 
         <EditText
-            android:id="@+id/lastNameEditText"
-            style="@style/Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edittext_bkg"
-            android:hint="Nachname *"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:padding="12dp" />
-
-        <TextView
-            android:id="@+id/lastNameErrorTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Der Nachname ist erforderlich!"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-        <EditText
             android:id="@+id/firstNameEditText"
             style="@style/Text"
             android:layout_width="match_parent"
@@ -73,6 +52,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Der Vorname ist erforderlich!"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/lastNameEditText"
+            style="@style/Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/edittext_bkg"
+            android:hint="Nachname *"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:padding="12dp" />
+
+        <TextView
+            android:id="@+id/lastNameErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Der Nachname ist erforderlich!"
             android:textColor="@android:color/holo_red_light"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:background="@drawable/edittext_bkg"
-            android:hint="Straßennummer *"
+            android:hint="Hausnummer *"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLength="5"
