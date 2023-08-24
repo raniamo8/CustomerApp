@@ -117,7 +117,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
                 }
             }
         } else {
-            Toast.makeText(context, "Fehler: Ungültige Position.", Toast.LENGTH_SHORT).show();
+            Log.d("QRCodeAdapter", "Fehler: Ungültige Position.");
         }
     }
 
