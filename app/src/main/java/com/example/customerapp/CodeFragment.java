@@ -86,7 +86,7 @@ public class CodeFragment extends Fragment {
 
         generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
         generateQRCodeButton.setOnClickListener(v -> {
-            generateQRCode(selectedZIP);
+            generateQRCode();
         });
 
         backButton = rootView.findViewById(R.id.backButton);
@@ -120,7 +120,7 @@ public class CodeFragment extends Fragment {
     }
 
 
-    private void generateQRCode(String zip) {
+    private void generateQRCode() {
         String lastName = lastNameEditText.getText().toString().trim();
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
@@ -128,7 +128,7 @@ public class CodeFragment extends Fragment {
         String selectedZIP = ((Spinner) requireView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();
 
         if (isInputValid(lastName, firstName, street, houseNumber)) {
-            createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);
+            createAndSaveRecipient(lastName, firstName, street, houseNumber, selectedZIP);
             addressBook.saveData(getContext());
         } else {
             Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor.", Toast.LENGTH_SHORT).show();

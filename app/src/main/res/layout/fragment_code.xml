@@ -137,7 +137,6 @@
             android:layout_height="wrap_content"
             android:entries="@array/plz_options"
             android:padding="12dp"
-
             android:prompt="@string/select_plz" />
 
         <TextView
