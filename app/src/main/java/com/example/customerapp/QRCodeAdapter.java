@@ -92,18 +92,21 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
 
 
     public void deleteQRCodeAndRecipient(int position) {
-        Recipient recipient = addressBook.getRecipients().get(position);
-        if (recipient != null) {
+        if (position >= 0 && position < addressBook.getRecipients().size()) {
+            Recipient recipient = addressBook.getRecipients().get(position);
+
             String filePath = qrCodeFilePaths.get(position);
             File file = new File(filePath);
             if (file.exists()) {
                 if (file.delete()) {
                     qrCodeFilePaths.remove(position);
-                    Address addressToRemove = recipient.getAddresses().get(0);
-                    if (recipient.getAddresses().contains(addressToRemove)) {
-                        Log.d("AddressBook", "Adresse vor dem Löschen: " + addressToRemove.toString());
-                    } else {
-                        Log.d("AddressBook", "Adresse nicht gefunden, bevor sie entfernt wird.");
+                    if (position < recipient.getAddresses().size()) {
+                        Address addressToRemove = recipient.getAddresses().get(0);
+                        if (recipient.getAddresses().contains(addressToRemove)) {
+                            Log.d("AddressBook", "Adresse vor dem Löschen: " + addressToRemove.toString());
+                        } else {
+                            Log.d("AddressBook", "Adresse nicht gefunden, bevor sie entfernt wird.");
+                        }
                     }
                     addressBook.deleteOneRecipient(recipient, context);
                     notifyItemRemoved(position);
@@ -113,8 +116,11 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
                     Toast.makeText(context, "Fehler beim Löschen des QR-Codes.", Toast.LENGTH_SHORT).show();
                 }
             }
+        } else {
+            Toast.makeText(context, "Fehler: Ungültige Position.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void openQRCodeDisplayFragment(Context context, int position) {
         if (position >= 0 && position < qrCodeFilePaths.size()) {
