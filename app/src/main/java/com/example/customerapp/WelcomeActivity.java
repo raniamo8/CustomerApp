@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
         boolean isFirstRun = preferences.getBoolean("is_first_run", true);
 
         if (isFirstRun) {
-            FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, new WelcomeFragmentOne());
+            FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.welcome_frame_layout, new WelcomeFragmentOne());
             preferences.edit().putBoolean("is_first_run", false).apply();
         }
     }
