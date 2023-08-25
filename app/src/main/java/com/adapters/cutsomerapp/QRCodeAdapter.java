@@ -79,7 +79,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
             super(itemView);
             qrCodeItemImageView = itemView.findViewById(R.id.qrCodeItemImageView);
             deleteButton = itemView.findViewById(R.id.deleteButton);
-            opnQRCodeButton = itemView.findViewById(R.id.opnQRCodeButton);
+            opnQRCodeButton = itemView.findViewById(R.id.openQRCodeButton);
             recipientInfoTextView = itemView.findViewById(R.id.recipientInfoTextView);
         }
     }

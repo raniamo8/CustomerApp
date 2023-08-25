@@ -56,7 +56,7 @@ public class QRCodeUITest {
     @Test
     public void test2OpenQRCodeInforamtion() {
         onView(isRoot()).perform(waitFor(1000));
-        onView(withId(R.id.buttonOpenQRCode)).perform(click());
+        onView(withId(R.id.openQRCodeButton)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.backButtonToList)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
