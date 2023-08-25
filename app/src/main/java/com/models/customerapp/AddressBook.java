@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.models.customerapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;

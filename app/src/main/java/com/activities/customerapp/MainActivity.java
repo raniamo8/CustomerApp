@@ -1,11 +1,8 @@
-package com.example.customerapp;
+package com.activities.customerapp;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.customerapp.databinding.ActivitymainBinding;
+import com.example.customerapp.R;
+import com.fragments.customerapp.CodeFragment;
+import com.fragments.customerapp.ExploreFragment;
+import com.fragments.customerapp.QRCodeListFragment;
+import com.fragments.customerapp.SettingFragment;
+import com.models.customerapp.AddressBook;
+import com.models.customerapp.FragmentManagerHelper;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import com.example.customerapp.databinding.ActivitymainBinding;
 
 //TODO Code Fragment: PLz spinner color
 //TODO: Checkstyle

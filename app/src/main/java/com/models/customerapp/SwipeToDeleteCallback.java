@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.models.customerapp;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,6 +10,9 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.adapters.cutsomerapp.QRCodeAdapter;
+import com.example.customerapp.R;
 
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     private static final int ICON_SIZE = 100;

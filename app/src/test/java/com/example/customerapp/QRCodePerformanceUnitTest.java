@@ -14,6 +14,9 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.*;
 
+import com.models.customerapp.Address;
+import com.models.customerapp.Recipient;
+
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = Build.VERSION_CODES.O)
 public class QRCodePerformanceUnitTest {

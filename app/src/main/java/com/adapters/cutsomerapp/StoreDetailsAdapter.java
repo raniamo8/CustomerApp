@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.adapters.cutsomerapp;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,6 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.customerapp.R;
+import com.fragments.customerapp.StoreDetailsFragment;
+import com.models.customerapp.FragmentManagerHelper;
+import com.models.customerapp.StoreDetails;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

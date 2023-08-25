@@ -1,12 +1,13 @@
-package com.example.customerapp;
+package com.activities.customerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.example.customerapp.R;
+import com.fragments.customerapp.WelcomeFragmentOne;
+import com.models.customerapp.FragmentManagerHelper;
 
 
 /**

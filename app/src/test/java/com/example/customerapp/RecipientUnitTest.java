@@ -11,6 +11,9 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.models.customerapp.Address;
+import com.models.customerapp.Recipient;
+
 
 @RunWith(RobolectricTestRunner.class)
 public class RecipientUnitTest {

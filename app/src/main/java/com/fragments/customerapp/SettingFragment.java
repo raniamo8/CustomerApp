@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,8 +10,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
+import com.example.customerapp.R;
+import com.models.customerapp.FragmentManagerHelper;
+import com.adapters.cutsomerapp.QRCodeAdapter;
+import com.models.customerapp.AddressBook;
 
 import java.util.ArrayList;
 import java.util.List;

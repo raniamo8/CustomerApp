@@ -1,6 +1,6 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
-import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+import static com.models.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +15,11 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.customerapp.R;
+import com.models.customerapp.Address;
+import com.models.customerapp.AddressBook;
+import com.models.customerapp.Recipient;
 
 public class QRCodeDisplayFragment extends Fragment {
     TextView showScanTextView, homeTextView;

@@ -1,6 +1,6 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
-import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+import static com.models.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.customerapp.R;
 
 public class OwnerInformationFragment extends Fragment {
 

@@ -22,16 +22,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".OwnerInformationFragment"
+            android:name="com.fragments.customerapp.OwnerInformationFragment"
             android:theme="@style/Theme.CustomerApp.NoActionBar" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name="com.activities.customerapp.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".QRCodeDisplayFragment"
+            android:name="com.fragments.customerapp.QRCodeDisplayFragment"
             android:theme="@style/Theme.CustomerApp.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.activities.customerapp.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CustomerApp.NoActionBar">
             <intent-filter>

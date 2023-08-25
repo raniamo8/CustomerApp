@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.models.customerapp;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

@@ -15,6 +15,10 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import com.models.customerapp.Address;
+import com.models.customerapp.AddressBook;
+import com.models.customerapp.Recipient;
+
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class AddressBookUnitTest {

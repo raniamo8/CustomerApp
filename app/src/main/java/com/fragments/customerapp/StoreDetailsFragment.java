@@ -1,6 +1,6 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
-import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+import static com.models.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +18,12 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.customerapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.models.customerapp.StoreDetails;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

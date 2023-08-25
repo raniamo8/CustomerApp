@@ -1,11 +1,9 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
-import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+import static com.models.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -13,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +23,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.customerapp.R;
+import com.models.customerapp.EmojiExcludeFilter;
+import com.models.customerapp.FragmentManagerHelper;
+import com.models.customerapp.Address;
+import com.models.customerapp.AddressBook;
+import com.models.customerapp.Recipient;
 
 /**
  * Represents a fragment where the user can enter recipient information and generate a QR code for the recipient.

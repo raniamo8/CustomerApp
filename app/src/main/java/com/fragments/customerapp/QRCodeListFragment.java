@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,16 +14,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.customerapp.R;
+import com.models.customerapp.FragmentManagerHelper;
+import com.adapters.cutsomerapp.QRCodeAdapter;
+import com.models.customerapp.SwipeToDeleteCallback;
+import com.models.customerapp.AddressBook;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a fragment that displays a list of QR codes generated for recipients.

@@ -1,6 +1,6 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
-import static com.example.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
+import static com.models.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.activities.customerapp.MainActivity;
+import com.example.customerapp.R;
 
 /**
  * Second fragment of the introduction.

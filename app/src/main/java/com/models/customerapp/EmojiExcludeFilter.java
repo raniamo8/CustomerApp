@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.models.customerapp;
 
 import android.text.InputFilter;
 import android.text.SpannableString;

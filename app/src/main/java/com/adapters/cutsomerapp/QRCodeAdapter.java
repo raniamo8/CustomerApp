@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.adapters.cutsomerapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,6 +17,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.customerapp.R;
+import com.fragments.customerapp.QRCodeDisplayFragment;
+import com.models.customerapp.Address;
+import com.models.customerapp.AddressBook;
+import com.models.customerapp.Recipient;
 
 import java.io.File;
 import java.util.List;

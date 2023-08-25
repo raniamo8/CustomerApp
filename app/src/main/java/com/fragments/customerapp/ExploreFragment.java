@@ -1,4 +1,4 @@
-package com.example.customerapp;
+package com.fragments.customerapp;
 
 import static android.content.ContentValues.TAG;
 
@@ -20,7 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.customerapp.R;
+import com.adapters.cutsomerapp.StoreDetailsAdapter;
 import com.google.android.gms.maps.model.LatLng;
+import com.models.customerapp.Address;
+import com.models.customerapp.StoreDetails;
 
 import org.json.JSONArray;
 import org.json.JSONException;
