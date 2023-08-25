@@ -3,7 +3,7 @@
     style="@style/Screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fragments.customerapp.WelcomeFragmentOne">
+    tools:context="customerapp.fragments.customerapp.WelcomeFragmentOne">
 
     <LinearLayout
         android:layout_width="match_parent"
