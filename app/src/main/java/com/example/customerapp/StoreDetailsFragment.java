@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -139,7 +138,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
     private void submittingData() {
         if (storeDetails != null) {
             ownerNameTextView.setText(storeDetails.getOwner());
-            ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getHouseNumber());
+            ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getStreetNr());
             ownerPhoneTextView.setText(storeDetails.getTelephone());
             ownerEmailTextView.setText(storeDetails.getEmail());
             String logoImageUrl = storeDetails.getLogo();

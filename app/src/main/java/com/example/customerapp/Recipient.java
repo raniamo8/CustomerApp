@@ -26,7 +26,6 @@ import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.qrcode.QRCodeReader;
 
 /**
  * Represents a recipient with its information.
@@ -62,6 +61,14 @@ public class Recipient {
         return lastName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public List<Address> getAddresses() {
         return addresses;
     }
@@ -83,7 +90,7 @@ public class Recipient {
         }
 
         Address address = addresses.get(0);
-        String text = lastName + "&" + firstName + "&" + address.getStreet() + "&" + address.getHouseNumber() + "&" + address.getZip() + "&" + address.getCity();
+        String text = lastName + "&" + firstName + "&" + address.getStreet() + "&" + address.getStreetNr() + "&" + address.getZip() + "&" + address.getCity();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, WIDTH_HEIGHT_NR, WIDTH_HEIGHT_NR);
