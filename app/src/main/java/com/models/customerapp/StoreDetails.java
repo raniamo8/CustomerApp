@@ -73,7 +73,6 @@ public class StoreDetails implements Serializable {
         return backgroundImage;
     }
 
-
     public LatLng getCoordinates() {
         return coordinates;
     }

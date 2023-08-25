@@ -140,7 +140,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
     private void submittingData() {
         if (storeDetails != null) {
             ownerNameTextView.setText(storeDetails.getOwner());
-            ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getHouseNumber());
+            ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getStreetNr());
             ownerPhoneTextView.setText(storeDetails.getTelephone());
             ownerEmailTextView.setText(storeDetails.getEmail());
             String logoImageUrl = storeDetails.getLogo();

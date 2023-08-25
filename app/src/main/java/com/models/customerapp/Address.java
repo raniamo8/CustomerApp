@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class Address implements Serializable {
     private String street;
-    private String houseNumber;
+    private String streetNr;
     private String zip;
     private String city = "Lingen";
     private double latitude;
@@ -18,8 +18,8 @@ public class Address implements Serializable {
         this.street = street;
     }
 
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
+    public void setStreetNr(String streetNr) {
+        this.streetNr = streetNr;
     }
 
     public void setZip(String zip) {
@@ -28,14 +28,14 @@ public class Address implements Serializable {
 
     public Address(String street, String streetNr, String zip, String city) {
         this.street = street;
-        this.houseNumber = streetNr;
+        this.streetNr = streetNr;
         this.zip = zip;
         this.city = city;
     }
 
     public Address(String street, String streetNr, String zip) {
         this.street = street;
-        this.houseNumber = streetNr;
+        this.streetNr = streetNr;
         this.zip = zip;
         getCity();
     }
@@ -44,8 +44,8 @@ public class Address implements Serializable {
         return street;
     }
 
-    public String getHouseNumber() {
-        return houseNumber;
+    public String getStreetNr() {
+        return streetNr;
     }
 
     public String getZip() {
@@ -57,7 +57,7 @@ public class Address implements Serializable {
     }
 
     public String getFullAddress() {
-        return street + " " + houseNumber + "\n" + zip + " " + city;
+        return street + " " + streetNr + "\n" + zip + " " + city;
     }
 
     public double getLatitude() {
