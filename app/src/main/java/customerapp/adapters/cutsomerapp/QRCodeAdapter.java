@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,13 +56,21 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         holder.qrCodeItemImageView.setImageBitmap(qrCodeBitmap);
         setRecipientInfo(holder, position);
 
+        /*
         holder.opnQRCodeButton.setOnClickListener(v -> {
             openQRCodeDisplayFragment(v.getContext(), position);
         });
+        */
 
+        holder.openQRCodeLayout.setOnClickListener(v -> {
+            openQRCodeDisplayFragment(v.getContext(), position);
+        });
+
+         /*
         holder.deleteButton.setOnClickListener(v -> {
             deleteQRCodeAndRecipient(position);
         });
+           */
     }
 
     @Override
@@ -71,16 +80,18 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
 
     static class QRCodeViewHolder extends RecyclerView.ViewHolder {
         ImageView qrCodeItemImageView;
-        Button deleteButton;
-        Button opnQRCodeButton;
+        //Button deleteButton;
+        //Button opnQRCodeButton;
         TextView recipientInfoTextView;
+        LinearLayout openQRCodeLayout;
 
         public QRCodeViewHolder(@NonNull View itemView) {
             super(itemView);
             qrCodeItemImageView = itemView.findViewById(R.id.qrCodeItemImageView);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
-            opnQRCodeButton = itemView.findViewById(R.id.openQRCodeButton);
+            //deleteButton = itemView.findViewById(R.id.deleteButton);
+            //opnQRCodeButton = itemView.findViewById(R.id.openQRCodeButton);
             recipientInfoTextView = itemView.findViewById(R.id.recipientInfoTextView);
+            openQRCodeLayout = itemView.findViewById(R.id.openQRCodeLayout);
         }
     }
 

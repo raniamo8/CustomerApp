@@ -21,5 +21,8 @@
         <item name="cornerSize">10%</item>
     </style>
 
+    <style name="circularImageArrow">
+        <item name="cornerSize">30%</item>
+    </style>
 
 </resources>
