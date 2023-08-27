@@ -88,7 +88,7 @@ public class CodeFragment extends Fragment {
 
         generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
         generateQRCodeButton.setOnClickListener(v -> {
-            generateQRCode();
+            generateQRCodeInFragment();
         });
 
         backButton = rootView.findViewById(R.id.backButton);
@@ -122,7 +122,7 @@ public class CodeFragment extends Fragment {
     }
 
 
-    private void generateQRCode() {
+    private void generateQRCodeInFragment() {
         String lastName = lastNameEditText.getText().toString().trim();
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
