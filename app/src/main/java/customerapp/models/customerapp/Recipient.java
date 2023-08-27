@@ -109,7 +109,6 @@ public class Recipient {
         if (qrCodeBitmap == null) {
             return false;
         }
-
         try {
             File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
             String fileName = "qr_code" + qrCodeCounter + ".png";

@@ -108,10 +108,10 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     public void deleteQRCodeAndRecipient(int position) {
         if (position >= 0 && position < addressBook.getRecipients().size()) {
             Recipient recipient = addressBook.getRecipients().get(position);
-
             String filePath = qrCodeFilePaths.get(position);
             File file = new File(filePath);
             if (file.exists()) {
