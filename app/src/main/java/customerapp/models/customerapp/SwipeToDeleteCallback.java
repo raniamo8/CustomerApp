@@ -1,11 +1,13 @@
 package customerapp.models.customerapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -35,8 +37,21 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-        mAdapter.deleteQRCodeAndRecipient(position);
+
+        new AlertDialog.Builder(viewHolder.itemView.getContext())
+                .setTitle("Bestätigen Sie das Löschen")
+                .setMessage("Möchten Sie den QR-Code wirklich löschen?")
+                .setPositiveButton("Ja", (dialog, which) -> {
+                    mAdapter.deleteQRCodeAndRecipient(position);
+                    Toast.makeText(viewHolder.itemView.getContext(), "QR-Code wurde gelöscht.", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Abbrechen", (dialog, which) -> {
+                    mAdapter.notifyItemChanged(position);
+                })
+                .create()
+                .show();
     }
+
 
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,

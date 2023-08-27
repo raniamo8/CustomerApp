@@ -69,7 +69,9 @@ public class AddressBook {
             return;
         }
         int qrCodeCounter = getQRCodeCounter(context);
+        Log.d("AddressBook", "QR-Code Counter vor dem Hinzufügen: " + getQRCodeCounter(context));
         setQRCodeCounter(context, qrCodeCounter + 1);
+        Log.d("AddressBook", "QR-Code Counter nach dem Hinzufügen: " + getQRCodeCounter(context));
         recipient.setQRCodeCounter(qrCodeCounter);
         recipients.add(recipient);
         System.out.println("Hinzufügen eines Recipients: " + recipient.getFirstName() + " " + recipient.getLastName());
@@ -88,6 +90,7 @@ public class AddressBook {
         if (recipients == null) {
             recipients = new ArrayList<>();
         }
+        Log.d("AddressBook", "Geladener QR-Code Counter: " + getQRCodeCounter(context));
         Log.d("AddressBook", "Loaded data: " + recipients);
     }
 
@@ -98,6 +101,7 @@ public class AddressBook {
         String json = gson.toJson(recipients);
         editor.putString(ADDRESS_BOOK_PREFS_KEY, json);
         editor.apply();
+        Log.d("AddressBook", "Gespeicherter QR-Code Counter: " + getQRCodeCounter(context));
         Log.d("AddressBook", "Saved data: " + json);
     }
 
@@ -133,19 +137,18 @@ public class AddressBook {
             Iterator<Address> iterator = recipient.getAddresses().iterator();
             while (iterator.hasNext()) {
                 Address address = iterator.next();
-                iterator.remove();  // Sicher entfernen der aktuellen Adresse
+                // Sicher entfernen der aktuellen Adresse
+                iterator.remove();
                 Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
             }
-
             recipients.remove(recipient);
             System.out.println("Der Recipient wurde erfolgreich entfernt");
 
-
             int qrCodeCounter = getQRCodeCounter(context);
+            Log.d("AddressBook", "QR-Code Counter vor dem Löschen: " + getQRCodeCounter(context));
             qrCodeCounter--;
             setQRCodeCounter(context, qrCodeCounter);
-
-
+            Log.d("AddressBook", "QR-Code Counter nach dem Löschen: " + getQRCodeCounter(context));
             if (recipients.isEmpty()) {
                 setQRCodeCounter(context, 0);
             }

@@ -117,7 +117,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
             if (file.exists()) {
                 if (file.delete()) {
                     qrCodeFilePaths.remove(position);
-                    if (position < recipient.getAddresses().size()) {
+                    if (position < addressBook.getRecipients().size()) {
                         Address addressToRemove = recipient.getAddresses().get(0);
                         if (recipient.getAddresses().contains(addressToRemove)) {
                             Log.d("AddressBook", "Adresse vor dem Löschen: " + addressToRemove.toString());
@@ -136,6 +136,8 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         } else {
             Log.d("QRCodeAdapter", "Fehler: Ungültige Position.");
         }
+        Log.d("QRCodeAdapter", "QR-Code an Position " + position + " wird gelöscht.");
+        notifyDataSetChanged();
     }
 
 
