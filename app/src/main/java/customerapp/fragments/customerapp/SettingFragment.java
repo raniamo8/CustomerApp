@@ -87,12 +87,8 @@ public class SettingFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void deleteAllQRandRecipients() {
-        if (addressBook.getRecipients().isEmpty()) {
-            Toast.makeText(getContext(), "Es gibt keine QR-Codes zum Löschen.", Toast.LENGTH_SHORT).show();
-        } else {
-            addressBook.deleteAllRecipients(getContext());
-            Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
-        }
+        customerapp.utils.QRCodeUtils.deleteAllQRandRecipients(getContext(), addressBook);
     }
+
 
 }

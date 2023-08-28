@@ -25,6 +25,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.customerapp.R;
+
+import java.util.UUID;
+
 import customerapp.models.customerapp.EmojiExcludeFilter;
 import customerapp.models.customerapp.FragmentManagerHelper;
 import customerapp.models.customerapp.Address;
@@ -141,9 +144,12 @@ public class CodeFragment extends Fragment {
     private void createAndSaveRecipient(String lastName, String firstName, String street, String houseNumber, String zip) {
         Recipient recipient = new Recipient(lastName, firstName);
         Address address = new Address(street, houseNumber, zip);
-        int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
+        //int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
         address.getCity();
         recipient.addAddress(address);
+
+        String qrCodeFileName = UUID.randomUUID().toString() + ".png";
+        recipient.setQRCodeFileName(qrCodeFileName);
 
         Log.d("Recipient Info", "First Name: " + firstName +
                 ", Last Name: " + lastName +
@@ -153,13 +159,13 @@ public class CodeFragment extends Fragment {
                 ", City: " + address.getCity());
 
         addressBook.addRecipient(recipient, getContext());
-        recipient.setQRCodeCounter(qrCodeCounter);
+        //recipient.setQRCodeCounter(qrCodeCounter);
         //Bitmap qrCodeBitmap = recipient.generateQRCode();
         //qrCodeImageView.setImageBitmap(qrCodeBitmap);
 
         if (recipient.saveQRCodeToInternalStorage(getContext())) {
-            qrCodeCounter++;
-            AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
+            //qrCodeCounter++;
+            //AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
             //Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich generiert.", Toast.LENGTH_SHORT).show();
             showSuccessDialog();
         } else {

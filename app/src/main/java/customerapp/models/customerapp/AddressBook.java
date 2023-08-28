@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents an address book that stores a list of recipients and their information.
@@ -68,11 +69,6 @@ public class AddressBook {
             System.out.println("Recipient ist bereits im AddressBook vorhanden.");
             return;
         }
-        int qrCodeCounter = getQRCodeCounter(context);
-        Log.d("AddressBook", "QR-Code Counter vor dem Hinzufügen: " + getQRCodeCounter(context));
-        setQRCodeCounter(context, qrCodeCounter + 1);
-        Log.d("AddressBook", "QR-Code Counter nach dem Hinzufügen: " + getQRCodeCounter(context));
-        recipient.setQRCodeCounter(qrCodeCounter);
         recipients.add(recipient);
         System.out.println("Hinzufügen eines Recipients: " + recipient.getFirstName() + " " + recipient.getLastName());
         System.out.println("Recipient wurde zum AddressBook erfolgreich hinzugefügt");
@@ -132,7 +128,7 @@ public class AddressBook {
     }
     */
 
-    public void deleteOneRecipient(Recipient recipient, Context context) {
+    public void deleteOneRecipient1(Recipient recipient, Context context) {
         if (recipients.contains(recipient)) {
             Iterator<Address> iterator = recipient.getAddresses().iterator();
             while (iterator.hasNext()) {
@@ -158,6 +154,51 @@ public class AddressBook {
         }
     }
 
+    public void deleteOneRecipient2(Recipient recipient, Context context) {
+        if (recipients.contains(recipient)) {
+            recipient.deleteQRCodeFromInternalStorage(context);
+            Iterator<Address> iterator = recipient.getAddresses().iterator();
+            while (iterator.hasNext()) {
+                Address address = iterator.next();
+                iterator.remove();
+                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
+            }
+            recipients.remove(recipient);
+            Log.d("AddressBook", "Der Recipient wurde erfolgreich entfernt");
+            int qrCodeCounter = getQRCodeCounter(context);
+            Log.d("AddressBook", "QR-Code Counter vor dem Löschen: " + qrCodeCounter);
+            qrCodeCounter--;
+            setQRCodeCounter(context, qrCodeCounter);
+            Log.d("AddressBook", "QR-Code Counter nach dem Löschen: " + getQRCodeCounter(context));
+            if (recipients.isEmpty()) {
+                setQRCodeCounter(context, 0);
+            }
+            saveData(context);
+        } else {
+            Log.d("AddressBook", "Der Recipient konnte nicht gefunden werden");
+        }
+    }
+
+    public void deleteOneRecipient(Recipient recipient, Context context) {
+        if (recipients.contains(recipient)) {
+            // Hier löschen Sie die QR-Code-Datei des Recipient aus dem internen Speicher
+            recipient.deleteQRCodeFromInternalStorage(context);
+
+            Iterator<Address> iterator = recipient.getAddresses().iterator();
+            while (iterator.hasNext()) {
+                Address address = iterator.next();
+                iterator.remove();
+                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
+            }
+            recipients.remove(recipient);
+            Log.d("AddressBook", "Der Recipient wurde erfolgreich entfernt");
+
+            saveData(context);
+        } else {
+            System.out.println("Der Recipient konnte nicht gefunden werden");
+        }
+    }
+
 
     public void deleteAllRecipients(Context context) {
         recipients.clear();
@@ -176,5 +217,4 @@ public class AddressBook {
             }
         }
     }
-
 }

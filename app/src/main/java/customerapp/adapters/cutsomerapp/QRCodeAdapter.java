@@ -112,7 +112,7 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
     public void deleteQRCodeAndRecipient(int position) {
         if (position >= 0 && position < addressBook.getRecipients().size()) {
             Recipient recipient = addressBook.getRecipients().get(position);
-            String filePath = qrCodeFilePaths.get(position);
+            String filePath = context.getDir("qr_codes", Context.MODE_PRIVATE).getAbsolutePath() + "/" + recipient.getQRCodeFileName();
             File file = new File(filePath);
             if (file.exists()) {
                 if (file.delete()) {

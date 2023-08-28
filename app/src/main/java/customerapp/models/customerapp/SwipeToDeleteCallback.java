@@ -43,7 +43,6 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
                 .setMessage("Möchten Sie den QR-Code wirklich löschen?")
                 .setPositiveButton("Ja", (dialog, which) -> {
                     mAdapter.deleteQRCodeAndRecipient(position);
-                    Toast.makeText(viewHolder.itemView.getContext(), "QR-Code wurde gelöscht.", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Abbrechen", (dialog, which) -> {
                     mAdapter.notifyItemChanged(position);

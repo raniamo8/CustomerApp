@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
@@ -32,17 +33,21 @@ import com.google.zxing.common.HybridBinarizer;
  * The recipient can generate a QR code based on their information, and save it to the internal storage of the app.
  */
 public class Recipient {
+
+    private UUID uuid;
     private static int qrCodeCounter = 1;
     private static final int WIDTH_HEIGHT_NR = 400;
     private String firstName;
     private String lastName;
+    private String qrCodeFileName;
     private List<Address> addresses;
 
     public Recipient(String lastName, String firstName) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.addresses = new ArrayList<>();
-        this.qrCodeCounter = 0;
+        //this.uuid = UUID.randomUUID();
+        //this.qrCodeCounter = 0;
     }
 
     public int getQRCodeCounter() {
@@ -59,6 +64,21 @@ public class Recipient {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getQRCodeFileName() {
+        return qrCodeFileName;
+    }
+    public UUID getUUID() {
+        return uuid;
+    }
+
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setQRCodeFileName(String qrCodeFileName) {
+        this.qrCodeFileName = qrCodeFileName;
     }
 
     public void setFirstName(String firstName) {
@@ -109,22 +129,35 @@ public class Recipient {
         if (qrCodeBitmap == null) {
             return false;
         }
+
         try {
             File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
-            String fileName = "qr_code" + qrCodeCounter + ".png";
-            File file = new File(directory, fileName);
+            qrCodeFileName = UUID.randomUUID().toString() + ".png"; // Generieren eines eindeutigen Dateinamens
+            File file = new File(directory, qrCodeFileName);
             OutputStream outputStream = Files.newOutputStream(file.toPath());
             qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
             Log.d("Recipient", "QR code saved to: " + file.getAbsolutePath());
-            qrCodeCounter++;
-
             return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void deleteQRCodeFromInternalStorage(Context context) {
+        String qrCodeFileName = getQRCodeFileName();
+        if (qrCodeFileName != null && !qrCodeFileName.isEmpty()) {
+            File dir = context.getFilesDir();
+            File file = new File(dir, qrCodeFileName);
+            boolean deleted = file.delete();
+            if (deleted) {
+                Log.d("Recipient", "QR-Code-Datei erfolgreich gelöscht: " + qrCodeFileName);
+            } else {
+                Log.d("Recipient", "Fehler beim Löschen der QR-Code-Datei: " + qrCodeFileName);
+            }
+        }
     }
 
 
