@@ -1,7 +1,6 @@
 package customerapp.fragments.customerapp;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,31 +18,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.customerapp.R;
-import customerapp.models.customerapp.FragmentManagerHelper;
-import customerapp.adapters.cutsomerapp.QRCodeAdapter;
-import customerapp.models.customerapp.SwipeToDeleteCallback;
-import customerapp.models.customerapp.AddressBook;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+
+import customerapp.adapters.cutsomerapp.QRCodeAdapter;
+import customerapp.models.customerapp.AddressBook;
+import customerapp.models.customerapp.FragmentManagerHelper;
+import customerapp.models.customerapp.SwipeToDeleteCallback;
 
 /**
  * Represents a fragment that displays a list of QR codes generated for recipients.
  * This fragment allows the user to view and manage the list of QR codes and associated recipients.
  */
 public class QRCodeListFragment extends Fragment {
-    private List<String> qrCodeFilePaths;
-    private QRCodeAdapter qrCodeAdapter;
     private AddressBook addressBook;
+    private RecyclerView recyclerViewQRCodeList;
+    private QRCodeAdapter qrCodeAdapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        qrCodeFilePaths = new ArrayList<>();
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getContext());
-        qrCodeAdapter = new QRCodeAdapter(getContext(), qrCodeFilePaths, addressBook);
+        qrCodeAdapter = new QRCodeAdapter(getContext(), addressBook.getRecipients());
         setHasOptionsMenu(true);
     }
 
@@ -53,18 +52,24 @@ public class QRCodeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_qr_code_list, container, false);
         addressBook = AddressBook.getInstance();
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewQRCodeList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(qrCodeAdapter);
+        recyclerViewQRCodeList = view.findViewById(R.id.recyclerViewQRCodeList);
+        recyclerViewQRCodeList.setAdapter(qrCodeAdapter);
+        recyclerViewQRCodeList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        loadQRCodeFilePaths();
-
-        view.findViewById(R.id.fabAddQRCode).setOnClickListener(v -> goToCodeFragment());
+        FloatingActionButton fabAddQRCode = view.findViewById(R.id.fabAddQRCode);
+        fabAddQRCode.setOnClickListener(v -> navigateToCodeFragment());
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(qrCodeAdapter, getContext()));
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(recyclerViewQRCodeList);
 
         return view;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void onResume() {
+        super.onResume();
+        qrCodeAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -72,21 +77,28 @@ public class QRCodeListFragment extends Fragment {
         inflater.inflate(R.menu.menu_qr_code_list, menu);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_delete_all_recipients) {
-            deleteAllQRandRecipients();
+            if(addressBook.getRecipients().isEmpty()) {
+                Toast.makeText(getContext(), "Es gibt keine QR-Codes zum Löschen.", Toast.LENGTH_SHORT).show();
+            } else {
+                addressBook.deleteAllRecipients(getContext());
+                qrCodeAdapter.notifyDataSetChanged();
+                Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void goToCodeFragment() {
+    private void navigateToCodeFragment() {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
                 R.id.frame_layout,
-                CodeFragment.getInstance(),
+                new CodeFragment(),
                 R.anim.slide_in,
                 R.anim.slide_out,
                 true
@@ -94,31 +106,6 @@ public class QRCodeListFragment extends Fragment {
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
-    private void loadQRCodeFilePaths() {
-        qrCodeFilePaths.clear();
-        File directory = requireContext().getDir("qr_codes", Context.MODE_PRIVATE);
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    qrCodeFilePaths.add(file.getAbsolutePath());
-                }
-            }
-        }
-        //aktulalisierung
-        addressBook.loadData(getContext());
-        qrCodeAdapter.notifyDataSetChanged();
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    protected void deleteAllQRandRecipients() {
-        customerapp.utils.QRCodeUtils.deleteAllQRandRecipients(getContext(), addressBook);
-        qrCodeFilePaths.clear();
-        qrCodeAdapter.notifyDataSetChanged();
-    }
-
-
-
 }
+
 

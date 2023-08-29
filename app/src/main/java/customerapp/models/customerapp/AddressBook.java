@@ -23,10 +23,8 @@ import java.util.UUID;
  */
 public class AddressBook {
     private static AddressBook instance;
-    private static final String KEY_QR_CODE_COUNTER = "qr_code_counter";
-    private static final String ADDRESS_BOOK_PREFS_KEY = "address_book_prefs_key";
-    private List<Recipient> recipients;
-
+    private ArrayList<Recipient> recipients;
+    private static final String PREF_RECIPIENTS_KEY = "PREF_RECIPIENTS_KEY";
 
     public AddressBook() {
         this.recipients = new ArrayList<>();
@@ -39,182 +37,44 @@ public class AddressBook {
         return instance;
     }
 
-    public List<Recipient> getRecipients() {
+    public ArrayList<Recipient> getRecipients() {
         return recipients;
     }
 
-    public static int getQRCodeCounter(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getInt(KEY_QR_CODE_COUNTER, 1);
-    }
-
-
-    public static void setQRCodeCounter(Context context, int qrCodeCounter) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(KEY_QR_CODE_COUNTER, qrCodeCounter);
-        editor.apply();
-    }
-
-    public void reset() {
-        recipients.clear();
-    }
-
     public void addRecipient(Recipient recipient, Context context) {
-        if (recipient == null || (recipient.getFirstName().isEmpty() && recipient.getLastName().isEmpty())) {
-            System.out.println("Der Recipient ist null.");
-            return;
-        }
-        if (recipients.contains(recipient)) {
-            System.out.println("Recipient ist bereits im AddressBook vorhanden.");
-            return;
-        }
-        recipients.add(recipient);
-        System.out.println("Hinzufügen eines Recipients: " + recipient.getFirstName() + " " + recipient.getLastName());
-        System.out.println("Recipient wurde zum AddressBook erfolgreich hinzugefügt");
+        this.recipients.add(recipient);
         saveData(context);
     }
 
 
-    public void loadData(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Gson gson = new Gson();
-        String json = preferences.getString(ADDRESS_BOOK_PREFS_KEY, "");
-        Type type = new TypeToken<List<Recipient>>() {
-        }.getType();
-        recipients = gson.fromJson(json, type);
-        if (recipients == null) {
-            recipients = new ArrayList<>();
+    public void deleteOneRecipient(int index, Context context) {
+        if (index >= 0 && index < recipients.size()) {
+            recipients.remove(index);
         }
-        Log.d("AddressBook", "Geladener QR-Code Counter: " + getQRCodeCounter(context));
-        Log.d("AddressBook", "Loaded data: " + recipients);
+        saveData(context);
     }
-
-    public void saveData(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(recipients);
-        editor.putString(ADDRESS_BOOK_PREFS_KEY, json);
-        editor.apply();
-        Log.d("AddressBook", "Gespeicherter QR-Code Counter: " + getQRCodeCounter(context));
-        Log.d("AddressBook", "Saved data: " + json);
-    }
-
-/*
-    public void deleteOneRecipient222(Recipient recipient, Context context) {
-        if (recipients.contains(recipient)) {
-            for (Address address : recipient.getAddresses()) {
-                recipient.removeAddress(address);
-                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
-            }
-
-            recipients.remove(recipient);
-            System.out.println("Der Recipient wurde erfolgreich entfernt");
-
-            if (!recipient.getAddresses().isEmpty()) {
-                int qrCodeCounter = getQRCodeCounter(context);
-                qrCodeCounter--;
-                setQRCodeCounter(context, qrCodeCounter);
-            }
-
-            if (recipients.isEmpty()) {
-                setQRCodeCounter(context, 0);
-            }
-            saveData(context);
-        } else {
-            System.out.println("Der Recipient konnte nicht gefunden werden");
-        }
-    }
-    */
-
-    public void deleteOneRecipient1(Recipient recipient, Context context) {
-        if (recipients.contains(recipient)) {
-            Iterator<Address> iterator = recipient.getAddresses().iterator();
-            while (iterator.hasNext()) {
-                Address address = iterator.next();
-                // Sicher entfernen der aktuellen Adresse
-                iterator.remove();
-                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
-            }
-            recipients.remove(recipient);
-            System.out.println("Der Recipient wurde erfolgreich entfernt");
-
-            int qrCodeCounter = getQRCodeCounter(context);
-            Log.d("AddressBook", "QR-Code Counter vor dem Löschen: " + getQRCodeCounter(context));
-            qrCodeCounter--;
-            setQRCodeCounter(context, qrCodeCounter);
-            Log.d("AddressBook", "QR-Code Counter nach dem Löschen: " + getQRCodeCounter(context));
-            if (recipients.isEmpty()) {
-                setQRCodeCounter(context, 0);
-            }
-            saveData(context);
-        } else {
-            System.out.println("Der Recipient konnte nicht gefunden werden");
-        }
-    }
-
-    public void deleteOneRecipient2(Recipient recipient, Context context) {
-        if (recipients.contains(recipient)) {
-            recipient.deleteQRCodeFromInternalStorage(context);
-            Iterator<Address> iterator = recipient.getAddresses().iterator();
-            while (iterator.hasNext()) {
-                Address address = iterator.next();
-                iterator.remove();
-                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
-            }
-            recipients.remove(recipient);
-            Log.d("AddressBook", "Der Recipient wurde erfolgreich entfernt");
-            int qrCodeCounter = getQRCodeCounter(context);
-            Log.d("AddressBook", "QR-Code Counter vor dem Löschen: " + qrCodeCounter);
-            qrCodeCounter--;
-            setQRCodeCounter(context, qrCodeCounter);
-            Log.d("AddressBook", "QR-Code Counter nach dem Löschen: " + getQRCodeCounter(context));
-            if (recipients.isEmpty()) {
-                setQRCodeCounter(context, 0);
-            }
-            saveData(context);
-        } else {
-            Log.d("AddressBook", "Der Recipient konnte nicht gefunden werden");
-        }
-    }
-
-    public void deleteOneRecipient(Recipient recipient, Context context) {
-        if (recipients.contains(recipient)) {
-            // Hier löschen Sie die QR-Code-Datei des Recipient aus dem internen Speicher
-            recipient.deleteQRCodeFromInternalStorage(context);
-
-            Iterator<Address> iterator = recipient.getAddresses().iterator();
-            while (iterator.hasNext()) {
-                Address address = iterator.next();
-                iterator.remove();
-                Log.d("AddressBook", "Adresse gelöscht: " + address.toString());
-            }
-            recipients.remove(recipient);
-            Log.d("AddressBook", "Der Recipient wurde erfolgreich entfernt");
-
-            saveData(context);
-        } else {
-            System.out.println("Der Recipient konnte nicht gefunden werden");
-        }
-    }
-
 
     public void deleteAllRecipients(Context context) {
         recipients.clear();
-        setQRCodeCounter(context, 0);
         saveData(context);
-        deleteAllSavedQRCodes(context);
-        System.out.println("Alle Recipients und QR-Codes wurden gelöscht.");
     }
 
-    private void deleteAllSavedQRCodes(Context context) {
-        File directory = context.getDir("qr_codes", Context.MODE_PRIVATE);
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                file.delete();
-            }
+    public void saveData(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(recipients);
+        editor.putString(PREF_RECIPIENTS_KEY, json);
+        editor.apply();
+    }
+
+    public void loadData(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = prefs.getString(PREF_RECIPIENTS_KEY, "");
+        if (!json.isEmpty()) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<Recipient>>() {}.getType();
+            recipients = gson.fromJson(json, type);
         }
     }
 }

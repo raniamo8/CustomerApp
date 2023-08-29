@@ -98,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
             }
             if (selectedFragment != null) {
                 FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, selectedFragment);
-                if (selectedFragment instanceof CodeFragment) {
-                    CodeFragment.instance = (CodeFragment) selectedFragment;
-                }
             }
             return true;
         });

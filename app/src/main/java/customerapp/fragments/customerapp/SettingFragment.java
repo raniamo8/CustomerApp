@@ -12,12 +12,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.customerapp.R;
-import customerapp.models.customerapp.FragmentManagerHelper;
-import customerapp.adapters.cutsomerapp.QRCodeAdapter;
-import customerapp.models.customerapp.AddressBook;
 
-import java.util.ArrayList;
-import java.util.List;
+import customerapp.adapters.cutsomerapp.QRCodeAdapter;
+import customerapp.models.customerapp.FragmentManagerHelper;
+import customerapp.models.customerapp.AddressBook;
 
 /**
  * A fragment that allows users to manage app settings, including enabling or disabling dark mode,
@@ -26,10 +24,8 @@ import java.util.List;
 public class SettingFragment extends Fragment {
     Button deleteAllButton, addAddressButton;
     ImageButton informationButton;
-    private List<String> qrCodeFilePaths;
     private QRCodeAdapter qrCodeAdapter;
     private AddressBook addressBook;
-
 
     public SettingFragment() {
     }
@@ -37,10 +33,9 @@ public class SettingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        qrCodeFilePaths = new ArrayList<>();
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getContext());
-        qrCodeAdapter = new QRCodeAdapter(getContext(), qrCodeFilePaths, addressBook);
+        qrCodeAdapter = new QRCodeAdapter(getContext(), addressBook.getRecipients());  // Hier wurde die Anpassung vorgenommen.
         setHasOptionsMenu(true);
     }
 
@@ -49,7 +44,6 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         addressBook = AddressBook.getInstance();
-
 
         addAddressButton = view.findViewById(R.id.addAddressButton);
         view.findViewById(R.id.addAddressButton).setOnClickListener(v -> goToCodeFragment());
@@ -63,11 +57,22 @@ public class SettingFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private void deleteAllQRandRecipients() {
+        if(addressBook.getRecipients().isEmpty()) {
+            Toast.makeText(getContext(), "Es gibt keine QR-Codes zum Löschen.", Toast.LENGTH_SHORT).show();
+        } else {
+            addressBook.deleteAllRecipients(getContext());
+            qrCodeAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void goToCodeFragment() {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
                 R.id.frame_layout,
-                CodeFragment.getInstance(),
+                new CodeFragment(),
                 R.anim.slide_in_right,
                 R.anim.slide_out,
                 true
@@ -84,11 +89,5 @@ public class SettingFragment extends Fragment {
                 true
         );
     }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private void deleteAllQRandRecipients() {
-        customerapp.utils.QRCodeUtils.deleteAllQRandRecipients(getContext(), addressBook);
-    }
-
 
 }

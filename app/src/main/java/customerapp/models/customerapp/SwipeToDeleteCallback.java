@@ -1,3 +1,4 @@
+
 package customerapp.models.customerapp;
 
 import android.app.AlertDialog;
@@ -37,12 +38,12 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-
         new AlertDialog.Builder(viewHolder.itemView.getContext())
                 .setTitle("Bestätigen Sie das Löschen")
                 .setMessage("Möchten Sie den QR-Code wirklich löschen?")
                 .setPositiveButton("Ja", (dialog, which) -> {
-                    mAdapter.deleteQRCodeAndRecipient(position);
+                    AddressBook.getInstance().deleteOneRecipient(position, viewHolder.itemView.getContext());
+                    mAdapter.notifyItemRemoved(position);
                 })
                 .setNegativeButton("Abbrechen", (dialog, which) -> {
                     mAdapter.notifyItemChanged(position);
@@ -50,6 +51,8 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
                 .create()
                 .show();
     }
+
+
 
 
     @Override

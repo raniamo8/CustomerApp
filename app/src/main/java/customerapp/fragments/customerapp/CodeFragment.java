@@ -1,19 +1,15 @@
 package customerapp.fragments.customerapp;
 
-import static customerapp.models.customerapp.FragmentManagerHelper.goBackToPreviousFragment;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,41 +22,29 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.customerapp.R;
 
-import java.util.UUID;
-
-import customerapp.models.customerapp.EmojiExcludeFilter;
-import customerapp.models.customerapp.FragmentManagerHelper;
+import customerapp.adapters.cutsomerapp.QRCodeAdapter;
 import customerapp.models.customerapp.Address;
+import customerapp.models.customerapp.EmojiExcludeFilter;
 import customerapp.models.customerapp.AddressBook;
+import customerapp.models.customerapp.FragmentManagerHelper;
 import customerapp.models.customerapp.Recipient;
 
-/**
- * Represents a fragment where the user can enter recipient information and generate a QR code for the recipient.
- * The fragment also provides the functionality to save the generated QR code to the internal storage.
- */
 public class CodeFragment extends Fragment {
     private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
-    private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView;
-    private ImageView qrCodeImageView;
+    private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView, plzErrorTextView;
+    private Spinner plzSpinner;
     Button generateQRCodeButton;
     private AppCompatImageButton backButton;
-    private AddressBook addressBook = new AddressBook();
-
-    @SuppressLint("StaticFieldLeak")
-    public static CodeFragment instance;
-
-    public static CodeFragment getInstance() {
-        if (instance == null) {
-            instance = new CodeFragment();
-        }
-        return instance;
-    }
+    private AddressBook addressBook;
+    private QRCodeAdapter qrCodeAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getContext());
+
+        qrCodeAdapter = new QRCodeAdapter(getContext(), addressBook.getRecipients());
     }
 
     @Nullable
@@ -68,48 +52,13 @@ public class CodeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_code, container, false);
 
-        lastNameEditText = rootView.findViewById(R.id.lastNameEditText);
-        firstNameEditText = rootView.findViewById(R.id.firstNameEditText);
-        streetEditText = rootView.findViewById(R.id.streetEditText);
-        streetNrEditText = rootView.findViewById(R.id.streetNrEditText);
-
-        lastNameErrorTextView = rootView.findViewById(R.id.lastNameErrorTextView);
-        firstNameErrorTextView = rootView.findViewById(R.id.firstNameErrorTextView);
-        streetErrorTextView = rootView.findViewById(R.id.streetErrorTextView);
-        streetNrErrorTextView = rootView.findViewById(R.id.streetNrErrorTextView);
-
-        Spinner zipSpinner = rootView.findViewById(R.id.plzSpinner);
-        String selectedZIP = zipSpinner.getSelectedItem().toString();
-
-        //qrCodeImageView = rootView.findViewById(R.id.qrCodeImageView);
-
-        EmojiExcludeFilter emojiFilter = new EmojiExcludeFilter();
-        lastNameEditText.setFilters(new InputFilter[]{emojiFilter});
-        firstNameEditText.setFilters(new InputFilter[]{emojiFilter});
-        streetEditText.setFilters(new InputFilter[]{emojiFilter});
-        streetNrEditText.setFilters(new InputFilter[]{emojiFilter});
-
-        generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
-        generateQRCodeButton.setOnClickListener(v -> {
-            generateQRCodeInFragment();
-        });
-
-        backButton = rootView.findViewById(R.id.backButton);
+        initializeViews(rootView);
+        generateQRCodeButton.setOnClickListener(v -> addRecipientInfo());
         backButton.setOnClickListener(v -> {
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            goBackToPreviousFragment(fragmentManager);
+            FragmentManagerHelper.goBackToPreviousFragment(requireActivity().getSupportFragmentManager());
         });
 
         return rootView;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            requireActivity().onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -124,113 +73,109 @@ public class CodeFragment extends Fragment {
         clearInputFields();
     }
 
+    private void initializeViews(View rootView) {
+        lastNameEditText = rootView.findViewById(R.id.lastNameEditText);
+        firstNameEditText = rootView.findViewById(R.id.firstNameEditText);
+        streetEditText = rootView.findViewById(R.id.streetEditText);
+        streetNrEditText = rootView.findViewById(R.id.streetNrEditText);
+        plzSpinner = rootView.findViewById(R.id.plzSpinner);
 
-    private void generateQRCodeInFragment() {
+        lastNameErrorTextView = rootView.findViewById(R.id.lastNameErrorTextView);
+        firstNameErrorTextView = rootView.findViewById(R.id.firstNameErrorTextView);
+        streetErrorTextView = rootView.findViewById(R.id.streetErrorTextView);
+        streetNrErrorTextView = rootView.findViewById(R.id.streetNrErrorTextView);
+        plzErrorTextView = rootView.findViewById(R.id.plzErrorTextView);
+
+        EmojiExcludeFilter emojiFilter = new EmojiExcludeFilter();
+        lastNameEditText.setFilters(new InputFilter[]{emojiFilter});
+        firstNameEditText.setFilters(new InputFilter[]{emojiFilter});
+        streetEditText.setFilters(new InputFilter[]{emojiFilter});
+        streetNrEditText.setFilters(new InputFilter[]{emojiFilter});
+
+        generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
+
+        backButton = rootView.findViewById(R.id.backButton);
+    }
+
+    private void addRecipientInfo() {
         String lastName = lastNameEditText.getText().toString().trim();
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
         String houseNumber = streetNrEditText.getText().toString().trim();
-        String selectedZIP = ((Spinner) requireView().findViewById(R.id.plzSpinner)).getSelectedItem().toString();
+        String zip = plzSpinner.getSelectedItem().toString();
 
-        if (isInputValid(lastName, firstName, street, houseNumber)) {
-            createAndSaveRecipient(lastName, firstName, street, houseNumber, selectedZIP);
+        if (isInputValid(lastName, firstName, street, houseNumber, zip)) {
+            createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);
             addressBook.saveData(getContext());
+            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich erstellt", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @SuppressLint("NewApi")
-    private void createAndSaveRecipient(String lastName, String firstName, String street, String houseNumber, String zip) {
-        Recipient recipient = new Recipient(lastName, firstName);
-        Address address = new Address(street, houseNumber, zip);
-        //int qrCodeCounter = AddressBook.getQRCodeCounter(getContext());
-        address.getCity();
-        recipient.addAddress(address);
 
-        String qrCodeFileName = UUID.randomUUID().toString() + ".png";
-        recipient.setQRCodeFileName(qrCodeFileName);
-
-        Log.d("Recipient Info", "First Name: " + firstName +
-                ", Last Name: " + lastName +
-                ", Street: " + street +
-                ", Street Nr: " + houseNumber +
-                ", PLZ: " + zip +
-                ", City: " + address.getCity());
-
-        addressBook.addRecipient(recipient, getContext());
-        //recipient.setQRCodeCounter(qrCodeCounter);
-        //Bitmap qrCodeBitmap = recipient.generateQRCode();
-        //qrCodeImageView.setImageBitmap(qrCodeBitmap);
-
-        if (recipient.saveQRCodeToInternalStorage(getContext())) {
-            //qrCodeCounter++;
-            //AddressBook.setQRCodeCounter(getContext(), qrCodeCounter);
-            //Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich generiert.", Toast.LENGTH_SHORT).show();
-            showSuccessDialog();
-        } else {
-            Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
-        }
-        clearInputFields();
-    }
-
-    private boolean isInputValid(String lastName, String firstName, String street, String houseNumber) {
+    private boolean isInputValid(String lastName, String firstName, String street, String houseNumber, String zip) {
         boolean isValid = true;
 
-        if (!isValidLastName(lastName)) {
+        if (lastName.isEmpty()) {
             lastNameErrorTextView.setVisibility(View.VISIBLE);
             isValid = false;
         } else {
             lastNameErrorTextView.setVisibility(View.GONE);
         }
 
-        if (!isValidFirstName(firstName)) {
+        if (firstName.isEmpty()) {
             firstNameErrorTextView.setVisibility(View.VISIBLE);
             isValid = false;
         } else {
             firstNameErrorTextView.setVisibility(View.GONE);
         }
 
-        if (!isValidStreet(street)) {
+        if (street.isEmpty()) {
             streetErrorTextView.setVisibility(View.VISIBLE);
             isValid = false;
         } else {
             streetErrorTextView.setVisibility(View.GONE);
         }
 
-        //TODO: error handle
-        if (!isValidStreetNr(houseNumber)) {
+        if (houseNumber.isEmpty() || houseNumber.length() > 5) {
             streetNrErrorTextView.setVisibility(View.VISIBLE);
             isValid = false;
         } else {
             streetNrErrorTextView.setVisibility(View.GONE);
         }
 
+        if (zip.isEmpty() || zip.equals("Wählen Sie eine PLZ")) {  // Hier gehe ich davon aus, dass "Wählen Sie eine PLZ" der Standardtext ist. Ändern Sie diesen Wert entsprechend.
+            plzErrorTextView.setVisibility(View.VISIBLE);
+            isValid = false;
+        } else {
+            plzErrorTextView.setVisibility(View.GONE);
+        }
+
         return isValid;
     }
-
-    private boolean isValidLastName(@NonNull String lastName) {
-        return !lastName.isEmpty();
-    }
-
-    private boolean isValidFirstName(@NonNull String firstName) {
-        return !firstName.isEmpty();
-    }
-
-    private boolean isValidStreet(@NonNull String street) {
-        return !street.isEmpty();
-    }
-
-    private boolean isValidStreetNr(@NonNull String houseNumber) {
-        return !houseNumber.isEmpty() && houseNumber.length() <= 5;
-    }
-
 
     private void clearInputFields() {
         lastNameEditText.setText("");
         firstNameEditText.setText("");
         streetEditText.setText("");
         streetNrEditText.setText("");
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void createAndSaveRecipient(String lastName, String firstName, String street, String houseNumber, String zip) {
+        Address address = new Address(street, houseNumber, zip);
+        Recipient recipient = new Recipient(lastName, firstName, address);
+        addressBook.addRecipient(recipient, getContext());
+        qrCodeAdapter.notifyDataSetChanged();
+        Log.d("Recipient Info", "First Name: " + firstName +
+                ", Last Name: " + lastName +
+                ", Street: " + street +
+                ", Street Nr: " + houseNumber +
+                ", PLZ: " + zip +
+                ", City: " + address.getCity());
+        showSuccessDialog();
     }
 
     private void showSuccessDialog() {
@@ -249,6 +194,5 @@ public class CodeFragment extends Fragment {
                 //.setNegativeButton("Abbrechen", null)
                 .show();
     }
-
 
 }

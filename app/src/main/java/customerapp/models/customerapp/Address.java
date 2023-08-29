@@ -11,8 +11,6 @@ public class Address implements Serializable {
     private String streetNr;
     private String zip;
     private String city = "Lingen";
-    private double latitude;
-    private double longitude;
 
     public void setStreet(String street) {
         this.street = street;
@@ -60,11 +58,4 @@ public class Address implements Serializable {
         return street + " " + streetNr + "\n" + zip + " " + city;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
 }
