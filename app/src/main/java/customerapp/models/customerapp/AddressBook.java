@@ -24,7 +24,7 @@ import java.util.UUID;
 public class AddressBook {
     private static AddressBook instance;
     private ArrayList<Recipient> recipients;
-    private static final String PREF_RECIPIENTS_KEY = "PREF_RECIPIENTS_KEY";
+    public static final String PREF_RECIPIENTS_KEY = "PREF_RECIPIENTS_KEY";
 
     public AddressBook() {
         this.recipients = new ArrayList<>();
@@ -42,31 +42,46 @@ public class AddressBook {
     }
 
     public void addRecipient(Recipient recipient, Context context) {
-        this.recipients.add(recipient);
-        saveData(context);
+        if (recipient != null) {
+            recipients.add(recipient);
+            saveData(context);
+        }
     }
-
 
     public void deleteOneRecipient(int index, Context context) {
         if (index >= 0 && index < recipients.size()) {
             recipients.remove(index);
+            saveData(context);
         }
-        saveData(context);
     }
 
     public void deleteAllRecipients(Context context) {
-        recipients.clear();
-        saveData(context);
+        if (!recipients.isEmpty()) {
+            recipients.clear();
+            saveData(context);
+        }
     }
 
+
     public void saveData(Context context) {
+        if (context == null) {
+            Log.e("AddressBook", "Context provided to saveData is null.");
+            return;
+        }
+        if (recipients == null) {
+            Log.e("AddressBook", "Recipients list is null. Nothing to save.");
+            return;
+        }
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(recipients);
         editor.putString(PREF_RECIPIENTS_KEY, json);
+
         editor.apply();
     }
+
 
     public void loadData(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -75,6 +90,13 @@ public class AddressBook {
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<Recipient>>() {}.getType();
             recipients = gson.fromJson(json, type);
+        } else {
+            recipients = new ArrayList<>();
         }
     }
+
+    public void reset() {
+        this.recipients.clear();
+    }
+
 }
