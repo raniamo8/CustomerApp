@@ -43,8 +43,7 @@ public class CodeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getContext());
-
-        qrCodeAdapter = new QRCodeAdapter(getContext(), addressBook.getRecipients());
+        qrCodeAdapter = new QRCodeAdapter(getContext());
     }
 
     @Nullable
@@ -53,10 +52,8 @@ public class CodeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_code, container, false);
 
         initializeViews(rootView);
-        generateQRCodeButton.setOnClickListener(v -> addRecipientInfo());
-        backButton.setOnClickListener(v -> {
-            FragmentManagerHelper.goBackToPreviousFragment(requireActivity().getSupportFragmentManager());
-        });
+        generateQRCodeButton.setOnClickListener(v -> generate());
+        backButton.setOnClickListener(v -> FragmentManagerHelper.goBackToPreviousFragment(requireActivity().getSupportFragmentManager()));
 
         return rootView;
     }
@@ -95,22 +92,6 @@ public class CodeFragment extends Fragment {
         generateQRCodeButton = rootView.findViewById(R.id.buttonGenerate);
 
         backButton = rootView.findViewById(R.id.backButton);
-    }
-
-    private void addRecipientInfo() {
-        String lastName = lastNameEditText.getText().toString().trim();
-        String firstName = firstNameEditText.getText().toString().trim();
-        String street = streetEditText.getText().toString().trim();
-        String houseNumber = streetNrEditText.getText().toString().trim();
-        String zip = plzSpinner.getSelectedItem().toString();
-
-        if (isInputValid(lastName, firstName, street, houseNumber, zip)) {
-            createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);
-            addressBook.saveData(getContext());
-            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich erstellt", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
@@ -178,21 +159,43 @@ public class CodeFragment extends Fragment {
         showSuccessDialog();
     }
 
+    private void generate() {
+        String lastName = lastNameEditText.getText().toString().trim();
+        String firstName = firstNameEditText.getText().toString().trim();
+        String street = streetEditText.getText().toString().trim();
+        String houseNumber = streetNrEditText.getText().toString().trim();
+        String zip = plzSpinner.getSelectedItem().toString();
+
+        if (isInputValid(lastName, firstName, street, houseNumber, zip)) {
+            createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);
+            addressBook.saveData(getContext());
+            //Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich erstellt", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void showSuccessDialog() {
-        new AlertDialog.Builder(requireContext())
+        AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
                 //.setTitle("QR-Code")
                 .setMessage("Der QR-Code wurde erfolgreich erstellt!")
-                .setPositiveButton("Zurück zur Übersicht", (dialog, which) -> {
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    FragmentManagerHelper.goToFragment(fragmentManager,
-                            R.id.frame_layout,
-                            new QRCodeListFragment(),
-                            0,
-                            0,
-                            true);
-                })
+                .setPositiveButton("Zurück zur Übersicht", (dialog, which) -> clickOnFragment())
                 //.setNegativeButton("Abbrechen", null)
-                .show();
+                .create();
+
+        alertDialog.setOnCancelListener(dialog -> clickOnFragment());
+        alertDialog.show();
+    }
+
+
+    private void clickOnFragment() {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentManagerHelper.goToFragment(fragmentManager,
+                R.id.frame_layout,
+                new QRCodeListFragment(),
+                0,
+                0,
+                true);
     }
 
 }
