@@ -1,6 +1,7 @@
 
 package customerapp.models.customerapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -35,24 +36,32 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
         return false;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-        new AlertDialog.Builder(viewHolder.itemView.getContext())
+        AlertDialog.Builder builder = new AlertDialog.Builder(viewHolder.itemView.getContext())
                 .setTitle("Bestätigen Sie das Löschen")
                 .setMessage("Möchten Sie den QR-Code wirklich löschen?")
                 .setPositiveButton("Ja", (dialog, which) -> {
                     AddressBook.getInstance().deleteOneRecipient(position, viewHolder.itemView.getContext());
                     mAdapter.notifyItemRemoved(position);
+                    mAdapter.notifyDataSetChanged();
                 })
                 .setNegativeButton("Abbrechen", (dialog, which) -> {
                     mAdapter.notifyItemChanged(position);
+                    mAdapter.notifyDataSetChanged();
                 })
-                .create()
-                .show();
+                .setCancelable(true);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        alertDialog.setOnCancelListener(dialog -> {
+            mAdapter.notifyItemChanged(position);
+            mAdapter.notifyDataSetChanged();
+        });
     }
-
-
 
 
     @Override

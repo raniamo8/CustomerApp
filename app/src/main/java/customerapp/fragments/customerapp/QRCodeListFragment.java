@@ -42,7 +42,7 @@ public class QRCodeListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getContext());
-        qrCodeAdapter = new QRCodeAdapter(getContext(), addressBook.getRecipients());
+        qrCodeAdapter = new QRCodeAdapter(getContext());
         setHasOptionsMenu(true);
     }
 

@@ -35,7 +35,7 @@ public class SettingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getContext());
-        qrCodeAdapter = new QRCodeAdapter(getContext(), addressBook.getRecipients());  // Hier wurde die Anpassung vorgenommen.
+        qrCodeAdapter = new QRCodeAdapter(getContext());
         setHasOptionsMenu(true);
     }
 
