@@ -177,7 +177,7 @@ public class CodeFragment extends Fragment {
         try {
             zip = plzSpinner.getSelectedItem().toString();
         } catch (NullPointerException npe) {
-            Log.e("CodeFragment", "Fehler beim Abrufen der ausgewählten PLZ.", npe);
+            Log.e("CodeFragment", "Fehler beim Abrufen der ausgewählten PLZ", npe);
             Toast.makeText(getContext(), "Bitte wählen Sie eine PLZ aus", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -186,11 +186,11 @@ public class CodeFragment extends Fragment {
             try {
                 addressBook.saveData(getContext());
             } catch (Exception e) {
-                Log.e("CodeFragment", "Fehler beim Speichern des Addressbuchs.", e);
+                Log.e("CodeFragment", "Fehler beim Speichern des Addressbuchs", e);
                 Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich erstellt", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich erstellt", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor", Toast.LENGTH_SHORT).show();
         }
