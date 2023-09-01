@@ -9,6 +9,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -51,6 +54,7 @@ public class ExploreFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         storeList = new ArrayList<>();
         storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
     }
@@ -73,6 +77,21 @@ public class ExploreFragment extends Fragment {
 
         refreshData(false);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_store_details_fragment, menu);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
+            refreshData(true);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private ArrayList<StoreDetails> downloadData() {
