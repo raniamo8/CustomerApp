@@ -65,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
         checkFirstRun();
 
         if (savedInstanceState == null) {
-            FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, new QRCodeListFragment());
-        }
-
-        if (savedInstanceState == null) {
             replace(getSupportFragmentManager(), R.id.frame_layout, new QRCodeListFragment());
         }
 
@@ -148,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
     private void checkFirstRun() {
         SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
         boolean isFirstRun = preferences.getBoolean("is_first_run", true);
-
         if (isFirstRun) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
