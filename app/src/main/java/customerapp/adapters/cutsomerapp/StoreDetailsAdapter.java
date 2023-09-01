@@ -49,19 +49,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         holder.storeNameTextView.setText(store.getName());
 
         String logoUrl = store.getLogo();
-        Picasso.get().load(logoUrl).into(holder.storeLogoImageView);
-
-        Picasso.get().load(logoUrl).into(holder.storeLogoImageView, new Callback() {
-            @Override
-            public void onSuccess() {
-                Log.d("Picasso", "Logo-Bild erfolgreich im Adapter geladen");
-            }
-
-            @Override
-            public void onError(Exception e) {
-                Log.e("Picasso", "Fehler beim Laden des Logo-Bildes im Adapter", e);
-            }
-        });
+        loadImage(holder.storeLogoImageView, logoUrl);
 
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
     }
@@ -97,5 +85,34 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
                 true
         );
     }
+
+    private void loadImage(ImageView imageView, String imageUrl) {
+        try {
+            float density = context.getResources().getDisplayMetrics().density;
+            int targetWidth = (int) (100 * density);
+            int targetHeight = (int) (100 * density);
+
+            Picasso.get()
+                    .load(imageUrl)
+                    .resize(targetWidth, targetHeight)
+                    .centerInside()
+                    .placeholder(R.drawable.baseline_loading_animation)
+                    .error(R.drawable.baseline_error_image)
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("Picasso", "Logo-Bild erfolgreich im Adapter geladen");
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Log.e("Picasso", "Fehler beim Laden des Logo-Bildes im Adapter", e);
+                        }
+                    });
+        } catch (Exception e) {
+            Log.e("StoreDetailsAdapter", "Fehler beim Laden des Bildes mit Picasso", e);
+        }
+    }
+
 
 }

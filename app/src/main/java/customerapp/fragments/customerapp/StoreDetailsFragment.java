@@ -137,17 +137,25 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         mapView.onResume();
     }
 
+    @SuppressLint("SetTextI18n")
     private void submittingData() {
         if (storeDetails != null) {
             ownerNameTextView.setText(storeDetails.getOwner());
             ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getStreetNr());
             ownerPhoneTextView.setText(storeDetails.getTelephone());
             ownerEmailTextView.setText(storeDetails.getEmail());
+
             String logoImageUrl = storeDetails.getLogo();
-            String backgroundImageUrl = storeDetails.getBackgroundImage();
+
+            int logoTargetWidth = (int) getResources().getDimension(R.dimen.shop_logo_big_width);
+            int logoTargetHeight = (int) getResources().getDimension(R.dimen.shop_logo_big_height);
 
             Picasso.get()
                     .load(logoImageUrl)
+                    .resize(logoTargetWidth, logoTargetHeight)
+                    .centerCrop()
+                    .placeholder(R.drawable.baseline_loading_animation)
+                    .error(R.drawable.baseline_error_image)
                     .into(shopLogoBig, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -160,19 +168,35 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
                         }
                     });
 
-            Picasso.get()
-                    .load(backgroundImageUrl)
-                    .into(backgroundImageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            Log.d("Picasso", "Hintergrundbild erfolgreich geladen");
-                        }
+            backgroundImageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    backgroundImageView.getViewTreeObserver().removeOnPreDrawListener(this);
 
-                        @Override
-                        public void onError(Exception e) {
-                            Log.e("Picasso", "Fehler beim Laden des Hintergrundbildes", e);
-                        }
-                    });
+                    int width = backgroundImageView.getWidth();
+                    int height = backgroundImageView.getHeight();
+
+                    Picasso.get()
+                            .load(storeDetails.getBackgroundImage())
+                            .resize(width, height)
+                            .centerCrop()
+                            .placeholder(R.drawable.baseline_loading_animation)
+                            .error(R.drawable.baseline_error_image)
+                            .into(backgroundImageView, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.d("Picasso", "Hintergrundbild erfolgreich geladen");
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Log.e("Picasso", "Fehler beim Laden des Hintergrundbildes", e);
+                                }
+                            });
+
+                    return true;
+                }
+            });
         }
     }
 }
