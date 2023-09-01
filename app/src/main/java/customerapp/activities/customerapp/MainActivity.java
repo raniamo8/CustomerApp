@@ -62,7 +62,14 @@ public class MainActivity extends AppCompatActivity {
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getApplicationContext());
 
-        checkFirstRun();
+        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
+
+        if (isFirstRun) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         if (savedInstanceState == null) {
             replace(getSupportFragmentManager(), R.id.frame_layout, new QRCodeListFragment());
@@ -138,19 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Server nicht erreichbar");
                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    private void checkFirstRun() {
-        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
-        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
-        if (isFirstRun) {
-            Intent intent = new Intent(this, WelcomeActivity.class);
-            startActivity(intent);
-            finish();
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("is_first_run", false);
-            editor.apply();
         }
     }
 
