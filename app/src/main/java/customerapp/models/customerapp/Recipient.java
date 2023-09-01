@@ -68,15 +68,16 @@ public class Recipient implements Serializable {
         this.address = address;
     }
 
+    //TODO: change row
     public String toQrString() {
-        return lastName + "&" + firstName + "&" + address.getStreet() + "&" + address.getStreetNr() + "&" + address.getZip() + "&" + address.getCity();
+        return firstName + "&" + lastName + "&" + address.getStreet() + "&" + address.getStreetNr() + "&" + address.getZip() + "&" + address.getCity();
     }
 
     public Bitmap generateQRCode() {
         String qrString = toQrString();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
-            BitMatrix matrix = writer.encode(qrString, BarcodeFormat.QR_CODE, 500, 500); // size can be adjusted based on your needs
+            BitMatrix matrix = writer.encode(qrString, BarcodeFormat.QR_CODE, 500, 500);
             BarcodeEncoder encoder = new BarcodeEncoder();
             return encoder.createBitmap(matrix);
         } catch (WriterException e) {

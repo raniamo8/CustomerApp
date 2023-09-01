@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -84,16 +85,33 @@ public class AddressBook {
 
 
     public void loadData(Context context) {
+        if (context == null) {
+            Log.e("AddressBook", "Context provided to loadData is null.");
+            return;
+        }
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String json = prefs.getString(PREF_RECIPIENTS_KEY, "");
         if (!json.isEmpty()) {
-            Gson gson = new Gson();
-            Type type = new TypeToken<ArrayList<Recipient>>() {}.getType();
-            recipients = gson.fromJson(json, type);
+            try {
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<Recipient>>() {}.getType();
+                List<Recipient> loadedRecipients = gson.fromJson(json, type);
+                if (loadedRecipients != null) {
+                    recipients = new ArrayList<>(loadedRecipients);
+                } else {
+                    Log.e("AddressBook", "Loaded recipients are null.");
+                    recipients = new ArrayList<>();
+                }
+            } catch (JsonSyntaxException e) {
+                Log.e("AddressBook", "Error parsing recipients from JSON.", e);
+                recipients = new ArrayList<>();
+            }
         } else {
             recipients = new ArrayList<>();
         }
     }
+
 
     public void reset() {
         this.recipients.clear();

@@ -42,7 +42,11 @@ public class CodeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
-        addressBook.loadData(getContext());
+        try {
+            addressBook.loadData(getContext());
+        } catch (Exception e) {
+            Log.e("CodeFragment", "Fehler beim Laden des Addressbuchs.", e);
+        }
         qrCodeAdapter = new QRCodeAdapter(getContext());
     }
 
@@ -61,7 +65,11 @@ public class CodeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        addressBook.saveData(getContext());
+        try {
+            addressBook.saveData(getContext());
+        } catch (Exception e) {
+            Log.e("CodeFragment", "Fehler beim Speichern des Addressbuchs.", e);
+        }
     }
 
     @Override
@@ -126,7 +134,7 @@ public class CodeFragment extends Fragment {
             streetNrErrorTextView.setVisibility(View.GONE);
         }
 
-        if (zip.isEmpty() || zip.equals("Wählen Sie eine PLZ")) {  // Hier gehe ich davon aus, dass "Wählen Sie eine PLZ" der Standardtext ist. Ändern Sie diesen Wert entsprechend.
+        if (zip.isEmpty() || zip.equals("Wählen Sie eine PLZ")) {
             plzErrorTextView.setVisibility(View.VISIBLE);
             isValid = false;
         } else {
@@ -164,16 +172,30 @@ public class CodeFragment extends Fragment {
         String firstName = firstNameEditText.getText().toString().trim();
         String street = streetEditText.getText().toString().trim();
         String houseNumber = streetNrEditText.getText().toString().trim();
-        String zip = plzSpinner.getSelectedItem().toString();
 
+        String zip = null;
+        try {
+            zip = plzSpinner.getSelectedItem().toString();
+        } catch (NullPointerException npe) {
+            Log.e("CodeFragment", "Fehler beim Abrufen der ausgewählten PLZ.", npe);
+            Toast.makeText(getContext(), "Bitte wählen Sie eine PLZ aus", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (isInputValid(lastName, firstName, street, houseNumber, zip)) {
             createAndSaveRecipient(lastName, firstName, street, houseNumber, zip);
-            addressBook.saveData(getContext());
-            //Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich erstellt", Toast.LENGTH_SHORT).show();
+            try {
+                addressBook.saveData(getContext());
+            } catch (Exception e) {
+                Log.e("CodeFragment", "Fehler beim Speichern des Addressbuchs.", e);
+                Toast.makeText(getContext(), "Fehler beim Speichern des QR-Codes", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(getContext(), "Der QR-Code wurde erfolgreich erstellt", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), "Es liegt einen Fehler beim Ausfüllen vor", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void showSuccessDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(requireContext())

@@ -116,8 +116,11 @@ public class ExploreFragment extends Fragment {
                 System.out.println(backgroundImage);
             }
             return storeList;
-        } catch (IOException | JSONException e) {
-            Log.e(TAG, "Error downloading or decoding JSON data", e);
+        } catch (IOException e) {
+            Log.e(TAG, "Error during network connection", e);
+            return null;
+        } catch (JSONException e) {
+            Log.e(TAG, "Error decoding JSON data", e);
             return null;
         }
     }
@@ -143,6 +146,7 @@ public class ExploreFragment extends Fragment {
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(() -> {
                 ArrayList<StoreDetails> result = downloadData();
+                //TODO: APP crash
                 requireActivity().runOnUiThread(() -> {
                     if (result != null) {
                         updateUI(result);

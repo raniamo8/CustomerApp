@@ -1,5 +1,7 @@
 package customerapp.activities.customerapp;
 
+import static customerapp.models.customerapp.FragmentManagerHelper.replace;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -60,18 +62,14 @@ public class MainActivity extends AppCompatActivity {
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getApplicationContext());
 
-        //TODO: refactor to methode
-        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
-        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
-
-        if (isFirstRun) {
-            Intent intent = new Intent(this, WelcomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        checkFirstRun();
 
         if (savedInstanceState == null) {
             FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, new QRCodeListFragment());
+        }
+
+        if (savedInstanceState == null) {
+            replace(getSupportFragmentManager(), R.id.frame_layout, new QRCodeListFragment());
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -85,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         protected void onPostExecute(Boolean isReachable) {
                             if (isReachable) {
-                                FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, new ExploreFragment());
+                                replace(getSupportFragmentManager(), R.id.frame_layout, new ExploreFragment());
                             } else {
                                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
                             }
@@ -97,11 +95,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             if (selectedFragment != null) {
-                FragmentManagerHelper.replace(getSupportFragmentManager(), R.id.frame_layout, selectedFragment);
+                replace(getSupportFragmentManager(), R.id.frame_layout, selectedFragment);
             }
             return true;
         });
     }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -137,13 +136,26 @@ public class MainActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... voids) {
             return isServerReachable("http://131.173.65.77:8080/api/store-details", 500);
         }
-
         @Override
         protected void onPostExecute(Boolean isReachable) {
             if (!isReachable) {
                 System.out.println("Server nicht erreichbar");
                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void checkFirstRun() {
+        SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
+
+        if (isFirstRun) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+            finish();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("is_first_run", false);
+            editor.apply();
         }
     }
 

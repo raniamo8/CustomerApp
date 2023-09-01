@@ -2,6 +2,7 @@ package customerapp.fragments.customerapp;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,7 +42,11 @@ public class QRCodeListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
-        addressBook.loadData(getContext());
+        try {
+            addressBook.loadData(getContext());
+        } catch (Exception e) {
+            Log.e("QRCodeListFragment", "Fehler beim Laden des Addressbuchs.", e);
+        }
         qrCodeAdapter = new QRCodeAdapter(getContext());
         setHasOptionsMenu(true);
     }
@@ -85,7 +90,11 @@ public class QRCodeListFragment extends Fragment {
             if(addressBook.getRecipients().isEmpty()) {
                 Toast.makeText(getContext(), "Es gibt keine QR-Codes zum Löschen.", Toast.LENGTH_SHORT).show();
             } else {
-                addressBook.deleteAllRecipients(getContext());
+                try {
+                    addressBook.deleteAllRecipients(getContext());
+                } catch (Exception e) {
+                    Log.e("QRCodeListFragment", "Fehler beim Löschen aller Empfänger.", e);
+                }
                 qrCodeAdapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
             }
