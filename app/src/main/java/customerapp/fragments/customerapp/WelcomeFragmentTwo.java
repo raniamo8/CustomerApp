@@ -1,6 +1,9 @@
 package customerapp.fragments.customerapp;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +33,12 @@ public class WelcomeFragmentTwo extends Fragment {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
 
+            SharedPreferences preferences = getActivity().getSharedPreferences("app_preferences", MODE_PRIVATE);
+            preferences.edit().putBoolean("is_first_run", false).apply();
+
             requireActivity().finish();
         });
+
 
         backToIntroButton = welcomeView.findViewById(R.id.backToIntroButton);
         backToIntroButton.setOnClickListener(v -> {
