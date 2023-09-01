@@ -4,4 +4,6 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="shop_logo_big_width">200dp</dimen>
     <dimen name="shop_logo_big_height">200dp</dimen>
+    <dimen name="store_logo_adapter_width">100dp</dimen>
+    <dimen name="store_logo_adapter_height">100dp</dimen>
 </resources>

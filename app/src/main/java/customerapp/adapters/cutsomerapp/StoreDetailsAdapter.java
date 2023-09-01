@@ -88,9 +88,8 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
 
     private void loadImage(ImageView imageView, String imageUrl) {
         try {
-            float density = context.getResources().getDisplayMetrics().density;
-            int targetWidth = (int) (100 * density);
-            int targetHeight = (int) (100 * density);
+            int targetWidth = (int) context.getResources().getDimension(R.dimen.store_logo_adapter_width);
+            int targetHeight = (int) context.getResources().getDimension(R.dimen.store_logo_adapter_height);
 
             Picasso.get()
                     .load(imageUrl)
@@ -113,6 +112,5 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
             Log.e("StoreDetailsAdapter", "Fehler beim Laden des Bildes mit Picasso", e);
         }
     }
-
 
 }
