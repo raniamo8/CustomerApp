@@ -24,7 +24,7 @@
                 style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Adresse"
+                android:text="Daten bearbeiten"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -44,6 +44,15 @@
                 android:backgroundTint="@color/lavender"
                 android:text="Addresse hinzufügen" />
 
+            <Button
+                android:id="@+id/deleteAllButton"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#E42127"
+                android:text="Alle Addressen löschen" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +67,7 @@
                 style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Daten löschen"
+                android:text="About us"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -68,15 +77,6 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp" />
-
-            <Button
-                android:id="@+id/deleteAllButton"
-                style="@style/Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="#E42127"
-                android:text="Alle Addressen löschen" />
 
 
             <LinearLayout
