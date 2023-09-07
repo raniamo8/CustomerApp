@@ -38,6 +38,10 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 //TODO: test are configured as gradle!!!!!!
 //TODO: IntroReset
 //TODO: control increment test in addressbook
+
+/**
+ * Represents the primary user interface of the app.
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
@@ -110,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if the server specified by the given URL is reachable within a specified timeout.
+     * 
+     * @param url The URL of the server to check.
+     * @param timeoutMillis The maximum time, in milliseconds, before which a response should be received.
+     * @return true if the server is reachable within the specified timeout, false otherwise.
+     */
     public boolean isServerReachable(String url, int timeoutMillis) {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -123,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called when the fragment is no longer being used.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -130,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
         addressBook.saveData(getApplicationContext());
     }
 
+
+    /**
+     * An asynchronous task to check the reachability of the server. Once the task completes,
+     * it updates the UI based on whether the server is reachable or not.
+     */
     @SuppressLint("StaticFieldLeak")
     private class CheckServerReachabilityTask extends AsyncTask<Void, Void, Boolean> {
         @Override
