@@ -24,6 +24,14 @@ public class Address implements Serializable {
         this.zip = zip;
     }
 
+    /**
+     * Constructor to initialize an address with all fields.
+     * 
+     * @param street The name of the street.
+     * @param streetNr The street number.
+     * @param zip The postal code.
+     * @param city The city.
+     */
     public Address(String street, String streetNr, String zip, String city) {
         this.street = street;
         this.streetNr = streetNr;
@@ -31,6 +39,14 @@ public class Address implements Serializable {
         this.city = city;
     }
 
+    /**
+     * Constructor to initialize an address without specifying the city.
+     * Defaults to "Lingen" for the city.
+     * 
+     * @param street The name of the street.
+     * @param streetNr The street number.
+     * @param zip The postal code.
+     */
     public Address(String street, String streetNr, String zip) {
         this.street = street;
         this.streetNr = streetNr;
@@ -54,6 +70,11 @@ public class Address implements Serializable {
         return city;
     }
 
+    /**
+     * Provides a string representation of the full address.
+     * 
+     * @return The full address in "Street StreetNumber, ZipCode City" format.
+     */
     public String getFullAddress() {
         return street + " " + streetNr + "\n" + zip + " " + city;
     }
