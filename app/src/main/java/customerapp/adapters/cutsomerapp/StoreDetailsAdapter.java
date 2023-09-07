@@ -36,6 +36,11 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     }
 
 
+    /**
+     * Handles the navigation to the `StoreDetailsFragment` when a store item is clicked.
+     *
+     * @param store The selected store.
+     */
     @NonNull
     @Override
     public StoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,6 +48,13 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         return new StoreViewHolder(itemView);
     }
 
+    /**
+     * Binds data to the provided ViewHolder, setting the store's name, logo, 
+     * and click listener for navigation to the `StoreDetailsFragment`.
+     *
+     * @param holder   The ViewHolder instance to which the data should be bound.
+     * @param position The position of the item within the dataset.
+     */
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         StoreDetails store = storeList.get(position);
@@ -54,11 +66,19 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         holder.openDetails.setOnClickListener(view -> goToStoreDetailsFragment(store));
     }
 
+    /**
+     * Returns the total number of store items in the dataset.
+     *
+     * @return The item count.
+     */
     @Override
     public int getItemCount() {
         return storeList.size();
     }
 
+    /**
+     * ViewHolder class that represents an individual store item view.
+     */
     static class StoreViewHolder extends RecyclerView.ViewHolder {
         ImageView storeLogoImageView;
         TextView storeNameTextView;
@@ -75,6 +95,11 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         }
     }
 
+    /**
+     * Handles the navigation to the StoreDetailsFragment when a store item is clicked.
+     *
+     * @param store The selected store.
+     */
     private void goToStoreDetailsFragment(StoreDetails store) {
         FragmentManagerHelper.goToFragment(
                 ((AppCompatActivity) context).getSupportFragmentManager(),
@@ -86,6 +111,13 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
         );
     }
 
+    /**
+     * Loads and displays the store's logo in the specified ImageView using the Picasso library.
+     * If the image fails to load, an error placeholder is displayed.
+     *
+     * @param imageView The ImageView where the logo should be displayed.
+     * @param imageUrl  The URL from which the image should be loaded.
+     */
     private void loadImage(ImageView imageView, String imageUrl) {
         try {
             int targetWidth = (int) context.getResources().getDimension(R.dimen.store_logo_adapter_width);
