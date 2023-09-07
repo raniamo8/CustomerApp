@@ -36,6 +36,9 @@ public class QRCodeDisplayFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Initializes the fragment's essential data components.
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,14 @@ public class QRCodeDisplayFragment extends Fragment {
         }
     }
 
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,12 +73,22 @@ public class QRCodeDisplayFragment extends Fragment {
         return rootView;
     }
 
+
+    /**
+     * Display the generated QR code of the recipient in the dedicated ImageView.
+     */
     private void displayQRCode() {
         if (recipient != null) {
             qrImageView.setImageBitmap(recipient.generateQRCode());
         }
     }
 
+
+    /**
+     * Display the detailed information of the recipient.
+     *
+     * @param rootView The root view of the fragment containing the UI elements.
+     */
     private void displayRecipientDetails(View rootView) {
         if (recipient != null) {
             String recipientDetails = getFormattedRecipientDetails(recipient);
@@ -76,6 +97,13 @@ public class QRCodeDisplayFragment extends Fragment {
         }
     }
 
+
+    /**
+     * Formats the recipient details to display in a user-friendly manner.
+     *
+     * @param recipient Recipient object whose details are to be formatted.
+     * @return Formatted details string.
+     */
     private String getFormattedRecipientDetails(Recipient recipient) {
         Address address = recipient.getAddress();
         String formattedDetails = recipient.getFirstName() + " " + recipient.getLastName() + "\n"
