@@ -29,6 +29,11 @@ import customerapp.models.customerapp.AddressBook;
 import customerapp.models.customerapp.FragmentManagerHelper;
 import customerapp.models.customerapp.Recipient;
 
+/**
+ * Represents a user interface fragment for generating and displaying QR codes based on user input. 
+ * Allows the user to enter recipient details and validates the input. Once validated, a QR code 
+ * is generated and added to the address book.
+ */
 public class CodeFragment extends Fragment {
     private EditText lastNameEditText, firstNameEditText, streetEditText, streetNrEditText;
     private TextView lastNameErrorTextView, firstNameErrorTextView, streetErrorTextView, streetNrErrorTextView, plzErrorTextView;
@@ -38,6 +43,11 @@ public class CodeFragment extends Fragment {
     private AddressBook addressBook;
     private QRCodeAdapter qrCodeAdapter;
 
+    /**
+     * Called to do initial creation of a fragment.
+     * 
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +60,14 @@ public class CodeFragment extends Fragment {
         qrCodeAdapter = new QRCodeAdapter(getContext());
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * 
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI.
+     *
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +80,9 @@ public class CodeFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Called when the fragment is no longer being used.
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -72,12 +93,22 @@ public class CodeFragment extends Fragment {
         }
     }
 
+    
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume() {
         super.onResume();
         clearInputFields();
     }
 
+    
+    /**
+     * Initializes the views in the fragment.
+     * 
+     * @param rootView The root view of the fragment.
+     */
     private void initializeViews(View rootView) {
         lastNameEditText = rootView.findViewById(R.id.lastNameEditText);
         firstNameEditText = rootView.findViewById(R.id.firstNameEditText);
@@ -103,6 +134,16 @@ public class CodeFragment extends Fragment {
     }
 
 
+    /**
+     * Validates the user input for recipient creation.
+     * 
+     * @param lastName The last name of the recipient.
+     * @param firstName The first name of the recipient.
+     * @param street The street address of the recipient.
+     * @param houseNumber The house number of the recipient.
+     * @param zip The zip code of the recipient.
+     * @return true if the input is valid, otherwise false.
+     */
     private boolean isInputValid(String lastName, String firstName, String street, String houseNumber, String zip) {
         boolean isValid = true;
 
@@ -144,6 +185,16 @@ public class CodeFragment extends Fragment {
         return isValid;
     }
 
+    /**
+     * Validates the user input for recipient creation.
+     * 
+     * @param lastName The last name of the recipient.
+     * @param firstName The first name of the recipient.
+     * @param street The street address of the recipient.
+     * @param houseNumber The house number of the recipient.
+     * @param zip The zip code of the recipient.
+     * @return true if the input is valid, otherwise false.
+     */
     private void clearInputFields() {
         lastNameEditText.setText("");
         firstNameEditText.setText("");
@@ -152,6 +203,15 @@ public class CodeFragment extends Fragment {
     }
 
 
+    /**
+     * Creates and saves a new recipient based on the provided information.
+     * 
+     * @param lastName The last name of the recipient.
+     * @param firstName The first name of the recipient.
+     * @param street The street address of the recipient.
+     * @param houseNumber The house number of the recipient.
+     * @param zip The zip code of the recipient.
+     */
     @SuppressLint("NotifyDataSetChanged")
     private void createAndSaveRecipient(String lastName, String firstName, String street, String houseNumber, String zip) {
         Address address = new Address(street, houseNumber, zip);
@@ -167,6 +227,9 @@ public class CodeFragment extends Fragment {
         showSuccessDialog();
     }
 
+    /**
+     * Handles the generation of a QR code based on user input.
+     */
     private void generate() {
         String lastName = lastNameEditText.getText().toString().trim();
         String firstName = firstNameEditText.getText().toString().trim();
@@ -197,6 +260,9 @@ public class CodeFragment extends Fragment {
     }
 
 
+    /**
+     * Displays a success dialog to the user after successful QR code generation.
+     */
     private void showSuccessDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
                 //.setTitle("QR-Code")
@@ -209,7 +275,10 @@ public class CodeFragment extends Fragment {
         alertDialog.show();
     }
 
-
+    //TODO: Changes
+    /**
+     * Navigates the user to the QRCodeListFragment.
+     */
     private void clickOnFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentManagerHelper.goToFragment(fragmentManager,
