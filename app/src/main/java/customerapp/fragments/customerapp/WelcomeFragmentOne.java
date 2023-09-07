@@ -14,6 +14,15 @@ import com.example.customerapp.R;
  * First fragment of the introduction.
  */
 public class WelcomeFragmentOne extends Fragment {
+    
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_one, container, false);
