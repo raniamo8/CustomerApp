@@ -15,6 +15,10 @@ import com.example.customerapp.R;
 
 import customerapp.models.customerapp.FragmentManagerHelper;
 
+
+/**
+ * A Fragment that displays detailed information about the developers of the app.
+ */
 public class OwnerInformationFragment extends Fragment {
 
     TextView informationTitleTextView, generalsTextView, groupTextView, copyrightTextView;
