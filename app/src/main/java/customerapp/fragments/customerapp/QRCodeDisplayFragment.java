@@ -20,6 +20,10 @@ import com.example.customerapp.R;
 import customerapp.models.customerapp.Address;
 import customerapp.models.customerapp.Recipient;
 
+
+/**
+ * A Fragment dedicated to showcasing a recipient's generated QR code.
+ */
 public class QRCodeDisplayFragment extends Fragment {
 
     private Recipient recipient;
