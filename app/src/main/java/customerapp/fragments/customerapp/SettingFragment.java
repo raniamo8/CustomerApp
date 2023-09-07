@@ -30,6 +30,9 @@ public class SettingFragment extends Fragment {
     public SettingFragment() {
     }
 
+    /**
+     * Initializes the fragment's essential data components.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,15 @@ public class SettingFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +69,10 @@ public class SettingFragment extends Fragment {
         return view;
     }
 
+    
+    /**
+     * Deletes all QR codes and associated recipients, updating the UI and notifying the user about the action.
+     */
     @SuppressLint("NotifyDataSetChanged")
     private void deleteAllQRandRecipients() {
         if(addressBook.getRecipients().isEmpty()) {
@@ -68,6 +84,9 @@ public class SettingFragment extends Fragment {
         }
     }
 
+    /**
+     * Navigates the user to the CodeFragment for managing recipient addresses.
+     */
     private void goToCodeFragment() {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
@@ -79,6 +98,9 @@ public class SettingFragment extends Fragment {
         );
     }
 
+    /**
+     * Navigates the user to the OwnerInformationFragment, which contains details about the app's ownership and development.
+     */
     private void goToOwnerInformationFragment() {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
