@@ -20,6 +20,19 @@ public class StoreDetails implements Serializable {
     private LatLng coordinates;
 
 
+    /**
+     * Initializes a new StoreDetails instance with the provided parameters.
+     *
+     * @param id               Unique identifier for the store.
+     * @param name             Store's name.
+     * @param owner            Owner's name.
+     * @param address          Address of the store.
+     * @param telephone        Telephone number.
+     * @param email            Email ID.
+     * @param logo             Logo's resource ID or URI.
+     * @param backgroundImage  Background image's resource ID or URI.
+     * @param coordinates      Geographical coordinates of the store.
+     */
     public StoreDetails(String id, String name, String owner, Address address, String telephone, String email, String logo,
                         String backgroundImage, LatLng coordinates) {
         this.id = id;
