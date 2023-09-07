@@ -51,6 +51,9 @@ public class ExploreFragment extends Fragment {
     private StoreDetailsAdapter storeListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    /**
+     * Initializes the fragment's essential data components.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,14 @@ public class ExploreFragment extends Fragment {
         storeListAdapter = new StoreDetailsAdapter(requireContext(), storeList);
     }
 
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
@@ -79,11 +90,24 @@ public class ExploreFragment extends Fragment {
         return view;
     }
 
+
+    /**
+     * Initializes the options menu for this fragment.
+     *
+     * @param menu     The options menu.
+     * @param inflater Menu inflater.
+     */
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_store_details_fragment, menu);
     }
 
+    /**
+     * Handles item selections from the options menu.
+     *
+     * @param item The selected menu item.
+     * @return true if the event was handled, false otherwise.
+     */
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,6 +118,11 @@ public class ExploreFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Downloads store data from the remote server.
+     *
+     * @return A list of StoreDetails or null if there's an error during fetch.
+     */
     private ArrayList<StoreDetails> downloadData() {
         try {
             URL url = new URL("http://131.173.65.77:8080/api/store-details");
@@ -144,6 +173,11 @@ public class ExploreFragment extends Fragment {
         }
     }
 
+    /**
+     * Updates the UI with the provided store details list.
+     *
+     * @param result List of {@link StoreDetails} to display.
+     */
     @SuppressLint("NotifyDataSetChanged")
     private void updateUI(ArrayList<StoreDetails> result) {
         storeList.clear();
@@ -153,13 +187,23 @@ public class ExploreFragment extends Fragment {
         }
     }
 
+    /**
+     * Checks if a network connection is available.
+     *
+     * @return true if a network connection is available, false otherwise.
+     */
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
-    //TODO: refactor
+    /**
+     * Refreshes the displayed store data. Fetches new data from the server if a network connection is available,
+     * otherwise, it displays a relevant message to the user.
+     *
+     * @param isSwipeRefresh Indicates whether this refresh was initiated by the swipe-to-refresh gesture.
+     */
     private void refreshData(boolean isSwipeRefresh) {
         if (isNetworkAvailable()) {
             ExecutorService executorService = Executors.newSingleThreadExecutor();
