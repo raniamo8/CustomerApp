@@ -24,6 +24,14 @@ public class OwnerInformationFragment extends Fragment {
     public OwnerInformationFragment() {
     }
 
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_owner_inforamtion, container, false);
