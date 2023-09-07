@@ -38,6 +38,9 @@ public class QRCodeListFragment extends Fragment {
     private QRCodeAdapter qrCodeAdapter;
 
 
+    /**
+     * Initializes the fragment's essential data components.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,15 @@ public class QRCodeListFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,6 +82,10 @@ public class QRCodeListFragment extends Fragment {
         return view;
     }
 
+
+    /**
+     * Any changes made to the QR codes data are reflected by notifying the adapter.
+     */
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
@@ -77,11 +93,24 @@ public class QRCodeListFragment extends Fragment {
         qrCodeAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Inflates the fragment's menu options.
+     *
+     * @param menu The options menu in which items are placed.
+     * @param inflater MenuInflater to inflate the menu.
+     */
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_qr_code_list, menu);
     }
 
+    /**
+     * Handles item selections from the options menu.
+     * Currently, provides functionality to delete all QR codes.
+     *
+     * @param item The menu item that was selected.
+     * @return boolean indicating whether the event was consumed.
+     */
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,6 +132,9 @@ public class QRCodeListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Navigates the user to the CodeFragment for generating a new QR code.
+     */
     private void navigateToCodeFragment() {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
