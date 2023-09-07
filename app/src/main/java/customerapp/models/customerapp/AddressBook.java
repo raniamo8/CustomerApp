@@ -27,10 +27,18 @@ public class AddressBook {
     private ArrayList<Recipient> recipients;
     public static final String PREF_RECIPIENTS_KEY = "PREF_RECIPIENTS_KEY";
 
+    /**
+     * Constructor initializing an empty list of recipients.
+     */
     public AddressBook() {
         this.recipients = new ArrayList<>();
     }
 
+    /**
+     * Returns the singleton instance of the AddressBook.
+     * 
+     * @return the singleton instance
+     */
     public static AddressBook getInstance() {
         if (instance == null) {
             instance = new AddressBook();
@@ -38,10 +46,20 @@ public class AddressBook {
         return instance;
     }
 
+    /**
+     * Returns the singleton instance of the AddressBook.
+     * 
+     * @return the singleton instance
+     */
     public ArrayList<Recipient> getRecipients() {
         return recipients;
     }
 
+    /**
+     * Returns the singleton instance of the AddressBook.
+     * 
+     * @return the singleton instance
+     */
     public void addRecipient(Recipient recipient, Context context) {
         if (recipient != null) {
             recipients.add(recipient);
@@ -56,6 +74,11 @@ public class AddressBook {
         }
     }
 
+    /**
+     * Deletes all recipients in the address book.
+     * 
+     * @param context the Android context
+     */
     public void deleteAllRecipients(Context context) {
         if (!recipients.isEmpty()) {
             recipients.clear();
@@ -64,6 +87,11 @@ public class AddressBook {
     }
 
 
+    /**
+     * Saves the list of recipients to shared preferences.
+     * 
+     * @param context the Android context
+     *
     public void saveData(Context context) {
         if (context == null) {
             Log.e("AddressBook", "Context provided to saveData is null.");
@@ -84,6 +112,11 @@ public class AddressBook {
     }
 
 
+    /**
+     * Loads the list of recipients from shared preferences.
+     * 
+     * @param context the Android context
+     */
     public void loadData(Context context) {
         if (context == null) {
             Log.e("AddressBook", "Context provided to loadData is null.");
@@ -113,6 +146,11 @@ public class AddressBook {
     }
 
 
+    /**
+     * Loads the list of recipients from shared preferences.
+     * 
+     * @param context the Android context
+     */
     public void reset() {
         this.recipients.clear();
     }
