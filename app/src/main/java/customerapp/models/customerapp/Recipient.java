@@ -38,6 +38,13 @@ public class Recipient implements Serializable {
     private String lastName;
     private Address address;
 
+    /**
+     * Constructor to initialize a new Recipient.
+     *
+     * @param lastName  The last name of the recipient.
+     * @param firstName The first name of the recipient.
+     * @param address   The address of the recipient.
+     */
     public Recipient(String lastName, String firstName, Address address) {
         this.lastName = lastName;
         this.firstName = firstName;
@@ -68,11 +75,20 @@ public class Recipient implements Serializable {
         this.address = address;
     }
 
-    //TODO: change row
+    /**
+     * Converts the recipient details into a string suitable for QR code generation.
+     *
+     * @return A concatenated string of recipient details.
+     */
     public String toQrString() {
         return firstName + "&" + lastName + "&" + address.getStreet() + "&" + address.getStreetNr() + "&" + address.getZip() + "&" + address.getCity();
     }
 
+    /**
+     * Generates a QR code based on the recipient's details and the string representation.
+     *
+     * @return A Bitmap representation of the QR code.
+     */
     public Bitmap generateQRCode() {
         String qrString = toQrString();
         MultiFormatWriter writer = new MultiFormatWriter();
