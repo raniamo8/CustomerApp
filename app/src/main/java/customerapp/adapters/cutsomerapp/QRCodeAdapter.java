@@ -20,6 +20,9 @@ import customerapp.models.customerapp.FragmentManagerHelper;
 import customerapp.models.customerapp.Recipient;
 import customerapp.fragments.customerapp.QRCodeDisplayFragment;
 
+/**
+ * An adapter class responsible for displaying QR codes for recipients in a RecyclerView.
+ */
 public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeViewHolder> {
 
     private Context context;
