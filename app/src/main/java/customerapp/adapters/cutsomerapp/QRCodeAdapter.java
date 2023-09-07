@@ -28,6 +28,13 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         this.context = context;
     }
 
+    /**
+     * Creates a new ViewHolder instance for a given view type.
+     *
+     * @param parent The parent ViewGroup.
+     * @param viewType The type of view for this ViewHolder.
+     * @return A new QRCodeViewHolder instance.
+     */
     @NonNull
     @Override
     public QRCodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,6 +42,13 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         return new QRCodeViewHolder(itemView);
     }
 
+
+    /**
+     * Binds the data to the specified ViewHolder.
+     *
+     * @param holder The ViewHolder to be updated.
+     * @param position The position of the item within the data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull QRCodeViewHolder holder, int position) {
         Recipient recipient = AddressBook.getInstance().getRecipients().get(position);
@@ -46,16 +60,30 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         });
     }
 
+
+    /**
+     * Returns the total number of items in the data set.
+     *
+     * @return The number of recipients in the AddressBook.
+     */
     @Override
     public int getItemCount() {
         return AddressBook.getInstance().getRecipients().size();
     }
 
+    /**
+     * ViewHolder class that represents an individual QR code item within the RecyclerView.
+     */
     static class QRCodeViewHolder extends RecyclerView.ViewHolder {
         ImageView qrCodeItemImageView;
         TextView recipientInfoTextView;
         LinearLayout openQRCodeLayout;
 
+        /**
+         * Constructs a QRCodeViewHolder with a given view item.
+         *
+         * @param itemView The view item representing a single recipient's QR code and details.
+         */
         public QRCodeViewHolder(@NonNull View itemView) {
             super(itemView);
             qrCodeItemImageView = itemView.findViewById(R.id.qrCodeItemImageView);
@@ -64,6 +92,13 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         }
     }
 
+    
+    /**
+     * Opens the {@link QRCodeDisplayFragment} to display a larger view of the QR code for the selected recipient.
+     *
+     * @param context The context in which this method is called.
+     * @param position The position of the clicked item in the RecyclerView.
+     */
     private void openQRCodeDisplayFragment(Context context, int position) {
         if(position >= 0 && position < AddressBook.getInstance().getRecipients().size()) {
             if (context instanceof AppCompatActivity) {
