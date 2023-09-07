@@ -56,6 +56,9 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         return fragment;
     }
 
+    /**
+     * Initializes the fragment's essential data components.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,15 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         }
     }
 
+
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,30 +104,50 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         return view;
     }
 
+    /**
+     * Lifecycle method called when the fragment resumes its operation.
+     */
     @Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
     }
 
+
+    /**
+     * Initializes the fragment's essential data components.
+     */
     @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
     }
 
+
+    /**
+     * Called when the fragment is no longer being used.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
     }
 
+    /**
+     * Lifecycle method called when the fragment resumes its operation.
+     */
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
     }
 
+    /**
+     * Callback when the map is ready for use.
+     * The map's camera position is set to the store's geographical location.
+     *
+     * @param map A non-null instance of a GoogleMap associated with the MapView defined in this fragment's layout.
+     */
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
@@ -137,6 +169,11 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         mapView.onResume();
     }
 
+
+     /**
+     * Fills the UI views with the details from the {@link StoreDetails} object.
+     * If the store details are not null, populates text views and loads images using Picasso.
+     */
     @SuppressLint("SetTextI18n")
     private void submittingData() {
         if (storeDetails != null) {
