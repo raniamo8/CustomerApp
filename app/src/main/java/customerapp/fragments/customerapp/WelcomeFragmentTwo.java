@@ -25,6 +25,14 @@ import customerapp.models.customerapp.FragmentManagerHelper;
 public class WelcomeFragmentTwo extends Fragment {
     ImageButton backToIntroButton;
 
+    /**
+     * Inflates the fragment layout and initializes UI components.
+     *
+     * @param inflater           Used to inflate the layout.
+     * @param container          The parent view.
+     * @param savedInstanceState State information.
+     * @return A view representing the fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_two, container, false);
@@ -38,7 +46,6 @@ public class WelcomeFragmentTwo extends Fragment {
 
             requireActivity().finish();
         });
-
 
         backToIntroButton = welcomeView.findViewById(R.id.backToIntroButton);
         backToIntroButton.setOnClickListener(v -> {
