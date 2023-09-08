@@ -7,7 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 /**
  * Helper class to manage fragment transactions, offering methods to replace fragments and handle custom animations.
  */
-public class FragmentManagerHelper {
+public class FragmentManagerHelper
+{
 
     /**
      * Replaces the existing fragment with the provided one in the specified frame.
@@ -16,7 +17,8 @@ public class FragmentManagerHelper {
      * @param frameId         The ID of the frame where the fragment should be placed.
      * @param fragment        The new fragment to be placed.
      */
-    public static void replace(FragmentManager fragmentManager, int frameId, Fragment fragment) {
+    public static void replace(FragmentManager fragmentManager, int frameId, Fragment fragment)
+    {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(frameId, fragment);
         fragmentTransaction.commit();
@@ -32,11 +34,13 @@ public class FragmentManagerHelper {
      * @param exitAnim        Animation resource ID for the animation applied to the exiting fragment.
      * @param addToBackStack  If true, the transaction will be added to the back stack, allowing it to be reversed.
      */
-    public static void goToFragment(FragmentManager fragmentManager, int frameId, Fragment fragment, int enterAnim, int exitAnim, boolean addToBackStack) {
+    public static void goToFragment(FragmentManager fragmentManager, int frameId, Fragment fragment, int enterAnim, int exitAnim, boolean addToBackStack)
+    {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(enterAnim, exitAnim);
         transaction.replace(frameId, fragment);
-        if (addToBackStack) {
+        if (addToBackStack)
+        {
             transaction.addToBackStack(null);
         }
         transaction.commit();
@@ -47,8 +51,10 @@ public class FragmentManagerHelper {
      *
      * @param fragmentManager The fragment manager.
      */
-    public static void goBackToPreviousFragment(FragmentManager fragmentManager) {
-        if (fragmentManager != null) {
+    public static void goBackToPreviousFragment(FragmentManager fragmentManager)
+    {
+        if (fragmentManager != null)
+        {
             fragmentManager.popBackStack();
         }
     }

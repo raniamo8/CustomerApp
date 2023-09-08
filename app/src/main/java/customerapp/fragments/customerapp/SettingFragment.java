@@ -21,20 +21,24 @@ import customerapp.models.customerapp.AddressBook;
  * A fragment that allows users to manage app settings, including enabling or disabling dark mode,
  * adding addresses to recipients, and deleting all QR codes and recipients.
  */
-public class SettingFragment extends Fragment {
-    Button deleteAllButton, addAddressButton;
-    ImageButton informationButton;
+public class SettingFragment extends Fragment
+{
+    private Button deleteAllButton;
+    private Button addAddressButton;
+    private ImageButton informationButton;
     private QRCodeAdapter qrCodeAdapter;
     private AddressBook addressBook;
 
-    public SettingFragment() {
+    public SettingFragment()
+    {
     }
 
     /**
      * Initializes the fragment's essential data components.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
         addressBook.loadData(getContext());
@@ -42,7 +46,7 @@ public class SettingFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    
+
     /**
      * Inflates the fragment layout and initializes UI components.
      *
@@ -53,7 +57,8 @@ public class SettingFragment extends Fragment {
      */
     @SuppressLint("MissingInflatedId")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         addressBook = AddressBook.getInstance();
 
@@ -69,15 +74,18 @@ public class SettingFragment extends Fragment {
         return view;
     }
 
-    
+
     /**
      * Deletes all QR codes and associated recipients, updating the UI and notifying the user about the action.
      */
     @SuppressLint("NotifyDataSetChanged")
-    private void deleteAllQRandRecipients() {
-        if(addressBook.getRecipients().isEmpty()) {
+    private void deleteAllQRandRecipients()
+    {
+        if (addressBook.getRecipients().isEmpty())
+        {
             Toast.makeText(getContext(), "Es gibt keine QR-Codes zum Löschen.", Toast.LENGTH_SHORT).show();
-        } else {
+        } else
+        {
             addressBook.deleteAllRecipients(getContext());
             qrCodeAdapter.notifyDataSetChanged();
             Toast.makeText(getContext(), "Alle QR-Codes wurden gelöscht.", Toast.LENGTH_SHORT).show();
@@ -87,7 +95,8 @@ public class SettingFragment extends Fragment {
     /**
      * Navigates the user to the CodeFragment for managing recipient addresses.
      */
-    private void goToCodeFragment() {
+    private void goToCodeFragment()
+    {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
                 R.id.frame_layout,
@@ -101,7 +110,8 @@ public class SettingFragment extends Fragment {
     /**
      * Navigates the user to the OwnerInformationFragment, which contains details about the app's ownership and development.
      */
-    private void goToOwnerInformationFragment() {
+    private void goToOwnerInformationFragment()
+    {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
                 R.id.frame_layout,

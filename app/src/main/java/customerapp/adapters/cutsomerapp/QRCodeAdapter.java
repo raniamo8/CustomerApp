@@ -23,11 +23,11 @@ import customerapp.fragments.customerapp.QRCodeDisplayFragment;
 /**
  * An adapter class responsible for displaying QR codes for recipients in a RecyclerView.
  */
-public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeViewHolder> {
-
+public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeViewHolder>
+{
     private Context context;
-
-    public QRCodeAdapter(Context context) {
+    public QRCodeAdapter(Context context)
+    {
         this.context = context;
     }
 
@@ -40,7 +40,8 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
      */
     @NonNull
     @Override
-    public QRCodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public QRCodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_qr_code, parent, false);
         return new QRCodeViewHolder(itemView);
     }
@@ -53,12 +54,14 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
      * @param position The position of the item within the data set.
      */
     @Override
-    public void onBindViewHolder(@NonNull QRCodeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull QRCodeViewHolder holder, int position)
+    {
         Recipient recipient = AddressBook.getInstance().getRecipients().get(position);
         holder.recipientInfoTextView.setText(String.format("%s %s", recipient.getFirstName(), recipient.getLastName()));
         //holder.qrCodeItemImageView.setImageBitmap(recipient.generateQRCode());
 
-        holder.openQRCodeLayout.setOnClickListener(v -> {
+        holder.openQRCodeLayout.setOnClickListener(v ->
+        {
             openQRCodeDisplayFragment(v.getContext(), position);
         });
     }
@@ -70,24 +73,27 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
      * @return The number of recipients in the AddressBook.
      */
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return AddressBook.getInstance().getRecipients().size();
     }
 
     /**
      * ViewHolder class that represents an individual QR code item within the RecyclerView.
      */
-    static class QRCodeViewHolder extends RecyclerView.ViewHolder {
-        ImageView qrCodeItemImageView;
-        TextView recipientInfoTextView;
-        LinearLayout openQRCodeLayout;
+    static class QRCodeViewHolder extends RecyclerView.ViewHolder
+    {
+        public ImageView qrCodeItemImageView;
+        public TextView recipientInfoTextView;
+        public LinearLayout openQRCodeLayout;
 
         /**
          * Constructs a QRCodeViewHolder with a given view item.
          *
          * @param itemView The view item representing a single recipient's QR code and details.
          */
-        public QRCodeViewHolder(@NonNull View itemView) {
+        public QRCodeViewHolder(@NonNull View itemView)
+        {
             super(itemView);
             qrCodeItemImageView = itemView.findViewById(R.id.qrCodeItemImageView);
             recipientInfoTextView = itemView.findViewById(R.id.recipientInfoTextView);
@@ -95,16 +101,18 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
         }
     }
 
-    
     /**
      * Opens the {@link QRCodeDisplayFragment} to display a larger view of the QR code for the selected recipient.
      *
      * @param context The context in which this method is called.
      * @param position The position of the clicked item in the RecyclerView.
      */
-    private void openQRCodeDisplayFragment(Context context, int position) {
-        if(position >= 0 && position < AddressBook.getInstance().getRecipients().size()) {
-            if (context instanceof AppCompatActivity) {
+    private void openQRCodeDisplayFragment(Context context, int position)
+    {
+        if (position >= 0 && position < AddressBook.getInstance().getRecipients().size())
+        {
+            if (context instanceof AppCompatActivity)
+            {
                 AppCompatActivity activity = (AppCompatActivity) context;
                 Recipient selectedRecipient = AddressBook.getInstance().getRecipients().get(position);
                 QRCodeDisplayFragment fragment = QRCodeDisplayFragment.newInstance(selectedRecipient);
@@ -115,7 +123,8 @@ public class QRCodeAdapter extends RecyclerView.Adapter<QRCodeAdapter.QRCodeView
                         R.anim.slide_out,
                         true);
             }
-        } else {
+        } else
+        {
             Log.e("QRCodeAdapter", "Ungültige Position angeklickt: " + position);
         }
     }

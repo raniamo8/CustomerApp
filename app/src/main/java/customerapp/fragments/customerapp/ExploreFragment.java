@@ -46,7 +46,8 @@ import java.util.concurrent.Executors;
  * Represents a fragment the Explore screen, which displays a list of stores.
  * The fragment contains a list of store data and uses a RecyclerView with the StoreDetailsAdapter to display the store details.
  */
-public class ExploreFragment extends Fragment {
+public class ExploreFragment extends Fragment
+{
     private ArrayList<StoreDetails> storeList;
     private StoreDetailsAdapter storeListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -55,7 +56,8 @@ public class ExploreFragment extends Fragment {
      * Initializes the fragment's essential data components.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         storeList = new ArrayList<>();
@@ -73,7 +75,8 @@ public class ExploreFragment extends Fragment {
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -98,7 +101,8 @@ public class ExploreFragment extends Fragment {
      * @param inflater Menu inflater.
      */
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater)
+    {
         inflater.inflate(R.menu.menu_store_details_fragment, menu);
     }
 
@@ -110,9 +114,11 @@ public class ExploreFragment extends Fragment {
      */
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == R.id.action_refresh) {
+        if (id == R.id.action_refresh)
+        {
             refreshData(true);
         }
         return super.onOptionsItemSelected(item);
@@ -123,8 +129,10 @@ public class ExploreFragment extends Fragment {
      *
      * @return A list of StoreDetails or null if there's an error during fetch.
      */
-    private ArrayList<StoreDetails> downloadData() {
-        try {
+    private ArrayList<StoreDetails> downloadData()
+    {
+        try
+        {
             URL url = new URL("http://131.173.65.77:8080/api/store-details");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -135,14 +143,16 @@ public class ExploreFragment extends Fragment {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null)
+            {
                 stringBuilder.append(line).append("\n");
             }
             bufferedReader.close();
             JSONArray jsonArray = new JSONArray(stringBuilder.toString());
             ArrayList<StoreDetails> storeList = new ArrayList<>();
             int storeIndex;
-            for (storeIndex = 0; storeIndex < jsonArray.length(); storeIndex++) {
+            for (storeIndex = 0; storeIndex < jsonArray.length(); storeIndex++)
+            {
                 JSONObject jsonObject = jsonArray.getJSONObject(storeIndex);
                 String id = jsonObject.getString("id");
                 String name = jsonObject.getString("name");
@@ -159,15 +169,18 @@ public class ExploreFragment extends Fragment {
                 JSONObject coordinatesObject = jsonObject.getJSONObject("coordinates");
                 double latitude = coordinatesObject.getDouble("latitude");
                 double longitude = coordinatesObject.getDouble("longitude");
-                StoreDetails storeDetails = new StoreDetails(id, name, owner, new Address(street, houseNumber, zip, city), telephone, email, logo, backgroundImage, new LatLng(latitude, longitude));
+                StoreDetails storeDetails = new StoreDetails(id, name, owner, new Address(street, houseNumber, zip, city), telephone, email,
+                        logo, backgroundImage, new LatLng(latitude, longitude));
                 storeList.add(storeDetails);
                 System.out.println(backgroundImage);
             }
             return storeList;
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             Log.e(TAG, "Error during network connection", e);
             return null;
-        } catch (JSONException e) {
+        } catch (JSONException e)
+        {
             Log.e(TAG, "Error decoding JSON data", e);
             return null;
         }
@@ -179,10 +192,12 @@ public class ExploreFragment extends Fragment {
      * @param result List of {@link StoreDetails} to display.
      */
     @SuppressLint("NotifyDataSetChanged")
-    private void updateUI(ArrayList<StoreDetails> result) {
+    private void updateUI(ArrayList<StoreDetails> result)
+    {
         storeList.clear();
         storeList.addAll(result);
-        if (storeListAdapter != null) {
+        if (storeListAdapter != null)
+        {
             storeListAdapter.notifyDataSetChanged();
         }
     }
@@ -192,7 +207,8 @@ public class ExploreFragment extends Fragment {
      *
      * @return true if a network connection is available, false otherwise.
      */
-    private boolean isNetworkAvailable() {
+    private boolean isNetworkAvailable()
+    {
         ConnectivityManager connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
@@ -204,25 +220,32 @@ public class ExploreFragment extends Fragment {
      *
      * @param isSwipeRefresh Indicates whether this refresh was initiated by the swipe-to-refresh gesture.
      */
-    private void refreshData(boolean isSwipeRefresh) {
-        if (isNetworkAvailable()) {
+    private void refreshData(boolean isSwipeRefresh)
+    {
+        if (isNetworkAvailable())
+        {
             ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.execute(() -> {
+            executorService.execute(() ->
+            {
                 ArrayList<StoreDetails> result = downloadData();
-                //TODO: APP crash
-                requireActivity().runOnUiThread(() -> {
-                    if (result != null) {
+                requireActivity().runOnUiThread(() ->
+                {
+                    if (result != null)
+                    {
                         updateUI(result);
-                        if (isSwipeRefresh) {
+                        if (isSwipeRefresh)
+                        {
                             Toast.makeText(requireContext(), "Die Daten wurden aktualisiert", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
+                    } else
+                    {
                         Toast.makeText(requireContext(), "Die Verbindung zum Server ist fehlgeschlagen", Toast.LENGTH_SHORT).show();
                     }
                     swipeRefreshLayout.setRefreshing(false);
                 });
             });
-        } else {
+        } else
+        {
             Toast.makeText(requireContext(), "Keine Netzwerkverbindung", Toast.LENGTH_SHORT).show();
             swipeRefreshLayout.setRefreshing(false);
         }

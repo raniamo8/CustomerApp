@@ -22,8 +22,9 @@ import customerapp.models.customerapp.FragmentManagerHelper;
 /**
  * Second fragment of the introduction.
  */
-public class WelcomeFragmentTwo extends Fragment {
-    ImageButton backToIntroButton;
+public class WelcomeFragmentTwo extends Fragment
+{
+    private ImageButton backToIntroButton;
 
     /**
      * Inflates the fragment layout and initializes UI components.
@@ -34,10 +35,12 @@ public class WelcomeFragmentTwo extends Fragment {
      * @return A view representing the fragment.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_two, container, false);
         Button introEndButton = welcomeView.findViewById(R.id.introEndButton);
-        introEndButton.setOnClickListener(v -> {
+        introEndButton.setOnClickListener(v ->
+        {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
 
@@ -48,7 +51,8 @@ public class WelcomeFragmentTwo extends Fragment {
         });
 
         backToIntroButton = welcomeView.findViewById(R.id.backToIntroButton);
-        backToIntroButton.setOnClickListener(v -> {
+        backToIntroButton.setOnClickListener(v ->
+        {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentManagerHelper.goBackToPreviousFragment(fragmentManager);
         });

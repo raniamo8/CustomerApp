@@ -1,4 +1,3 @@
-
 package customerapp.models.customerapp;
 
 import android.annotation.SuppressLint;
@@ -9,21 +8,22 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import customerapp.adapters.cutsomerapp.QRCodeAdapter;
 import com.example.customerapp.R;
+
+import customerapp.adapters.cutsomerapp.QRCodeAdapter;
 
 /**
  * Provides swipe to delete functionality for RecyclerView items.
  * The callback listens for left swipe actions and shows an AlertDialog
  * to confirm deletion of the item.
  */
-public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback
+{
     private static final int ICON_SIZE = 100;
     private QRCodeAdapter mAdapter;
     private Drawable deleteIcon;
@@ -31,11 +31,13 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
 
     /**
-     * Provides swipe to delete functionality for RecyclerView items.
-     * The callback listens for left swipe actions and shows an AlertDialog
-     * to confirm deletion of the item.
+     * Constructor to initialize the SwipeToDeleteCallback.
+     *
+     * @param adapter  Adapter for the RecyclerView.
+     * @param context  Current application context.
      */
-    public SwipeToDeleteCallback(QRCodeAdapter adapter, Context context) {
+    public SwipeToDeleteCallback(QRCodeAdapter adapter, Context context)
+    {
         super(0, ItemTouchHelper.LEFT);
         mAdapter = adapter;
         background = new ColorDrawable(Color.RED);
@@ -43,7 +45,8 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
+    {
         return false;
     }
 
@@ -56,17 +59,20 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
      */
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+    {
         int position = viewHolder.getAdapterPosition();
         AlertDialog.Builder builder = new AlertDialog.Builder(viewHolder.itemView.getContext())
                 .setTitle("Bestätigen Sie das Löschen")
                 .setMessage("Möchten Sie den QR-Code wirklich löschen?")
-                .setPositiveButton("Ja", (dialog, which) -> {
+                .setPositiveButton("Ja", (dialog, which) ->
+                {
                     AddressBook.getInstance().deleteOneRecipient(position, viewHolder.itemView.getContext());
                     mAdapter.notifyItemRemoved(position);
                     mAdapter.notifyDataSetChanged();
                 })
-                .setNegativeButton("Abbrechen", (dialog, which) -> {
+                .setNegativeButton("Abbrechen", (dialog, which) ->
+                {
                     mAdapter.notifyItemChanged(position);
                     mAdapter.notifyDataSetChanged();
                 })
@@ -75,7 +81,8 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        alertDialog.setOnCancelListener(dialog -> {
+        alertDialog.setOnCancelListener(dialog ->
+        {
             mAdapter.notifyItemChanged(position);
             mAdapter.notifyDataSetChanged();
         });
@@ -94,8 +101,8 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
      */
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
-
+                            float dX, float dY, int actionState, boolean isCurrentlyActive)
+    {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         View itemView = viewHolder.itemView;
@@ -121,10 +128,9 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
      * @param context Current application context.
      * @return The value in pixels (px).
      */
-    private int dpToPx(int dp, Context context) {
+    private int dpToPx(int dp, Context context)
+    {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
     }
-
-
 }

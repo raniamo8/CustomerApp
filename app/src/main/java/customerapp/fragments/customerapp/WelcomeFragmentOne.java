@@ -13,8 +13,9 @@ import com.example.customerapp.R;
 /**
  * First fragment of the introduction.
  */
-public class WelcomeFragmentOne extends Fragment {
-    
+public class WelcomeFragmentOne extends Fragment
+{
+
     /**
      * Inflates the fragment layout and initializes UI components.
      *
@@ -24,10 +25,12 @@ public class WelcomeFragmentOne extends Fragment {
      * @return A view representing the fragment.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View welcomeView = inflater.inflate(R.layout.fragment_welcome_one, container, false);
         Button nextButton = welcomeView.findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(v -> {
+        nextButton.setOnClickListener(v ->
+        {
             Fragment fragment = new WelcomeFragmentTwo();
             requireActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.welcome_frame_layout, fragment)

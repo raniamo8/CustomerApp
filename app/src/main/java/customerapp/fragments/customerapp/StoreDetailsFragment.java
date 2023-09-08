@@ -36,19 +36,26 @@ import customerapp.models.customerapp.FragmentManagerHelper;
  * A fragment that displays detailed information about a specific store.
  * It takes a StoreDetails object as an argument and displays its data, including the store's logo, owner name, etc.
  */
-public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback {
+public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
+{
     private static final String ARG_STORE_DETAILS = "storeDetails";
     private StoreDetails storeDetails;
-    TextView ownerNameTextView, ownerAddressTextView, ownerPhoneTextView, ownerEmailTextView;
-    ImageView shopLogoBig, backgroundImageView;
+    private TextView ownerNameTextView;
+    private TextView ownerAddressTextView;
+    private TextView ownerPhoneTextView;
+    private TextView ownerEmailTextView;
+    private ImageView shopLogoBig;
+    private ImageView backgroundImageView;
     private AppCompatImageButton backButton;
     private MapView mapView;
     private GoogleMap googleMap;
 
-    public StoreDetailsFragment() {
+    public StoreDetailsFragment()
+    {
     }
 
-    public static StoreDetailsFragment newInstance(StoreDetails storeDetails) {
+    public static StoreDetailsFragment newInstance(StoreDetails storeDetails)
+    {
         StoreDetailsFragment fragment = new StoreDetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_STORE_DETAILS, storeDetails);
@@ -60,9 +67,11 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * Initializes the fragment's essential data components.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             storeDetails = (StoreDetails) getArguments().getSerializable(ARG_STORE_DETAILS);
         }
     }
@@ -78,7 +87,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      */
     @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_store_details, container, false);
 
         shopLogoBig = view.findViewById(R.id.shopLogoBig);
@@ -92,7 +102,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
         submittingData();
 
         backButton = view.findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
+        backButton.setOnClickListener(v ->
+        {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentManagerHelper.goBackToPreviousFragment(fragmentManager);
         });
@@ -108,7 +119,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * Lifecycle method called when the fragment resumes its operation.
      */
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         mapView.onResume();
     }
@@ -118,7 +130,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * Initializes the fragment's essential data components.
      */
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         mapView.onPause();
     }
@@ -128,7 +141,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * Called when the fragment is no longer being used.
      */
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         super.onDestroy();
         mapView.onDestroy();
     }
@@ -137,7 +151,8 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * Lifecycle method called when the fragment resumes its operation.
      */
     @Override
-    public void onLowMemory() {
+    public void onLowMemory()
+    {
         super.onLowMemory();
         mapView.onLowMemory();
     }
@@ -149,23 +164,24 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * @param map A non-null instance of a GoogleMap associated with the MapView defined in this fragment's layout.
      */
     @Override
-    public void onMapReady(@NonNull GoogleMap map) {
+    public void onMapReady(@NonNull GoogleMap map)
+    {
         googleMap = map;
         LatLng storeLocation = storeDetails.getCoordinates();
         googleMap.addMarker(new MarkerOptions().position(storeLocation).title("Store Location"));
-        mapView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        mapView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
             @Override
-            public void onGlobalLayout() {
+            public void onGlobalLayout()
+            {
                 LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
                 boundsBuilder.include(storeLocation);
-
                 LatLngBounds bounds = boundsBuilder.build();
                 float zoomLevel = 14.0f;
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bounds.getCenter(), zoomLevel));
                 mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-
         mapView.onResume();
     }
 
@@ -175,8 +191,10 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * If the store details are not null, populates text views and loads images using Picasso.
      */
     @SuppressLint("SetTextI18n")
-    private void submittingData() {
-        if (storeDetails != null) {
+    private void submittingData()
+    {
+        if (storeDetails != null)
+        {
             ownerNameTextView.setText(storeDetails.getOwner());
             ownerAddressTextView.setText(storeDetails.getAddress().getStreet() + " " + storeDetails.getAddress().getStreetNr());
             ownerPhoneTextView.setText(storeDetails.getTelephone());
@@ -193,21 +211,26 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
                     .centerCrop()
                     .placeholder(R.drawable.baseline_loading_animation)
                     .error(R.drawable.baseline_error_image)
-                    .into(shopLogoBig, new Callback() {
+                    .into(shopLogoBig, new Callback()
+                    {
                         @Override
-                        public void onSuccess() {
+                        public void onSuccess()
+                        {
                             Log.d("Picasso", "Logo-Bild erfolgreich geladen");
                         }
 
                         @Override
-                        public void onError(Exception e) {
+                        public void onError(Exception e)
+                        {
                             Log.e("Picasso", "Fehler beim Laden des Logo-Bildes", e);
                         }
                     });
 
-            backgroundImageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            backgroundImageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener()
+            {
                 @Override
-                public boolean onPreDraw() {
+                public boolean onPreDraw()
+                {
                     backgroundImageView.getViewTreeObserver().removeOnPreDrawListener(this);
 
                     int width = backgroundImageView.getWidth();
@@ -219,14 +242,17 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
                             .centerCrop()
                             .placeholder(R.drawable.baseline_loading_animation)
                             .error(R.drawable.baseline_error_image)
-                            .into(backgroundImageView, new Callback() {
+                            .into(backgroundImageView, new Callback()
+                            {
                                 @Override
-                                public void onSuccess() {
+                                public void onSuccess()
+                                {
                                     Log.d("Picasso", "Hintergrundbild erfolgreich geladen");
                                 }
 
                                 @Override
-                                public void onError(Exception e) {
+                                public void onError(Exception e)
+                                {
                                     Log.e("Picasso", "Fehler beim Laden des Hintergrundbildes", e);
                                 }
                             });

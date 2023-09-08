@@ -24,15 +24,18 @@ import customerapp.models.customerapp.Recipient;
 /**
  * A Fragment dedicated to showcasing a recipient's generated QR code.
  */
-public class QRCodeDisplayFragment extends Fragment {
-
+public class QRCodeDisplayFragment extends Fragment
+{
     private Recipient recipient;
     private ImageView qrImageView;
-    ImageButton backButton;
+    private ImageButton backButton;
 
-    public QRCodeDisplayFragment() {}
+    public QRCodeDisplayFragment()
+    {
+    }
 
-    public static QRCodeDisplayFragment newInstance(Recipient recipient) {
+    public static QRCodeDisplayFragment newInstance(Recipient recipient)
+    {
         QRCodeDisplayFragment fragment = new QRCodeDisplayFragment();
         Bundle args = new Bundle();
         args.putSerializable("recipient", recipient);
@@ -44,9 +47,11 @@ public class QRCodeDisplayFragment extends Fragment {
      * Initializes the fragment's essential data components.
      */
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             recipient = (Recipient) getArguments().getSerializable("recipient");
         }
     }
@@ -61,7 +66,8 @@ public class QRCodeDisplayFragment extends Fragment {
      */
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_qr_code_display, container, false);
 
         qrImageView = rootView.findViewById(R.id.qrCodeImageView);
@@ -69,7 +75,8 @@ public class QRCodeDisplayFragment extends Fragment {
         displayRecipientDetails(rootView);
 
         backButton = rootView.findViewById(R.id.backButtonToList);
-        backButton.setOnClickListener(v -> {
+        backButton.setOnClickListener(v ->
+        {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             goBackToPreviousFragment(fragmentManager);
         });
@@ -81,8 +88,10 @@ public class QRCodeDisplayFragment extends Fragment {
     /**
      * Display the generated QR code of the recipient in the dedicated ImageView.
      */
-    private void displayQRCode() {
-        if (recipient != null) {
+    private void displayQRCode()
+    {
+        if (recipient != null)
+        {
             qrImageView.setImageBitmap(recipient.generateQRCode());
         }
     }
@@ -93,8 +102,10 @@ public class QRCodeDisplayFragment extends Fragment {
      *
      * @param rootView The root view of the fragment containing the UI elements.
      */
-    private void displayRecipientDetails(View rootView) {
-        if (recipient != null) {
+    private void displayRecipientDetails(View rootView)
+    {
+        if (recipient != null)
+        {
             String recipientDetails = getFormattedRecipientDetails(recipient);
             TextView textViewRecipientDetails = rootView.findViewById(R.id.textViewRecipientDetails);
             textViewRecipientDetails.setText(recipientDetails);
@@ -108,7 +119,8 @@ public class QRCodeDisplayFragment extends Fragment {
      * @param recipient Recipient object whose details are to be formatted.
      * @return Formatted details string.
      */
-    private String getFormattedRecipientDetails(Recipient recipient) {
+    private String getFormattedRecipientDetails(Recipient recipient)
+    {
         Address address = recipient.getAddress();
         String formattedDetails = recipient.getFirstName() + " " + recipient.getLastName() + "\n"
                 + address.getFullAddress();

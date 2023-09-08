@@ -16,18 +16,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.customerapp.R;
-import customerapp.fragments.customerapp.CodeFragment;
-import customerapp.fragments.customerapp.ExploreFragment;
-import customerapp.fragments.customerapp.QRCodeListFragment;
-import customerapp.fragments.customerapp.SettingFragment;
-import customerapp.models.customerapp.AddressBook;
-import customerapp.models.customerapp.FragmentManagerHelper;
+import com.example.customerapp.databinding.ActivitymainBinding;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.example.customerapp.databinding.ActivitymainBinding;
+import customerapp.fragments.customerapp.ExploreFragment;
+import customerapp.fragments.customerapp.QRCodeListFragment;
+import customerapp.fragments.customerapp.SettingFragment;
+import customerapp.models.customerapp.AddressBook;
 
 //TODO Code Fragment: PLz spinner color
 //TODO: Checkstyle
@@ -42,7 +40,8 @@ import com.example.customerapp.databinding.ActivitymainBinding;
 /**
  * Represents the primary user interface of the app.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     private static final String CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private Fragment currentFragment;
     ActivitymainBinding binding;
@@ -50,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint({"NonConstantResourceId", "StaticFieldLeak"})
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         binding = ActivitymainBinding.inflate(getLayoutInflater());
@@ -66,29 +66,37 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
         boolean isFirstRun = preferences.getBoolean("is_first_run", true);
 
-        if (isFirstRun) {
+        if (isFirstRun)
+        {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
             finish();
         }
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null)
+        {
             replace(getSupportFragmentManager(), R.id.frame_layout, new QRCodeListFragment());
         }
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+        binding.bottomNavigationView.setOnItemSelectedListener(item ->
+        {
             Fragment selectedFragment = null;
-            switch (item.getItemId()) {
+            switch (item.getItemId())
+            {
                 case R.id.code:
                     selectedFragment = new QRCodeListFragment();
                     break;
                 case R.id.explore:
-                    new CheckServerReachabilityTask() {
+                    new CheckServerReachabilityTask()
+                    {
                         @Override
-                        protected void onPostExecute(Boolean isReachable) {
-                            if (isReachable) {
+                        protected void onPostExecute(Boolean isReachable)
+                        {
+                            if (isReachable)
+                            {
                                 replace(getSupportFragmentManager(), R.id.frame_layout, new ExploreFragment());
-                            } else {
+                            } else
+                            {
                                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_LONG).show();
                             }
                         }
@@ -98,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new SettingFragment();
                     break;
             }
-            if (selectedFragment != null) {
+            if (selectedFragment != null)
+            {
                 replace(getSupportFragmentManager(), R.id.frame_layout, selectedFragment);
             }
             return true;
@@ -107,29 +116,34 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState)
+    {
         super.onSaveInstanceState(outState);
-        if (currentFragment != null) {
+        if (currentFragment != null)
+        {
             getSupportFragmentManager().putFragment(outState, CURRENT_FRAGMENT_TAG, currentFragment);
         }
     }
 
     /**
      * Checks if the server specified by the given URL is reachable within a specified timeout.
-     * 
+     *
      * @param url The URL of the server to check.
      * @param timeoutMillis The maximum time, in milliseconds, before which a response should be received.
      * @return true if the server is reachable within the specified timeout, false otherwise.
      */
-    public boolean isServerReachable(String url, int timeoutMillis) {
-        try {
+    public boolean isServerReachable(String url, int timeoutMillis)
+    {
+        try
+        {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setConnectTimeout(timeoutMillis);
             connection.setReadTimeout(timeoutMillis);
             connection.setRequestMethod("HEAD");
             int responseCode = connection.getResponseCode();
             return (responseCode == HttpURLConnection.HTTP_OK);
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             return false;
         }
     }
@@ -138,7 +152,8 @@ public class MainActivity extends AppCompatActivity {
      * Called when the fragment is no longer being used.
      */
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
         Log.d("MainActivity", "onDestroy");
         addressBook.saveData(getApplicationContext());
@@ -150,14 +165,18 @@ public class MainActivity extends AppCompatActivity {
      * it updates the UI based on whether the server is reachable or not.
      */
     @SuppressLint("StaticFieldLeak")
-    private class CheckServerReachabilityTask extends AsyncTask<Void, Void, Boolean> {
+    private class CheckServerReachabilityTask extends AsyncTask<Void, Void, Boolean>
+    {
         @Override
-        protected Boolean doInBackground(Void... voids) {
+        protected Boolean doInBackground(Void... voids)
+        {
             return isServerReachable("http://131.173.65.77:8080/api/store-details", 500);
         }
         @Override
-        protected void onPostExecute(Boolean isReachable) {
-            if (!isReachable) {
+        protected void onPostExecute(Boolean isReachable)
+        {
+            if (!isReachable)
+            {
                 System.out.println("Server nicht erreichbar");
                 Toast.makeText(MainActivity.this, "Der Server ist nicht erreichbar", Toast.LENGTH_SHORT).show();
             }

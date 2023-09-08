@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.customerapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-
 import customerapp.adapters.cutsomerapp.QRCodeAdapter;
 import customerapp.models.customerapp.AddressBook;
 import customerapp.models.customerapp.FragmentManagerHelper;
@@ -32,7 +30,8 @@ import customerapp.models.customerapp.SwipeToDeleteCallback;
  * Represents a fragment that displays a list of QR codes generated for recipients.
  * This fragment allows the user to view and manage the list of QR codes and associated recipients.
  */
-public class QRCodeListFragment extends Fragment {
+public class QRCodeListFragment extends Fragment
+{
     private AddressBook addressBook;
     private RecyclerView recyclerViewQRCodeList;
     private QRCodeAdapter qrCodeAdapter;
@@ -42,12 +41,15 @@ public class QRCodeListFragment extends Fragment {
      * Initializes the fragment's essential data components.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         addressBook = AddressBook.getInstance();
-        try {
+        try
+        {
             addressBook.loadData(getContext());
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             Log.e("QRCodeListFragment", "Fehler beim Laden des Addressbuchs.", e);
         }
         qrCodeAdapter = new QRCodeAdapter(getContext());
@@ -65,7 +67,8 @@ public class QRCodeListFragment extends Fragment {
      */
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_qr_code_list, container, false);
         addressBook = AddressBook.getInstance();
 
@@ -88,7 +91,8 @@ public class QRCodeListFragment extends Fragment {
      */
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         qrCodeAdapter.notifyDataSetChanged();
     }
@@ -100,7 +104,8 @@ public class QRCodeListFragment extends Fragment {
      * @param inflater MenuInflater to inflate the menu.
      */
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater)
+    {
         inflater.inflate(R.menu.menu_qr_code_list, menu);
     }
 
@@ -113,15 +118,21 @@ public class QRCodeListFragment extends Fragment {
      */
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == R.id.action_delete_all_recipients) {
-            if(addressBook.getRecipients().isEmpty()) {
+        if (id == R.id.action_delete_all_recipients)
+        {
+            if (addressBook.getRecipients().isEmpty())
+            {
                 Toast.makeText(getContext(), "Es gibt keine QR-Codes zum Löschen.", Toast.LENGTH_SHORT).show();
-            } else {
-                try {
+            } else
+            {
+                try
+                {
                     addressBook.deleteAllRecipients(getContext());
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     Log.e("QRCodeListFragment", "Fehler beim Löschen aller Empfänger.", e);
                 }
                 qrCodeAdapter.notifyDataSetChanged();
@@ -135,7 +146,8 @@ public class QRCodeListFragment extends Fragment {
     /**
      * Navigates the user to the CodeFragment for generating a new QR code.
      */
-    private void navigateToCodeFragment() {
+    private void navigateToCodeFragment()
+    {
         FragmentManagerHelper.goToFragment(
                 requireActivity().getSupportFragmentManager(),
                 R.id.frame_layout,
@@ -146,7 +158,4 @@ public class QRCodeListFragment extends Fragment {
         );
     }
 
-
 }
-
-

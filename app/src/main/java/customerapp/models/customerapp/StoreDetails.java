@@ -8,7 +8,8 @@ import java.io.Serializable;
  * Represents store details, including shop name, owner name, address, phone number, email, and logo resource ID.
  * This class implements Serializable to enable passing store details between activities using Intent.
  */
-public class StoreDetails implements Serializable {
+public class StoreDetails implements Serializable
+{
     private String id;
     private String name;
     private String owner;
@@ -34,7 +35,8 @@ public class StoreDetails implements Serializable {
      * @param coordinates      Geographical coordinates of the store.
      */
     public StoreDetails(String id, String name, String owner, Address address, String telephone, String email, String logo,
-                        String backgroundImage, LatLng coordinates) {
+                        String backgroundImage, LatLng coordinates)
+    {
         this.id = id;
         this.name = name;
         this.owner = owner;
@@ -46,47 +48,58 @@ public class StoreDetails implements Serializable {
         this.coordinates = coordinates;
     }
 
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getOwner() {
+    public String getOwner()
+    {
         return owner;
     }
 
-    public Address getAddress() {
+    public Address getAddress()
+    {
         return address;
     }
 
-    public String getTelephone() {
+    public String getTelephone()
+    {
         return telephone;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public String getLogo() {
+    public String getLogo()
+    {
         return logo;
     }
 
-    public String getBackgroundImage() {
+    public String getBackgroundImage()
+    {
         return backgroundImage;
     }
 
-    public LatLng getCoordinates() {
+    public LatLng getCoordinates()
+    {
         return coordinates;
     }
 }

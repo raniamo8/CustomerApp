@@ -19,13 +19,17 @@ import customerapp.models.customerapp.FragmentManagerHelper;
 /**
  * A Fragment that displays detailed information about the developers of the app.
  */
-public class OwnerInformationFragment extends Fragment {
+public class OwnerInformationFragment extends Fragment
+{
+    private TextView informationTitleTextView;
+    private TextView generalsTextView;
+    private TextView groupTextView;
+    private TextView copyrightTextView;
+    private ImageButton backButtonToSetting;
+    private ImageView lieferlogoImageView;
 
-    TextView informationTitleTextView, generalsTextView, groupTextView, copyrightTextView;
-    ImageButton backButtonToSetting;
-    ImageView lieferlogoImageView;
-
-    public OwnerInformationFragment() {
+    public OwnerInformationFragment()
+    {
     }
 
     /**
@@ -37,7 +41,8 @@ public class OwnerInformationFragment extends Fragment {
      * @return A view representing the fragment.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_owner_inforamtion, container, false);
 
         informationTitleTextView = view.findViewById(R.id.informationTitleTextView);
@@ -47,11 +52,11 @@ public class OwnerInformationFragment extends Fragment {
         backButtonToSetting = view.findViewById(R.id.backButtonToSetting);
         lieferlogoImageView = view.findViewById(R.id.lieferlogoImageView);
 
-        backButtonToSetting.setOnClickListener(v -> {
+        backButtonToSetting.setOnClickListener(v ->
+        {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentManagerHelper.goBackToPreviousFragment(fragmentManager);
         });
-
         return view;
     }
 }

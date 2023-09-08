@@ -8,8 +8,9 @@ import android.text.Spanned;
  * An input filter that excludes emojis and surrogate characters.
  * Use this filter to prevent users from entering such characters in text fields.
  */
-public class EmojiExcludeFilter implements InputFilter {
-    
+public class EmojiExcludeFilter implements InputFilter
+{
+
     /**
      * Filters out emojis and surrogate characters from the input.
      *
@@ -22,11 +23,14 @@ public class EmojiExcludeFilter implements InputFilter {
      * @return The filtered character sequence without emojis and surrogate characters. 
      */
     @Override
-    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend)
+    {
         StringBuilder filtered = new StringBuilder();
-        for (int i = start; i < end; i++) {
+        for (int i = start; i < end; i++)
+        {
             int type = Character.getType(source.charAt(i));
-            if (type != Character.SURROGATE && type != Character.OTHER_SYMBOL) {
+            if (type != Character.SURROGATE && type != Character.OTHER_SYMBOL)
+            {
                 filtered.append(source.charAt(i));
             }
         }
