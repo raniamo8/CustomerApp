@@ -8,10 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-
 import static org.junit.Assert.*;
-
-import java.io.Console;
 
 import customerapp.models.customerapp.Address;
 import customerapp.models.customerapp.Recipient;
@@ -45,8 +42,10 @@ public class QRCodePerformanceUnitTest {
             assertNotNull(qrCode);
         }
 
-        long averageDuration = totalDuration / AMOUNT;
-        System.out.println("Average time to generate QR code: " + averageDuration + " milliseconds");
-        System.out.println("Total time to generate " + AMOUNT + " QR codes: " + totalDuration + " milliseconds");
+        double averageDurationInSeconds = totalDuration / (double) AMOUNT / 1000;
+        double totalDurationInSeconds = totalDuration / 1000.0;
+
+        System.out.println("Average time to generate QR code: " + averageDurationInSeconds + " seconds");
+        System.out.println("Total time to generate " + AMOUNT + " QR codes: " + totalDurationInSeconds + " seconds");
     }
 }
