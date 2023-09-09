@@ -30,7 +30,7 @@ import customerapp.models.customerapp.FragmentManagerHelper;
 import customerapp.models.customerapp.Recipient;
 
 /**
- * Represents a user interface fragment for generating and displaying QR codes based on user input.
+ * Represents a user interface fragment for generating QR codes based on user input.
  * Allows the user to enter recipient details and validates the input. Once validated, a QR code
  * is generated and added to the address book.
  */
