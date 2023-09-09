@@ -72,8 +72,14 @@ public class Recipient implements Serializable
      */
     public String toQrString()
     {
-        return firstName + "&" + lastName + "&" + address.getStreet() + "&" + address.getStreetNr() + "&" + address.getZip() + "&" + address.getCity();
+        return (firstName != null ? firstName : "") + "&"
+                + (lastName != null ? lastName : "") + "&"
+                + (address.getStreet() != null ? address.getStreet() : "") + "&"
+                + (address.getStreetNr() != null ? address.getStreetNr() : "") + "&"
+                + (address.getZip() != null ? address.getZip() : "") + "&"
+                + (address.getCity() != null ? address.getCity() : "");
     }
+
 
     /**
      * Generates a QR code based on the recipient's details and the string representation.
