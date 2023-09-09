@@ -42,12 +42,19 @@ public class IntroUITest {
         onView(isRoot()).perform(waitFor(1000));
         onView(ViewMatchers.withId(R.id.nextButton)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
+    }
+
+    @Test
+    public void test2Intro() {
+        onView(isRoot()).perform(waitFor(1000));
+        onView(ViewMatchers.withId(R.id.nextButton)).perform(click());
+        onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.introEndButton)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
     }
 
     @Test
-    public void test2INoIntro() {
+    public void test3NoIntro() {
         onView(isRoot()).perform(waitFor(3000));
     }
 

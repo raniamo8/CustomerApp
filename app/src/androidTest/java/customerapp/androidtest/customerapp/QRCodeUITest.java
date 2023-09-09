@@ -4,6 +4,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -14,6 +15,7 @@ import android.view.View;
 
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -44,21 +46,21 @@ public class QRCodeUITest {
     public void test1GenerateQRCodeSuccessfully() {
         onView(isRoot()).perform(waitFor(1000));
         onView(ViewMatchers.withId(R.id.fabAddQRCode)).perform(click());
-        onView(withId(R.id.lastNameEditText)).perform(typeText("Mo"), closeSoftKeyboard());
         onView(withId(R.id.firstNameEditText)).perform(typeText("R"), closeSoftKeyboard());
+        onView(withId(R.id.lastNameEditText)).perform(typeText("Mo"), closeSoftKeyboard());
         onView(withId(R.id.streetEditText)).perform(typeText("Teststr"), closeSoftKeyboard());
         onView(withId(R.id.streetNrEditText)).perform(typeText("10C"), closeSoftKeyboard());
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.buttonGenerate)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
-        onView(withId(R.id.backButton)).perform(click());
+        onView(withText("Zurück zur Übersicht")).perform(click());
         onView(isRoot()).perform(waitFor(2000));
     }
 
     @Test
     public void test2OpenQRCodeInforamtion() {
         onView(isRoot()).perform(waitFor(1000));
-        //onView(withId(R.id.openQRCodeButton)).perform(click());
+        onView(withId(R.id.openQRCodeLayout)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.backButtonToList)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
@@ -93,14 +95,27 @@ public class QRCodeUITest {
     }
 
     @Test
-    public void test5DeleteQRCode() {
+    public void test5DeleteOneQRCodeCancel() {
+        onView(isRoot()).perform(waitFor(2000));
+        onView(withId(R.id.recyclerViewQRCodeList))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, swipeLeft()));
         onView(isRoot()).perform(waitFor(1000));
-        //onView(withId(R.id.deleteButton)).perform(click());
+        onView(withText("Abbrechen")).perform(click());
         onView(isRoot()).perform(waitFor(2000));
     }
 
     @Test
-    public void test6BackButton() {
+    public void test6DeleteOneQRCodeConfirm() {
+        onView(isRoot()).perform(waitFor(2000));
+        onView(withId(R.id.recyclerViewQRCodeList))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, swipeLeft()));
+        onView(isRoot()).perform(waitFor(1000));
+        onView(withText("Ja")).perform(click());
+        onView(isRoot()).perform(waitFor(2000));
+    }
+
+    @Test
+    public void test7BackButton() {
         onView(isRoot()).perform(waitFor(1000));
         onView(withId(R.id.fabAddQRCode)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
@@ -117,37 +132,35 @@ public class QRCodeUITest {
     }
 
     @Test
-    public void test7AddTwoQRCodesOnTwoFragments() {
+    public void test8AddTwoQRCodesOnTwoFragments() {
         onView(isRoot()).perform(waitFor(1000));
         onView(withId(R.id.fabAddQRCode)).perform(click());
-        onView(withId(R.id.lastNameEditText)).perform(typeText("Mo"), closeSoftKeyboard());
         onView(withId(R.id.firstNameEditText)).perform(typeText("Rania"), closeSoftKeyboard());
+        onView(withId(R.id.lastNameEditText)).perform(typeText("Mo"), closeSoftKeyboard());
         onView(withId(R.id.streetEditText)).perform(typeText("Teststr"), closeSoftKeyboard());
         onView(withId(R.id.streetNrEditText)).perform(typeText("10C"), closeSoftKeyboard());
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.buttonGenerate)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
-        onView(withId(R.id.backButton)).perform(click());
+        onView(withText("Zurück zur Übersicht")).perform(click());
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.settings)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.addAddressButton)).perform(click());
         onView(isRoot()).perform(waitFor(500));
-        onView(withId(R.id.lastNameEditText)).perform(typeText("Baj"), closeSoftKeyboard());
         onView(withId(R.id.firstNameEditText)).perform(typeText("Sadik"), closeSoftKeyboard());
+        onView(withId(R.id.lastNameEditText)).perform(typeText("Baj"), closeSoftKeyboard());
         onView(withId(R.id.streetEditText)).perform(typeText("Teststr"), closeSoftKeyboard());
         onView(withId(R.id.streetNrEditText)).perform(typeText("10C"), closeSoftKeyboard());
         onView(isRoot()).perform(waitFor(2000));
         onView(withId(R.id.buttonGenerate)).perform(click());
         onView(isRoot()).perform(waitFor(2000));
-        onView(withId(R.id.backButton)).perform(click());
-        onView(isRoot()).perform(waitFor(2000));
-        onView(withId(R.id.code)).perform(click());
+        onView(withText("Zurück zur Übersicht")).perform(click());
         onView(isRoot()).perform(waitFor(2000));
     }
 
     @Test
-    public void test8DeleteAllQRCode() {
+    public void test9DeleteAllQRCode() {
         onView(isRoot()).perform(waitFor(1000));
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("Alle QR-Codes löschen")).perform(click());
