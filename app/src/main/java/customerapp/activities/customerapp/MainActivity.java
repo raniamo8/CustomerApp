@@ -27,15 +27,11 @@ import customerapp.fragments.customerapp.QRCodeListFragment;
 import customerapp.fragments.customerapp.SettingFragment;
 import customerapp.models.customerapp.AddressBook;
 
-//TODO Code Fragment: PLz spinner color
-//TODO: Checkstyle
+
 //TODO: Readme
-//TODO: Documentation
-//TODO: language check
 //-------------------------//
 //TODO: test are configured as gradle!!!!!!
 //TODO: IntroReset
-//TODO: control increment test in addressbook
 
 /**
  * Represents the primary user interface of the app.
