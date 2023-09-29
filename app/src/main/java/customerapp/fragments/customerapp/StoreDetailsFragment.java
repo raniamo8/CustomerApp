@@ -54,6 +54,12 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
     {
     }
 
+    /**
+     * Creates a new instance of the StoreDetailsFragment with the provided store details.
+     *
+     * @param storeDetails The details of the store to display.
+     * @return A new instance of {@link StoreDetailsFragment}.
+     */
     public static StoreDetailsFragment newInstance(StoreDetails storeDetails)
     {
         StoreDetailsFragment fragment = new StoreDetailsFragment();

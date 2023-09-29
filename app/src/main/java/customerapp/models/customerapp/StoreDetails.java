@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class StoreDetails implements Serializable
 {
     private String id;
-    private String name;
+    private String storeName;
     private String owner;
     private Address address;
     private String telephone;
@@ -25,7 +25,7 @@ public class StoreDetails implements Serializable
      * Initializes a new StoreDetails instance with the provided parameters.
      *
      * @param id               Unique identifier for the store.
-     * @param name             Store's name.
+     * @param storeName        Store's name.
      * @param owner            Owner's name.
      * @param address          Address of the store.
      * @param telephone        Telephone number.
@@ -34,11 +34,11 @@ public class StoreDetails implements Serializable
      * @param backgroundImage  Background image's resource ID or URI.
      * @param coordinates      Geographical coordinates of the store.
      */
-    public StoreDetails(String id, String name, String owner, Address address, String telephone, String email, String logo,
+    public StoreDetails(String id, String storeName, String owner, Address address, String telephone, String email, String logo,
                         String backgroundImage, LatLng coordinates)
     {
         this.id = id;
-        this.name = name;
+        this.storeName = storeName;
         this.owner = owner;
         this.address = address;
         this.telephone = telephone;
@@ -58,14 +58,14 @@ public class StoreDetails implements Serializable
         this.id = id;
     }
 
-    public String getName()
+    public String getStoreName()
     {
-        return name;
+        return storeName;
     }
 
-    public void setName(String name)
+    public void setStoreName(String storeName)
     {
-        this.name = name;
+        this.storeName = storeName;
     }
 
     public String getOwner()

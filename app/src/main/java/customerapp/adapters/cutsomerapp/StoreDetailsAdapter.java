@@ -64,7 +64,7 @@ public class StoreDetailsAdapter extends RecyclerView.Adapter<StoreDetailsAdapte
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position)
     {
         StoreDetails store = storeList.get(position);
-        holder.storeNameTextView.setText(store.getName());
+        holder.storeNameTextView.setText(store.getStoreName());
 
         String logoUrl = store.getLogo();
         loadImage(holder.storeLogoImageView, logoUrl);

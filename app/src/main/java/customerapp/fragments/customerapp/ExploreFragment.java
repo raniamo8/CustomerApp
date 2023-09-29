@@ -125,7 +125,7 @@ public class ExploreFragment extends Fragment
     }
 
     /**
-     * Downloads store data from the remote server.
+     * Downloads store data from the server.
      *
      * @return A list of StoreDetails or null if there's an error during fetch.
      */

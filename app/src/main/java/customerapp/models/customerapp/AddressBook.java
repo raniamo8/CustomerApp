@@ -133,7 +133,7 @@ public class AddressBook
      * Loads the list of recipients from shared preferences.
      *
      * @param context the Android context
-     * @noinspection checkstyle:WhitespaceAround, checkstyle:WhitespaceAround
+     * @noinspection checkstyle:WhitespaceAround, checkstyle:WhitespaceAround, checkstyle:LeftCurly
      */
     public void loadData(Context context)
     {

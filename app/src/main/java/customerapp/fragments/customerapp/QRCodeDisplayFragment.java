@@ -34,6 +34,12 @@ public class QRCodeDisplayFragment extends Fragment
     {
     }
 
+    /**
+     * Factory method to create a new instance of this fragment using the provided parameters.
+     *
+     * @param recipient Recipient object for which the QR Code and details are to be displayed.
+     * @return A new instance of fragment QRCodeDisplayFragment.
+     */
     public static QRCodeDisplayFragment newInstance(Recipient recipient)
     {
         QRCodeDisplayFragment fragment = new QRCodeDisplayFragment();

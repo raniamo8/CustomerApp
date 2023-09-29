@@ -93,7 +93,7 @@ public class SettingFragment extends Fragment
     }
 
     /**
-     * Navigates the user to the CodeFragment for managing recipient addresses.
+     * Navigates the user to the CodeFragment for creating a new QR-Code.
      */
     private void goToCodeFragment()
     {
