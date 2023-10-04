@@ -89,7 +89,7 @@ public class StoreDetailsFragment extends Fragment implements OnMapReadyCallback
      * @param inflater           Used to inflate the layout.
      * @param container          The parent view.
      * @param savedInstanceState State information.
-     * @return A view representing the fragment.
+     * @return  A view representing the fragment.
      */
     @SuppressLint("SetTextI18n")
     @Override
