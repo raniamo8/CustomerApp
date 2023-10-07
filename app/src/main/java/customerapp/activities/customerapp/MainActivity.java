@@ -27,12 +27,6 @@ import customerapp.fragments.customerapp.QRCodeListFragment;
 import customerapp.fragments.customerapp.SettingFragment;
 import customerapp.models.customerapp.AddressBook;
 
-
-//TODO: Readme
-//-------------------------//
-//TODO: test are configured as gradle!!!!!!
-//TODO: IntroReset
-
 /**
  * Represents the primary user interface of the app.
  */

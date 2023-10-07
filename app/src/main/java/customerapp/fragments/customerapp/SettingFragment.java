@@ -18,8 +18,8 @@ import customerapp.models.customerapp.FragmentManagerHelper;
 import customerapp.models.customerapp.AddressBook;
 
 /**
- * A fragment that allows users to manage app settings, including enabling or disabling dark mode,
- * adding addresses to recipients, and deleting all QR codes and recipients.
+ * A fragment that allows users to manage app settings including
+ * adding addresses to recipients and deleting all QR codes and recipients.
  */
 public class SettingFragment extends Fragment
 {

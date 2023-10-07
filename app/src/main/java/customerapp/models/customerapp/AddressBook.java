@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Represents an address book that stores a list of recipients and their information.
- * Provides methods to add, delete, and retrieve recipients, as well as manage the QR code counter.
+ * Provides methods to add, delete, and retrieve recipients.
  */
 public class AddressBook
 {
