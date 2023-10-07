@@ -19,7 +19,8 @@ The customer app is an android application that allows useres to generate QR-Cod
 
 ## Usage
 
-1. Run the application
+1. Sync Project with Gradle Files
+2. Run the application
 
 ## Folder Structure
 
