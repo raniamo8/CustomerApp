@@ -67,14 +67,13 @@ app
 │       ├───customerapp.androidtest.customerapp
 │       │   ├───IntroUITest.java
 │       │   ├───QRCodeUITest.java
-│       │   ├───SettingUITest.java
 │       │   └───UITestSuite.java
 │       │
 │       └───customerapp.unittest.customerapp
 │           ├───AddressBookUnitTest.java
 │           ├───QRCodePerformanceUnitTest.java
 │           ├───RecipientUnitTest.java
-│           └───UnitTestSuite.java
+│           └───UnittestSuite.java
 │
 ├───res
 │   ├───anim
@@ -119,6 +118,7 @@ app
 │
 |   .gitignore
 |   build.gradle
+|   checkstyle-despg.xml
 |   gradle.properties
 |   gradlew
 |   gradlew.bat
