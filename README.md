@@ -1,6 +1,6 @@
 # Customer App
 
-The customer app is an android application that allows useres to generate QR-Codes and manage it
+The customer app is an android application that allows users to generate QR-Codes and manage it
 
 ## Features
 
