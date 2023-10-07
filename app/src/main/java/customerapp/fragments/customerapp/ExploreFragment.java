@@ -133,7 +133,7 @@ public class ExploreFragment extends Fragment
     {
         try
         {
-            URL url = new URL("http://131.173.65.77:8080/api/store-details");
+            URL url = new URL("http://131.173.65.77:8080/storeDetails");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
